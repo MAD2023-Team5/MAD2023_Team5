@@ -7,19 +7,29 @@ public class User {
     private String description;
     private String image;
 
+    private String Name;
+
     public User() {
         // Default constructor required for Firebase
     }
 
-    public User(int userNo, String email, String password, String description, String image) {
+    public User(int userNo, String email, String password, String description, String image,String name) {
         this.userNo = userNo;
         this.email = email;
         this.password = password;
         this.description = description;
         this.image = image;
+        this.Name=name;
     }
 
     // Getters and setters
+    public String getName(){return Name;}
+
+    public void setName(String name)
+    {
+        this.Name=name;
+
+    }
     public int getUserNo() {
         return userNo;
     }
