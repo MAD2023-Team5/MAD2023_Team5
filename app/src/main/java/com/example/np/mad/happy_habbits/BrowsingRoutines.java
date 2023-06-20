@@ -64,6 +64,7 @@ public class BrowsingRoutines extends AppCompatActivity {
                 }
                 adapter.workoutRoutines = workoutRoutines;
                 adapter.notifyDataSetChanged();
+
             }
 
             @Override

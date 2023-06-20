@@ -44,26 +44,26 @@ public class FirebaseDataUploader {
 
         // Upload User data to Firebase
         DatabaseReference usersRef = rootRef.child("Users");
-        usersRef.child("user" + user1.getUserNo()).setValue(jsonConverter(user1))
+        usersRef.child( user1.getEmail().replace(".","")).setValue(user1)
                 .addOnSuccessListener(aVoid -> Log.i("Firebase", "User 1 data saved successfully."))
                 .addOnFailureListener(e -> Log.e("Firebase", "Failed to save User 1 data: " + e.getMessage()));
 
-        usersRef.child("user" + user2.getUserNo()).setValue(jsonConverter(user2))
+        usersRef.child( user2.getEmail().replace(".","")).setValue(user2)
                 .addOnSuccessListener(aVoid -> Log.i("Firebase", "User 2 data saved successfully."))
                 .addOnFailureListener(e -> Log.e("Firebase", "Failed to save User 2 data: " + e.getMessage()));
 
 
-        usersRef.child("user" + user3.getUserNo()).setValue(jsonConverter(user3));
-        usersRef.child("user" + user4.getUserNo()).setValue(jsonConverter(user4));
+        usersRef.child( user3.getEmail().replace(".","")).setValue(user3);
+        usersRef.child(user4.getEmail().replace(".","")).setValue(user4);
 
-        usersRef.child("user" + user5.getUserNo()).setValue(jsonConverter(user5));
-        usersRef.child("user" + user6.getUserNo()).setValue(jsonConverter(user6));
+        usersRef.child( user5.getEmail().replace(".","")).setValue(user5);
+        usersRef.child( user6.getEmail().replace(".","")).setValue(user6);
 
-        usersRef.child("user" + user7.getUserNo()).setValue(jsonConverter(user7));
-        usersRef.child("user" + user8.getUserNo()).setValue(jsonConverter(user8));
+        usersRef.child( user7.getEmail().replace(".","")).setValue(user7);
+        usersRef.child( user8.getEmail().replace(".","")).setValue(user8);
 
-        usersRef.child("user" + user9.getUserNo()).setValue(jsonConverter(user9));
-        usersRef.child("user" + user10.getUserNo()).setValue(jsonConverter(user10));
+        usersRef.child(user9.getEmail().replace(".","")).setValue(user9);
+        usersRef.child(user10.getEmail().replace(".","")).setValue(user10);
 
         // Sample Routine data
 
@@ -84,20 +84,20 @@ public class FirebaseDataUploader {
 
         // Upload Routine data to Firebase
         DatabaseReference routinesRef = rootRef.child("Routines");
-        routinesRef.child("routine"+routine1.getRoutineNo()).setValue(jsonConverter(routine1));
-        routinesRef.child("routine"+routine2.getRoutineNo()).setValue(jsonConverter(routine2));
+        routinesRef.child("routine"+routine1.getRoutineNo()).setValue(routine1);
+        routinesRef.child("routine"+routine2.getRoutineNo()).setValue(routine2);
 
-        routinesRef.child("routine"+routine3.getRoutineNo()).setValue(jsonConverter(routine3));
-        routinesRef.child("routine"+routine4.getRoutineNo()).setValue(jsonConverter(routine4));
+        routinesRef.child("routine"+routine3.getRoutineNo()).setValue(routine3);
+        routinesRef.child("routine"+routine4.getRoutineNo()).setValue(routine4);
 
-        routinesRef.child("routine"+routine5.getRoutineNo()).setValue(jsonConverter(routine5));
-        routinesRef.child("routine"+routine6.getRoutineNo()).setValue(jsonConverter(routine6));
+        routinesRef.child("routine"+routine5.getRoutineNo()).setValue(routine5);
+        routinesRef.child("routine"+routine6.getRoutineNo()).setValue(routine6);
 
-        routinesRef.child("routine"+routine7.getRoutineNo()).setValue(jsonConverter(routine7));
-        routinesRef.child("routine"+routine8.getRoutineNo()).setValue(jsonConverter(routine8));
+        routinesRef.child("routine"+routine7.getRoutineNo()).setValue(routine7);
+        routinesRef.child("routine"+routine8.getRoutineNo()).setValue(routine8);
 
-        routinesRef.child("routine"+routine9.getRoutineNo()).setValue(jsonConverter(routine9));
-        routinesRef.child("routine"+routine10.getRoutineNo()).setValue(jsonConverter(routine10));
+        routinesRef.child("routine"+routine9.getRoutineNo()).setValue(routine9);
+        routinesRef.child("routine"+routine10.getRoutineNo()).setValue(routine10);
 
 
 
@@ -131,16 +131,16 @@ public class FirebaseDataUploader {
 
         // Upload Exercise data to Firebase
         DatabaseReference exercisesRef = rootRef.child("Exercises");
-        exercisesRef.child("exercise"+exercise1.getExerciseNo()).setValue(jsonConverter(exercise1));
-        exercisesRef.child("exercise"+exercise2.getExerciseNo()).setValue(jsonConverter(exercise2));
-        exercisesRef.child("exercise"+exercise3.getExerciseNo()).setValue(jsonConverter(exercise3));
-        exercisesRef.child("exercise"+exercise4.getExerciseNo()).setValue(jsonConverter(exercise4));
-        exercisesRef.child("exercise"+exercise5.getExerciseNo()).setValue(jsonConverter(exercise5));
-        exercisesRef.child("exercise"+exercise6.getExerciseNo()).setValue(jsonConverter(exercise6));
-        exercisesRef.child("exercise"+exercise7.getExerciseNo()).setValue(jsonConverter(exercise7));
-        exercisesRef.child("exercise"+exercise8.getExerciseNo()).setValue(jsonConverter(exercise8));
-        exercisesRef.child("exercise"+exercise9.getExerciseNo()).setValue(jsonConverter(exercise9));
-        exercisesRef.child("exercise"+exercise10.getExerciseNo()).setValue(jsonConverter(exercise10));
+        exercisesRef.child("exercise"+exercise1.getExerciseNo()).setValue(exercise1);
+        exercisesRef.child("exercise"+exercise2.getExerciseNo()).setValue(exercise2);
+        exercisesRef.child("exercise"+exercise3.getExerciseNo()).setValue(exercise3);
+        exercisesRef.child("exercise"+exercise4.getExerciseNo()).setValue(exercise4);
+        exercisesRef.child("exercise"+exercise5.getExerciseNo()).setValue(exercise5);
+        exercisesRef.child("exercise"+exercise6.getExerciseNo()).setValue(exercise6);
+        exercisesRef.child("exercise"+exercise7.getExerciseNo()).setValue(exercise7);
+        exercisesRef.child("exercise"+exercise8.getExerciseNo()).setValue(exercise8);
+        exercisesRef.child("exercise"+exercise9.getExerciseNo()).setValue(exercise9);
+        exercisesRef.child("exercise"+exercise10.getExerciseNo()).setValue(exercise10);
 
 
 
@@ -160,16 +160,16 @@ public class FirebaseDataUploader {
 
         // Upload Sets data to Firebase
         DatabaseReference setsRef = rootRef.child("Sets");
-        setsRef.child("routine" + sets1.getRoutine().getRoutineNo()).child("exercise" + sets1.getExercise().getExerciseNo()).setValue(jsonConverter(sets1));
-        setsRef.child("routine" + sets2.getRoutine().getRoutineNo()).child("exercise" + sets2.getExercise().getExerciseNo()).setValue(jsonConverter(sets2));
-        setsRef.child("routine" + sets3.getRoutine().getRoutineNo()).child("exercise" + sets3.getExercise().getExerciseNo()).setValue(jsonConverter(sets3));
-        setsRef.child("routine" + sets4.getRoutine().getRoutineNo()).child("exercise" + sets4.getExercise().getExerciseNo()).setValue(jsonConverter(sets4));
-        setsRef.child("routine" + sets5.getRoutine().getRoutineNo()).child("exercise" + sets5.getExercise().getExerciseNo()).setValue(jsonConverter(sets5));
-        setsRef.child("routine" + sets6.getRoutine().getRoutineNo()).child("exercise" + sets6.getExercise().getExerciseNo()).setValue(jsonConverter(sets6));
-        setsRef.child("routine" + sets7.getRoutine().getRoutineNo()).child("exercise" + sets7.getExercise().getExerciseNo()).setValue(jsonConverter(sets7));
-        setsRef.child("routine" + sets8.getRoutine().getRoutineNo()).child("exercise" + sets8.getExercise().getExerciseNo()).setValue(jsonConverter(sets8));
-        setsRef.child("routine" + sets9.getRoutine().getRoutineNo()).child("exercise" + sets9.getExercise().getExerciseNo()).setValue(jsonConverter(sets9));
-        setsRef.child("routine" + sets10.getRoutine().getRoutineNo()).child("exercise" + sets10.getExercise().getExerciseNo()).setValue(jsonConverter(sets10));
+        setsRef.child("routine" + sets1.getRoutine().getRoutineNo()).child("exercise" + sets1.getExercise().getExerciseNo()).setValue(sets1);
+        setsRef.child("routine" + sets2.getRoutine().getRoutineNo()).child("exercise" + sets2.getExercise().getExerciseNo()).setValue(sets2);
+        setsRef.child("routine" + sets3.getRoutine().getRoutineNo()).child("exercise" + sets3.getExercise().getExerciseNo()).setValue(sets3);
+        setsRef.child("routine" + sets4.getRoutine().getRoutineNo()).child("exercise" + sets4.getExercise().getExerciseNo()).setValue((sets4));
+        setsRef.child("routine" + sets5.getRoutine().getRoutineNo()).child("exercise" + sets5.getExercise().getExerciseNo()).setValue(sets5);
+        setsRef.child("routine" + sets6.getRoutine().getRoutineNo()).child("exercise" + sets6.getExercise().getExerciseNo()).setValue(sets6);
+        setsRef.child("routine" + sets7.getRoutine().getRoutineNo()).child("exercise" + sets7.getExercise().getExerciseNo()).setValue(sets7);
+        setsRef.child("routine" + sets8.getRoutine().getRoutineNo()).child("exercise" + sets8.getExercise().getExerciseNo()).setValue(sets8);
+        setsRef.child("routine" + sets9.getRoutine().getRoutineNo()).child("exercise" + sets9.getExercise().getExerciseNo()).setValue(sets9);
+        setsRef.child("routine" + sets10.getRoutine().getRoutineNo()).child("exercise" + sets10.getExercise().getExerciseNo()).setValue(sets10);
 //
 //        // Sample Routine_Reactions data
 //        RoutineReaction routineReaction1 = new RoutineReaction(1, "routine1", true, false);
@@ -191,7 +191,7 @@ public class FirebaseDataUploader {
         rootRef.removeValue()
                 .addOnSuccessListener(aVoid -> Log.i("onupdate!!","succefully deleted"))
                 .addOnFailureListener(e -> Log.i("onupdate!!","Failed to delete data: " + e.getMessage()));
-
+        oncreate();
     }
     public static List<String> generateRandomTags()
     {

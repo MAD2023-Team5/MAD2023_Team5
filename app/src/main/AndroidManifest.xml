@@ -16,7 +16,7 @@
             android:name=".SignUp"
             android:exported="false" />
         <activity
-            android:name=".BrowsingRoutine"
+            android:name=".BrowsingRoutines"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
