@@ -1,9 +1,18 @@
 package com.example.np.mad.happy_habbits;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,12 +36,14 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
+    String title = "Main Activity";
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.i(title, "Create Login Page");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -56,16 +67,57 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(title, "Start Login Page");
+
+        EditText etUsername = findViewById(R.id.editTextText2);
+        EditText etPassword = findViewById(R.id.editTextTextPassword);
+        Button btnLogin = findViewById(R.id.button);
+        TextView signUp = findViewById(R.id.textView5);
+        Button myButton = findViewById(R.id.button);
+        myButton.setBackgroundColor(Color.BLACK);
+
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, BrowsingRoutines.class);
+                startActivity(intent);
+                Toast.makeText(MainActivity.this, "Logged in as", Toast.LENGTH_SHORT).show();
 
 
 
+//                if(isValidCredential(etUsername.getText().toString(), etPassword.getText().toString())){
+//                    Intent intent = new Intent(MainActivity.this, BrowsingRoutines.class);
+//                    startActivity(intent);
+//                }
+//                else{
+//                    Toast.makeText(MainActivity.this, "Invalid USERNAME or PASSWORD", Toast.LENGTH_SHORT).show();
+//                }
 
+            }
+        });
 
-
-
-
-
-
+        signUp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                startActivity(intent);
+                return false;
+            }
+        });
     }
 
 }
+// this is for the user searching
+//private boolean isValidCredential(String username, String password){
+//    User dbUserData = FirebaseDataUploader.findUser(username);
+//    if(dbUserData.getUsername().equals(username) && dbUserData.getPassword().equals(password)){
+//        return true;
+//    }
+//        return false;
+//    }
