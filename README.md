@@ -11,7 +11,7 @@ Login page:
 - Browse fitness personalities and routines uploaded by other:
     - Tags for filtering purposes
     - Like and Dislike buttons for exercise routines
-  
+
 - Using the fitness routines
     - Graphics accompanying the exercises.
 
