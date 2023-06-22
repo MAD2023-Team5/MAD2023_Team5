@@ -96,8 +96,8 @@ public class SignIn extends Fragment {
                     }
 ////
                     if (isloggedin.equals(true)) {
-//                      NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main);
-//                      navController.navigate(R.id.navigation_home);
+                      NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main);
+                      navController.navigate(R.id.navigation_home);
                         Log.i("testing", String.valueOf(isloggedin));
 
                     } else {

@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.AdapterView;
 
+import com.example.np.mad.happy_habbits.ui.Routines.WorkoutRoutinesAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,27 +50,27 @@ public class BrowsingRoutines extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         // Retrieve workout routines data from Firebase
-        retrieveWorkoutRoutines();
+        //retrieveWorkoutRoutines();
     }
 
-    private void retrieveWorkoutRoutines() {
-        firebaseData.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Routine> workoutRoutines = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Routine workoutRoutine = snapshot.getValue(Routine.class);
-                    workoutRoutines.add(workoutRoutine);
-                }
-                adapter.workoutRoutines = workoutRoutines;
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle database error
-            }
-        });
+//    private void retrieveWorkoutRoutines() {
+//        firebaseData.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                List<Routine> workoutRoutines = new ArrayList<>();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Routine workoutRoutine = snapshot.getValue(Routine.class);
+//                    workoutRoutines.add(workoutRoutine);
+//                }
+//                adapter.workoutRoutines = workoutRoutines;
+//                adapter.notifyDataSetChanged();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle database error
+//            }
+//        });
     }
-}
+

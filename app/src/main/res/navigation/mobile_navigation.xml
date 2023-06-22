@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_signin">
+    app:startDestination="@+id/navigation_routine">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -27,4 +27,15 @@
         android:name="com.example.np.mad.happy_habbits.ui.SignIn.SignIn"
         android:label="@string/title_signin"
         tools:layout="@layout/fragment_signin" />
+    <fragment
+        android:id="@+id/navigation_signup"
+        android:name="com.example.np.mad.happy_habbits.ui.SignIn.SignUpFragment"
+        android:label="@string/title_signin"
+        tools:layout="@layout/activity_sign_up" />
+
+    <fragment
+        android:id="@+id/navigation_routine"
+        android:name="com.example.np.mad.happy_habbits.ui.Routines.RoutineFragment"
+        android:label="@string/title_activity_browsing_routine"
+        tools:layout="@layout/activity_browsing_routine" />
 </navigation>

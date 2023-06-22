@@ -1,4 +1,4 @@
-package com.example.np.mad.happy_habbits;
+package com.example.np.mad.happy_habbits.ui.Routines;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.np.mad.happy_habbits.R;
+import com.example.np.mad.happy_habbits.Routine;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
         this.listener = listener;
     }
 
+    
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewWorkoutRoutineName;
 
