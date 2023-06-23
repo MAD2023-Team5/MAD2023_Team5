@@ -6,14 +6,11 @@ Happy Habit is an app that caters to individuals who are interested in fitness a
 Stage 1:
 
 Login page:
-
-- Uploading of their fitness routing
 - Browse fitness personalities and routines uploaded by other:
     - Tags for filtering purposes
     - Like and Dislike buttons for exercise routines
-
 - Using the fitness routines
-    - Graphics accompanying the exercises.
+
 
 
 Stage 2:
