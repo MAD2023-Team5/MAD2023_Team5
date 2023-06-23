@@ -55,10 +55,12 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                 // Get the clicked routine
                 Routine clickedRoutine = routines.get(position);
 
-                // Create a new instance of RoutineDetailFragment
+                //
+
                 //RoutineDetailFragment fragment = new RoutineDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("routine",routine.getRoutineNo()); // Pass the clicked routine to the fragment
+
                 //fragment.setArguments(bundle);
 
                 // Replace the current fragment with RoutineDetailFragment

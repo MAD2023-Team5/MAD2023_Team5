@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,8 @@ public class RoutineFragment extends Fragment {
     private RecyclerView recyclerViewRoutines;
     private WorkoutRoutinesAdapter routineAdapter;
 
+    private FragmentManager fragmentManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_browsing_routine, container, false);
@@ -37,8 +40,8 @@ public class RoutineFragment extends Fragment {
         firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
         recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
         recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        routineAdapter = new WorkoutRoutinesAdapter();
+        fragmentManager= getActivity().getSupportFragmentManager();
+        routineAdapter = new WorkoutRoutinesAdapter(fragmentManager);
         recyclerViewRoutines.setAdapter(routineAdapter);
 
         retrieveWorkoutRoutines();
