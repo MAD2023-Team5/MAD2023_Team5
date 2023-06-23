@@ -1,12 +1,15 @@
 package com.example.np.mad.happy_habbits.ui.Routines;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.np.mad.happy_habbits.R;
@@ -19,6 +22,12 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
     private List<Routine> routines;
 
+    private FragmentManager fragmentManager;
+
+    public WorkoutRoutinesAdapter (FragmentManager fragmentManager)
+    {
+        this.fragmentManager=fragmentManager;
+    }
     public void setRoutines(List<Routine> routines) {
         this.routines = routines;
         notifyDataSetChanged();
@@ -26,9 +35,13 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
     @NonNull
     @Override
-    public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.selected_routine, parent, false);
+
+
+
         return new RoutineViewHolder(view);
     }
 
@@ -36,6 +49,26 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     public void onBindViewHolder(@NonNull RoutineViewHolder holder, int position) {
         Routine routine = routines.get(position);
         holder.bind(routine);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the clicked routine
+                Routine clickedRoutine = routines.get(position);
+
+                // Create a new instance of RoutineDetailFragment
+                //RoutineDetailFragment fragment = new RoutineDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("routine",routine.getRoutineNo()); // Pass the clicked routine to the fragment
+                //fragment.setArguments(bundle);
+
+                // Replace the current fragment with RoutineDetailFragment
+                //fragmentManager.beginTransaction()
+                //.replace(R.id.fragment_container, fragment)
+                //        .addToBackStack(null)
+                //        .commit();ew fragment or activity passing the clickedRoutine information
+            }
+        });
+
     }
 
     @Override
