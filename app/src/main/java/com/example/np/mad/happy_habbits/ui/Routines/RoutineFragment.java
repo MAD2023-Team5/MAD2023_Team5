@@ -26,97 +26,42 @@ import java.util.List;
 
 public class RoutineFragment extends Fragment {
 
-    private RoutineViewModel mViewModel;
     private DatabaseReference firebaseData;
-    private RecyclerView recyclerView;
-
-    public WorkoutRoutinesAdapter adapter;
-
-    public static RoutineFragment newInstance() {
-        return new RoutineFragment();
-    }
+    private RecyclerView recyclerViewRoutines;
+    private WorkoutRoutinesAdapter routineAdapter;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState)
-    {
-
-
-        View rootview =inflater.inflate(R.layout.activity_browsing_routine, container, false);
-        recyclerView = (RecyclerView)  rootview.findViewById(R.id.BrowsingRoutinesRecyclerView);
-        Log.i("routine_fragment","first  stage");
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_browsing_routine, container, false);
 
         firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
+        recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
+        recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recyclerView.setAdapter(adapter);
+        routineAdapter = new WorkoutRoutinesAdapter();
+        recyclerViewRoutines.setAdapter(routineAdapter);
 
-
-
-
-        adapter = new WorkoutRoutinesAdapter(new ArrayList<>(), new WorkoutRoutinesAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Routine workoutRoutine) {
-                // Handle item click
-                // You can pass the selected workoutRoutine object to another activity or fragment for further processing
-                // For example:
-                // Intent intent = new Intent(WorkoutRoutinesActivity.this, WorkoutDetailActivity.class);
-                // intent.putExtra("workoutRoutine", workoutRoutine);
-                // startActivity(intent);
-            }
-        });
         retrieveWorkoutRoutines();
-        return rootview;
 
-
-
+        return view;
     }
 
-
-    public void onViewCreate(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
-
-        // Initialize Firebase
-
-
-        // Set up adapter
-
-
-
-        // Retrieve workout routines data from Firebase
-        //retrieveWorkoutRoutines();
-
-
-
-
-
-
-    }
     private void retrieveWorkoutRoutines() {
-        firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
         firebaseData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Routine> workoutRoutines = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Routine workoutRoutine = snapshot.getValue(Routine.class);
-                    adapter.workoutRoutines.add(workoutRoutine);
-
+                    workoutRoutines.add(workoutRoutine);
                 }
-
-                adapter.notifyDataSetChanged();
-
+                routineAdapter.setRoutines(workoutRoutines);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle database error
+                // Handle any errors
             }
         });
-
-
-
-
-}
+    }
 }

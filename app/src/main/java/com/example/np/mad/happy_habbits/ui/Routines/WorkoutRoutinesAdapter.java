@@ -15,63 +15,56 @@ import com.example.np.mad.happy_habbits.Routine;
 import java.util.List;
 
 // WorkoutRoutinesAdapter.java
-public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.ViewHolder>{
-    List<Routine> workoutRoutines;
-    private OnItemClickListener listener;
+public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.RoutineViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(Routine workoutRoutine);
-    }
+    private List<Routine> routines;
 
-    public WorkoutRoutinesAdapter(List<Routine> workoutRoutines, OnItemClickListener listener) {
-        this.workoutRoutines = workoutRoutines;
-        this.listener = listener;
-    }
-
-    
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewWorkoutRoutineName;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            textViewWorkoutRoutineName = itemView.findViewById(R.id.textViewSelectedRoutineName);
-        }
+    public void setRoutines(List<Routine> routines) {
+        this.routines = routines;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        // Inflate the custom layout
-        View workoutRoutineView = inflater.inflate(R.layout.selected_routine, parent, false);
-
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(workoutRoutineView);
-        return viewHolder;
+    public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.selected_routine, parent, false);
+        return new RoutineViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Get the data model based on position
-        Routine workoutRoutine = workoutRoutines.get(position);
-
-        // Set item views based on your views and data model
-        TextView textViewWorkoutRoutineName = holder.textViewWorkoutRoutineName;
-        textViewWorkoutRoutineName.setText(workoutRoutine.getRoutineNo());
-
-        // Set click listener
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(workoutRoutine);
-            }
-        });
+    public void onBindViewHolder(@NonNull RoutineViewHolder holder, int position) {
+        Routine routine = routines.get(position);
+        holder.bind(routine);
     }
 
     @Override
     public int getItemCount() {
-        return workoutRoutines.size();
+        return routines != null ? routines.size() : 0;
+    }
+
+    public class RoutineViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView textViewDescription;
+        private TextView textViewLikes;
+        private TextView textViewDislikes;
+
+        private TextView textViewTags;
+
+        public RoutineViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewLikes = itemView.findViewById(R.id.text_view_like_count);
+            textViewDislikes = itemView.findViewById(R.id.text_view_dislike_count);
+            textViewTags = itemView.findViewById(R.id.text_view_tags);
+        }
+
+        public void bind(Routine routine) {
+            textViewDescription.setText(routine.getDescription());
+            textViewLikes.setText(String.valueOf(routine.getLikeCount()));
+            textViewDislikes.setText(String.valueOf(routine.getDislikeCount()));
+            textViewTags.setText(String.valueOf(routine.getTags()));
+        }
     }
 }
+
