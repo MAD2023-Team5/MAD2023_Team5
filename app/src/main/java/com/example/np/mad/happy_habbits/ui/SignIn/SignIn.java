@@ -65,8 +65,6 @@ public class SignIn extends Fragment {
 
         Button btnLogin = view.findViewById(R.id.button);
 
-        Button myButton = view.findViewById(R.id.button);
-
         mViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
 
         btnLogin.setOnClickListener(new View.OnClickListener()

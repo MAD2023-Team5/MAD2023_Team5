@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.np.mad.happy_habbits.R;
 
@@ -22,10 +24,28 @@ public class SignUpFragment extends Fragment {
         return new SignUpFragment();
     }
 
+    Button btnLogin, btnRegister, btnCancel;
+    EditText etUsername, etPassword, etEmail;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        View view =  inflater.inflate(R.layout.fragment_sign_up, container, false);
+        etUsername = view.findViewById(R.id.editTextText);
+        etPassword = view.findViewById(R.id.editTextTextPassword2);
+        etEmail = view.findViewById(R.id.editTextTextEmailAddress);
+
+        btnRegister = view.findViewById(R.id.button2);
+        btnCancel = view.findViewById(R.id.button3);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //
+            }
+        });
+
+        return view;
     }
 
     @Override
