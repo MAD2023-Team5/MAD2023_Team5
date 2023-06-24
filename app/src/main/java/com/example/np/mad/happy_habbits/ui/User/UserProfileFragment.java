@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.Routine;
@@ -43,7 +44,6 @@ public class UserProfileFragment extends Fragment {
         fragmentManager= getActivity().getSupportFragmentManager();
         userAdapter = new UserAdapter(fragmentManager);
         recyclerViewUsers.setAdapter(userAdapter);
-
         retrieveUser();
 
         return view;

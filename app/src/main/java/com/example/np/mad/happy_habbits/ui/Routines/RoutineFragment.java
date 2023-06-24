@@ -1,5 +1,6 @@
 package com.example.np.mad.happy_habbits.ui.Routines;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.Routine;
+import com.example.np.mad.happy_habbits.ui.User.UserProfileFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +47,15 @@ public class RoutineFragment extends Fragment {
         fragmentManager= getActivity().getSupportFragmentManager();
         routineAdapter = new WorkoutRoutinesAdapter(fragmentManager);
         recyclerViewRoutines.setAdapter(routineAdapter);
-
+        Button btnUser = (Button) view.findViewById(R.id.btn_user);
+        btnUser.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RoutineFragment.this.getActivity(), UserProfileFragment.class);
+                startActivity(intent);
+            }
+        });
         retrieveWorkoutRoutines();
 
         return view;

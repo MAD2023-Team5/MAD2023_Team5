@@ -19,6 +19,7 @@
     <string name="explore">Explore</string>
     <string name="Explore">Browse fitness personalities and routines made by others!</string>
     <string name="Logout">Log Out</string>
+    <string name="User">View Users</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
