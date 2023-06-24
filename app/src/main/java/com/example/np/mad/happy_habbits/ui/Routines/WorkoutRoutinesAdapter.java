@@ -1,6 +1,8 @@
 package com.example.np.mad.happy_habbits.ui.Routines;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,9 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
     private List<Routine> routines;
 
+
+    private FragmentManager fragmentManager;
+
     public WorkoutRoutinesAdapter(FragmentManager fragmentManager) {
     }
 
@@ -27,6 +32,12 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
         this.routines = routines;
         notifyDataSetChanged();
     }
+
+    public void updateList(List<Routine> list){
+        this.routines = list;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
@@ -37,9 +48,31 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RoutineViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RoutineViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Routine routine = routines.get(position);
         holder.bind(routine);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the clicked routine
+                Routine clickedRoutine = routines.get(position);
+
+                // Create a new instance of RoutineDetailFragment
+                //
+
+                //RoutineDetailFragment fragment = new RoutineDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("routine",routine.getRoutineNo()); // Pass the clicked routine to the fragment
+
+                //fragment.setArguments(bundle);
+
+                // Replace the current fragment with RoutineDetailFragment
+                //fragmentManager.beginTransaction()
+                //.replace(R.id.fragment_container, fragment)
+                //        .addToBackStack(null)
+                //        .commit();ew fragment or activity passing the clickedRoutine information
+            }
+        });
     }
 
     @Override

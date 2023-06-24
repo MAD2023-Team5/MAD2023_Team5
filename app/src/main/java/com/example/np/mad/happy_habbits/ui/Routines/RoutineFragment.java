@@ -47,15 +47,7 @@ public class RoutineFragment extends Fragment {
         fragmentManager= getActivity().getSupportFragmentManager();
         routineAdapter = new WorkoutRoutinesAdapter(fragmentManager);
         recyclerViewRoutines.setAdapter(routineAdapter);
-        Button btnUser = (Button) view.findViewById(R.id.btn_user);
-        btnUser.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RoutineFragment.this.getActivity(), UserProfileFragment.class);
-                startActivity(intent);
-            }
-        });
+
         retrieveWorkoutRoutines();
 
         return view;
@@ -79,4 +71,5 @@ public class RoutineFragment extends Fragment {
             }
         });
     }
+
 }
