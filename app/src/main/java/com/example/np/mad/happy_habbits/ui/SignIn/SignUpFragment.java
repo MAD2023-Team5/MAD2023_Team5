@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -38,56 +40,54 @@ public class SignUpFragment extends Fragment {
     Button btnLogin, btnRegister, btnCancel;
     EditText etUsername, etPassword, etEmail;
 
-    TextView signuppage;
+    TextView signinpage;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_sign_up, container, false);
+        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         etUsername = view.findViewById(R.id.signup_email);
         etPassword = view.findViewById(R.id.signup_password);
-
         btnRegister = view.findViewById(R.id.createbtn);
-        signuppage = view.findViewById(R.id.signup);
+        signinpage = view.findViewById(R.id.login);
 
+        auth = FirebaseAuth.getInstance();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user, passWord;
-                user = etUsername.getText().toString().trim();
-                passWord = etPassword.getText().toString().trim();
+                String user = etUsername.getText().toString().trim();
+                String passWord = etPassword.getText().toString().trim();
 
-                if (user.isEmpty()){
+                if (user.isEmpty()) {
                     etUsername.setError("User cannot be empty!");
+                    return;
                 }
 
-                if (passWord.isEmpty()){
+                if (passWord.isEmpty()) {
                     etPassword.setError("Password cannot be empty!");
-                }else{
-                    auth.createUserWithEmailAndPassword(user,passWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(SignUpFragment.this.getActivity(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(SignUpFragment.this.getActivity(), SignIn.class));
-                            } else{
-                                Toast.makeText(SignUpFragment.this.getActivity(), "Registration Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
+                    return;
                 }
 
-
+                auth.createUserWithEmailAndPassword(user, passWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getContext(), SignIn.class));
+                        } else {
+                            Toast.makeText(getContext(), "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
-        signuppage.setOnClickListener(new View.OnClickListener() {
+        signinpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignUpFragment.this.getActivity(), SignIn.class));
-
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_signin);
             }
         });
 

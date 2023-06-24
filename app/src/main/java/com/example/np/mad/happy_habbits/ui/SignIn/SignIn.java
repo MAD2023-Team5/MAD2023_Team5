@@ -65,21 +65,17 @@ public class SignIn extends Fragment {
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     if (!pass.isEmpty()) {
-                        auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = auth.getCurrentUser();
-                                    if (user != null) {
-                                        String userId = user.getUid();
-                                        // Perform any additional actions after successful login
-                                        Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                                        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-                                        navController.navigate(R.id.navigation_home);
-                                    }
-                                } else {
-                                    Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
-                                }
+                            public void onSuccess(AuthResult authResult) {
+                                Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                                navController.navigate(R.id.navigation_home);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
@@ -93,9 +89,19 @@ public class SignIn extends Fragment {
             }
         });
 
+        signuppage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_signup);
+            }
+        });
+
         return view;
     }
 }
+
+
 
 //
 //    @Override
