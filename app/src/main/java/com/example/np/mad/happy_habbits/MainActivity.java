@@ -66,15 +66,29 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin,R.id.navigation_signin,R.id.navigation_home,R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+
+
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
         //navView.setSelectedItemId(R.id.navigation_routine);
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.navigation_signin  |  destination.getId() == R.id.navigation_signup ) {
+                navView.setVisibility(View.GONE);
+            } else {
+                navView.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+
 
 
         //dat already inside
 
 
     }
+
 }
 
 //    @SuppressLint("ClickableViewAccessibility")

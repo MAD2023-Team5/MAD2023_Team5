@@ -35,12 +35,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+
 public class SignIn extends Fragment {
 
     private FirebaseAuth auth;
     private EditText loginEmail, loginPassword;
     private TextView signuppage;
     private Button loginbtn;
+
 
     public static SignIn newInstance() {
         return new SignIn();
@@ -49,6 +52,8 @@ public class SignIn extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.fragment_signin, container, false);
 
         auth = FirebaseAuth.getInstance();
@@ -56,6 +61,7 @@ public class SignIn extends Fragment {
         loginPassword = view.findViewById(R.id.login_password);
         loginbtn = view.findViewById(R.id.loginbtn);
         signuppage = view.findViewById(R.id.signup);
+
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +105,9 @@ public class SignIn extends Fragment {
 
         return view;
     }
+
+
 }
-
-
 
 //
 //    @Override
