@@ -3,6 +3,7 @@ package com.example.np.mad.happy_habbits.ui.Routines;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.Routine;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 // WorkoutRoutinesAdapter.java
 public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.RoutineViewHolder> {
 
     private List<Routine> routines;
+
+    private List<Routine> completeroutine;
+
+
 
 
     private FragmentManager fragmentManager;
@@ -30,11 +38,61 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
     public void setRoutines(List<Routine> routines) {
         this.routines = routines;
+        Log.i("adapter", String.valueOf(routines.size()));
+
+        notifyDataSetChanged();
+    }
+
+    public void setCompleteroutineRoutine(List<Routine> routines)
+    {
+        this.completeroutine=routines;
+        Log.i("adapter", String.valueOf(completeroutine.size()));
         notifyDataSetChanged();
     }
 
     public void updateList(List<Routine> list){
         this.routines = list;
+        notifyDataSetChanged();
+    }
+
+
+    public void filter(String query) {
+
+
+        routines.clear();
+        Log.i("equal finder",String.valueOf(routines==completeroutine));
+
+        if (query.isEmpty()) {
+            routines.addAll(completeroutine);
+            Log.i("adapter is the ;ist readded", String.valueOf(routines.size()));
+        }
+        else {
+
+            query = query.toLowerCase(Locale.getDefault());
+
+            for (Routine item : completeroutine) {
+                if (item.getUser().getName().toLowerCase(Locale.getDefault()).contains(query)) {
+                    routines.add(item);
+                    Log.i("adapter","addstuff");
+
+                }
+
+                for (String tag: item.getTags())
+                {
+                    if (tag.toLowerCase(Locale.getDefault()).contains(query)) {
+                        routines.add(item);
+                        Log.i("adapter","addstuff");
+                        break;
+                    }
+                }
+
+                if (item.getDescription().toLowerCase(Locale.getDefault()).contains(query))
+                {   Log.i("adapter","addstuff");
+                    routines.add(item);
+
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -55,7 +113,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
             @Override
             public void onClick(View view) {
                 // Get the clicked routine
-                Routine clickedRoutine = routines.get(position);
+
 
                 // Create a new instance of RoutineDetailFragment
                 //

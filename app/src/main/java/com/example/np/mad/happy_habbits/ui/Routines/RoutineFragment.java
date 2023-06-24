@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.np.mad.happy_habbits.R;
@@ -50,6 +51,24 @@ public class RoutineFragment extends Fragment {
 
         retrieveWorkoutRoutines();
 
+
+
+        SearchView searchView = view.findViewById(R.id.searchview);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Perform search operation or desired action with the submitted query
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Perform filtering or updating of search results based on newText
+                routineAdapter.filter(newText);
+                return true;
+            }
+        });
+
         return view;
     }
 
@@ -63,7 +82,12 @@ public class RoutineFragment extends Fragment {
                     workoutRoutines.add(workoutRoutine);
                 }
                 routineAdapter.setRoutines(workoutRoutines);
+
+                List<Routine> workoutRoutines2 = new ArrayList<>();
+                workoutRoutines2.addAll(workoutRoutines);
+                routineAdapter.setCompleteroutineRoutine(workoutRoutines2);
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
