@@ -63,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin,R.id.navigation_home,R.id.navigation_dashboard, R.id.navigation_notifications)
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin,R.id.navigation_signin,R.id.navigation_home,R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        navView.setSelectedItemId(R.id.navigation_routine);
+        //navView.setSelectedItemId(R.id.navigation_routine);
 
 
         //dat already inside
