@@ -5,7 +5,7 @@ import java.util.List;
 public class Routine {
     private int routineNo;
     private List<Sets> setsList;
-    private  User user;
+    private User user;
     private String description;
 
     private List<String> Tags;
