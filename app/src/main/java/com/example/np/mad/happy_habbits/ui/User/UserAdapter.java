@@ -1,5 +1,6 @@
 package com.example.np.mad.happy_habbits.ui.User;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,19 @@ import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.User;
 import com.example.np.mad.happy_habbits.ui.User.UserAdapter;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private List<User> users;
 
+    private FragmentManager fragmentManager;
+
     public UserAdapter(FragmentManager fragmentManager) {
+
+        this.fragmentManager=fragmentManager;
     }
 
     public void setRoutines(List<User> users) {
@@ -29,10 +36,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @NonNull
     @Override
-    public UserAdapter.UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.selected_routine, parent, false);
-        return new UserAdapter.UserViewHolder(view);
+        View view = inflater.inflate(R.layout.selected_users, parent, false);
+        return new UserViewHolder(view);
     }
 
     @Override
@@ -47,21 +54,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
+        private TextView textViewName;
         private TextView textViewEmail;
         private TextView textViewDescription;
         private TextView textViewUserNo;
 
         public UserViewHolder(@NonNull View itemView) {
-            super(itemView);;
+            super(itemView);
+            textViewName = itemView.findViewById(R.id.text_view_name);
             textViewEmail = itemView.findViewById(R.id.text_view_email);
             textViewDescription = itemView.findViewById(R.id.text_view_user_description);
-            textViewUserNo = itemView.findViewById(R.id.text_view_user_no);
+
         }
 
         public void bind(User user) {
+            textViewName.setText(user.getName());
             textViewEmail.setText(user.getEmail());
             textViewDescription.setText(user.getDescription());
-            textViewUserNo.setText(String.valueOf(user.getUserNo()));
         }
     }
 }

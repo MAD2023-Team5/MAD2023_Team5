@@ -70,18 +70,7 @@ public class RoutineFragment extends Fragment {
             }
         });
 
-        // Applying OnClickListener to our Adapter
-        WorkoutRoutinesAdapter.setOnClickListener(new WorkoutRoutinesAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position) {
-                Intent intent = new Intent(RoutineFragment.this, UserProfileFragment.class);
-                // Passing the data to the
-                // User Activity
-                intent.putExtra(NEXT_SCREEN, model);
-                startActivity(intent);
-            }
-            public static final String NEXT_SCREEN = "details_screen";
-        });
+
         return view;
     }
 

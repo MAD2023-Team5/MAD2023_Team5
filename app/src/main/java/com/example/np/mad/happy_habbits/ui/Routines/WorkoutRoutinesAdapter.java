@@ -129,11 +129,11 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                 fragment.setArguments(bundle);
 
                 // Replace the current fragment with RoutineDetailFragment
-                fragmentManager.beginTransaction()
-                .replace(R.id.na, fragment)
-                        .addToBackStack(null)
-                        .commit();
-                //        ew fragment or activity passing the clickedRoutine information
+//                fragmentManager.beginTransaction()
+//                .replace(R.id., fragment)
+//                        .addToBackStack(null)
+//                        .commit();
+//                //        ew fragment or activity passing the clickedRoutine information
             }
         });
     }
