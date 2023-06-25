@@ -79,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 navView.setVisibility(View.VISIBLE);
             }
         });
-
+//          FirebaseDataUploader fd = new FirebaseDataUploader();
+//          fd.oncreate();
 
 
 

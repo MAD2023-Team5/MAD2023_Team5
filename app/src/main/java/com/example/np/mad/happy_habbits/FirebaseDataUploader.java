@@ -9,6 +9,7 @@ import com.example.np.mad.happy_habbits.Routine;
 import com.example.np.mad.happy_habbits.RoutineReaction;
 import com.example.np.mad.happy_habbits.Sets;
 import com.example.np.mad.happy_habbits.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -24,10 +25,14 @@ import java.util.regex.Pattern;
 public class FirebaseDataUploader {
     public FirebaseDataUploader() {}
 
+
     public static void oncreate() {
         // Initialize Firebase
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference rootRef = database.getReference();
+
+
         //gson object to convert classes to gson
         Gson gson = new Gson();
         // Sample User data
@@ -41,6 +46,17 @@ public class FirebaseDataUploader {
         User user8 = new User(8, "yeet@example.com", "password456", "Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you", null, "Rick Astley");
         User user9 = new User(9, "carlos@example.com", "password123", "Fitness enthusiast and outdoor lover", null, "Carlos");
         User user10 = new User(10, "carti@example.com", "password456", "Passionate about healthy living and yoga", null, "Carti");
+
+        auth.createUserWithEmailAndPassword(user1.getEmail(),user1.getPassword());
+        auth.createUserWithEmailAndPassword(user2.getEmail(),user2.getPassword());
+        auth.createUserWithEmailAndPassword(user3.getEmail(),user3.getPassword());
+        auth.createUserWithEmailAndPassword(user4.getEmail(),user4.getPassword());
+        auth.createUserWithEmailAndPassword(user5.getEmail(),user5.getPassword());
+        auth.createUserWithEmailAndPassword(user6.getEmail(),user6.getPassword());
+        auth.createUserWithEmailAndPassword(user7.getEmail(),user7.getPassword());
+        auth.createUserWithEmailAndPassword(user8.getEmail(),user8.getPassword());
+        auth.createUserWithEmailAndPassword(user9.getEmail(),user9.getPassword());
+        auth.createUserWithEmailAndPassword(user10.getEmail(),user10.getPassword());
 
         // Upload User data to Firebase
         DatabaseReference usersRef = rootRef.child("Users");
