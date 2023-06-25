@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_user">
+    app:startDestination="@+id/navigation_routine">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -44,4 +44,12 @@
         android:name="com.example.np.mad.happy_habbits.ui.User.UserProfileFragment"
         android:label="@string/title_activity_user"
         tools:layout="@layout/activity_user_profile" />
+
+    <fragment
+        android:id="@+id/navigation_routine_detail"
+        android:name="com.example.np.mad.happy_habbits.ui.Routines.RoutineFragment"
+        android:label="@string/title_activity_browsing_routine"
+        tools:layout="@layout/routine_detail" />
+
+
 </navigation>

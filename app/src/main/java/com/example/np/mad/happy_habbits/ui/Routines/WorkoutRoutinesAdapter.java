@@ -25,7 +25,11 @@ import java.util.Locale;
 public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.RoutineViewHolder> {
 
     private List<Routine> routines;
+
     private List<Routine> completeroutine;
+
+
+
 
     private FragmentManager fragmentManager;
 
@@ -111,20 +115,20 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                 // Get the clicked routine
 
 
-                // Create a new instance of RoutineFragment
+                // Create a new instance of RoutineDetailFragment
+                //
 
-                RoutineFragment fragment = new RoutineFragment();
+                RoutineDetailFragment fragment = new RoutineDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("routine",routine.getRoutineNo()); // Pass the clicked routine to the fragment
 
                 fragment.setArguments(bundle);
 
-                // Replace the current fragment with RoutineFragment
-//                fragmentManager.beginTransaction()
-//                .replace(R.id., fragment)
-//                        .addToBackStack(null)
-//                        .commit();
-//                //        ew fragment or activity passing the clickedRoutine information
+                // Replace the current fragment with RoutineDetailFragment
+                fragmentManager.beginTransaction()
+                .replace(R.id.navigation_routine_detail, fragment)
+                        .addToBackStack(null)
+                        .commit();//ew fragment or activity passing the clickedRoutine information
             }
         });
     }
@@ -137,23 +141,24 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     public class RoutineViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textViewDescription;
-        private TextView textViewLikes;
-        private TextView textViewDislikes;
+
+//        private TextView textViewLikes;
+//        private TextView textViewDislikes;
 
         private TextView textViewTags;
 
         public RoutineViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewLikes = itemView.findViewById(R.id.text_view_like_count);
-            textViewDislikes = itemView.findViewById(R.id.text_view_dislike_count);
+//            textViewLikes = itemView.findViewById(R.id.text_view_like_count);
+//            textViewDislikes = itemView.findViewById(R.id.text_view_dislike_count);
             textViewTags = itemView.findViewById(R.id.text_view_tags);
         }
 
         public void bind(Routine routine) {
             textViewDescription.setText(routine.getDescription());
-            textViewLikes.setText(String.valueOf(routine.getLikeCount()));
-            textViewDislikes.setText(String.valueOf(routine.getDislikeCount()));
+//            textViewLikes.setText(String.valueOf(routine.getLikeCount()));
+//            textViewDislikes.setText(String.valueOf(routine.getDislikeCount()));
             textViewTags.setText(String.valueOf(routine.getTags()));
         }
     }
