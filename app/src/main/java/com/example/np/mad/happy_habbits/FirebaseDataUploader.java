@@ -33,8 +33,7 @@ public class FirebaseDataUploader {
         DatabaseReference rootRef = database.getReference();
 
 
-        //gson object to convert classes to gson
-        Gson gson = new Gson();
+
         // Sample User data
         User user1 = new User(1, "johndoe@example.com", "password123", "We're no strangers to love You know the rules and so do I", null, "John");
         User user2 = new User(2, "adam@example.com", "password456", "A full commitment's what I'm thinking of You wouldn't get this from any other guy", null, "Adam");
@@ -47,6 +46,7 @@ public class FirebaseDataUploader {
         User user9 = new User(9, "carlos@example.com", "password123", "Fitness enthusiast and outdoor lover", null, "Carlos");
         User user10 = new User(10, "carti@example.com", "password456", "Passionate about healthy living and yoga", null, "Carti");
 
+        // Using firebase auth for authetication
         auth.createUserWithEmailAndPassword(user1.getEmail(),user1.getPassword());
         auth.createUserWithEmailAndPassword(user2.getEmail(),user2.getPassword());
         auth.createUserWithEmailAndPassword(user3.getEmail(),user3.getPassword());
@@ -59,6 +59,7 @@ public class FirebaseDataUploader {
         auth.createUserWithEmailAndPassword(user10.getEmail(),user10.getPassword());
 
         // Upload User data to Firebase
+        //The first two upload would utlise listserners to see if there is any errors.
         DatabaseReference usersRef = rootRef.child("Users");
         usersRef.child( user1.getEmail().replace(".","")).setValue(user1)
                 .addOnSuccessListener(aVoid -> Log.i("Firebase", "User 1 data saved successfully."))
@@ -175,6 +176,7 @@ public class FirebaseDataUploader {
         Sets sets10 = new Sets(routine4,exercise10,7,"120");
 
         // Upload Sets data to Firebase
+        //data is uploaded in a nested manner to get the full overview of the relationships.(plus json no partial key)
         DatabaseReference setsRef = rootRef.child("Sets");
         setsRef.child("routine" + sets1.getRoutine().getRoutineNo()).child("exercise" + sets1.getExercise().getExerciseNo()).setValue(sets1);
         setsRef.child("routine" + sets2.getRoutine().getRoutineNo()).child("exercise" + sets2.getExercise().getExerciseNo()).setValue(sets2);
@@ -223,6 +225,7 @@ public class FirebaseDataUploader {
         return random_list;
     }
 
+    //unneded functions
     private static String jsonConverter(Object object)
     {
 

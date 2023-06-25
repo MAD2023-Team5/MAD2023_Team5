@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signin, R.id.navigation_routine,R.id.navigation_user,R.id.navigation_routine_detail)
+        //creating the bottom navigations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signup, R.id.navigation_routine,R.id.navigation_user,R.id.navigation_routine_exercises)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         //navView.setSelectedItemId(R.id.navigation_routine);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            //for the sign and sign up page the bottom navigation would be hidden.
             if (destination.getId() == R.id.navigation_signin | destination.getId() == R.id.navigation_signup) {
                 navView.setVisibility(View.GONE);
             } else {

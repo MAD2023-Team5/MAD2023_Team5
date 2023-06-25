@@ -52,7 +52,7 @@ public class SignUpFragment extends Fragment {
         signinpage = view.findViewById(R.id.login);
 
         auth = FirebaseAuth.getInstance();
-
+        //utlising firebase auth to create new user.
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

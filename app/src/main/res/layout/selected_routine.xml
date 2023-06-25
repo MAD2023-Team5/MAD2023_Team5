@@ -13,16 +13,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/text_view_like_count"
+        android:id="@+id/text_view_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/text_view_dislike_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/text_view_tags"

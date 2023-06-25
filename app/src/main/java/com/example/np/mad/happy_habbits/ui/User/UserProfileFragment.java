@@ -48,6 +48,8 @@ public class UserProfileFragment extends Fragment {
     private void retrieveUser() {
         firebaseData.addValueEventListener(new ValueEventListener() {
             @Override
+            //get the collection of firebase 'childrens' and convert them to user class apend it to a list
+            //which would then set as the adapter list.
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<User> users = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {

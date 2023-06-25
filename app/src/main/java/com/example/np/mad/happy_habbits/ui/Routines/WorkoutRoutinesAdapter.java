@@ -33,7 +33,8 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     private List<Routine> completeroutine;
 
     private FragmentManager fragmentManager;
-
+    //create an interface to allow onitemclick to be given as a parameter.
+    // This allows for greater resubility of the code
     public interface OnItemClickListener {
         void onItemClick(Routine workoutRoutine);
     }
@@ -63,7 +64,8 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
         notifyDataSetChanged();
     }
 
-
+    // the filter function for the unfininshed search view. Utilise two list ,
+    // one to filter and the other as a master copy
     public void filter(String query) {
 
 
@@ -153,10 +155,15 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
+            //calling the function on bind as it is easier get the routine information.
             public void onClick(View v) {
                 listener.onItemClick(routine);
             }
         });
+
+
+
+
     }
 
     @Override
@@ -173,11 +180,12 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
         private TextView textViewTags;
 
+        private TextView textViewName;
+
         public RoutineViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
-//            textViewLikes = itemView.findViewById(R.id.text_view_like_count);
-//            textViewDislikes = itemView.findViewById(R.id.text_view_dislike_count);
+            textViewName = itemView.findViewById(R.id.text_view_name);
             textViewTags = itemView.findViewById(R.id.text_view_tags);
 
 
@@ -185,9 +193,8 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
         public void bind(Routine routine) {
             textViewDescription.setText(routine.getDescription());
-//            textViewLikes.setText(String.valueOf(routine.getLikeCount()));
-//            textViewDislikes.setText(String.valueOf(routine.getDislikeCount()));
-            textViewTags.setText(String.valueOf(routine.getTags()));
+            textViewName.setText(routine.getUser().getName());
+            textViewTags.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
         }
     }
 }

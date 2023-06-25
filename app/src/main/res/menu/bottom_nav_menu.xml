@@ -6,12 +6,12 @@
     <item
         android:id="@+id/navigation_routine"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:title="@string/routine" />
 
     <item
         android:id="@+id/navigation_user"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/User" />
 
 
 </menu>

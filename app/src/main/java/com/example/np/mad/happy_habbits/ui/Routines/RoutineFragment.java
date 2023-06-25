@@ -53,6 +53,8 @@ public class RoutineFragment extends Fragment {
         recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
         recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentManager= getChildFragmentManager();
+        //create a listener to so that so that user can see futher details about a routine.
+        //create a bumdle to pass the info to the new fragment
         routineAdapter = new WorkoutRoutinesAdapter(fragmentManager, new WorkoutRoutinesAdapter.OnItemClickListener()
         {
 
@@ -83,13 +85,16 @@ public class RoutineFragment extends Fragment {
         return view;
     }
 
+    //Created a search view, however it cause problems, such as the list utilised becoming null
+    //when going to another fragment and coming back.
 
-    @Override
-    public  void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-//        SearchView searchView = view.findViewById(R.id.searchview);
+//
+//    @Override
+//    public  void onCreate( @Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        retrieveWorkoutRoutines();
+//        SearchView searchView = getActivity().findViewById(R.id.searchview);
 //        WorkoutRoutinesAdapter routineAdapters = routineviewmodel.getRoutineAdapter();
 //
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -110,13 +115,15 @@ public class RoutineFragment extends Fragment {
 //                return true;
 //            }
 //        });
+//
+//    }
 
-    }
+
 
 
 
     public  void retrieveWorkoutRoutines() {
-
+        //function to add the neccesary data and pushing it into the adapter.
         firebaseData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -139,10 +146,7 @@ public class RoutineFragment extends Fragment {
         });
     }
 
-    public void onDestroyView() {
-        super.onDestroyView();
 
-    }
 
 
 

@@ -23,6 +23,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     private FragmentManager fragmentManager;
 
+    //contructor.
+
     public UserAdapter(FragmentManager fragmentManager) {
 
         this.fragmentManager=fragmentManager;
@@ -31,6 +33,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void setRoutines(List<User> users) {
         this.users = users;
         notifyDataSetChanged();
+        //call the function notfydarsetchanged so that the changes in data would be reflected
     }
 
     public  List<User> getRoutines()
@@ -43,7 +46,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.activity_user_details, parent, false);
-        return new UserViewHolder(view);
+        return new UserViewHolder(view);//creating a viewholder
     }
 
     @Override

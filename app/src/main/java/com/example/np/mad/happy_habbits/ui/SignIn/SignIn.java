@@ -61,7 +61,8 @@ public class SignIn extends Fragment {
         loginPassword = view.findViewById(R.id.login_password);
         loginbtn = view.findViewById(R.id.loginbtn);
         signuppage = view.findViewById(R.id.signup);
-
+        // using firebase authentication to autheticate users. If else stament utilised to point out the exact problem. For example if the email
+        //or password field is empty or email is invalid format the appropriate response would be given.
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +75,10 @@ public class SignIn extends Fragment {
                         auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
+                                //navigation controller used to navigate between fragments.
                                 Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-                                navController.navigate(R.id.navigation_home);
+                                navController.navigate(R.id.navigation_user);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -98,6 +100,7 @@ public class SignIn extends Fragment {
         signuppage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //navigation controller used to navigate to signup page.
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
                 navController.navigate(R.id.navigation_signup);
             }
