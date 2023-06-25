@@ -25,11 +25,16 @@ import java.util.Locale;
 public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.RoutineViewHolder> {
 
     private List<Routine> routines;
-
+    private View.OnClickListener onClickListener;
     private List<Routine> completeroutine;
 
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
-
+    public interface OnClickListener {
+        void onClick(int position, Routine model);
+    }
 
     private FragmentManager fragmentManager;
 
@@ -115,20 +120,20 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                 // Get the clicked routine
 
 
-                // Create a new instance of RoutineDetailFragment
-                //
+                // Create a new instance of RoutineFragment
 
-                //RoutineDetailFragment fragment = new RoutineDetailFragment();
+                RoutineFragment fragment = new RoutineFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("routine",routine.getRoutineNo()); // Pass the clicked routine to the fragment
 
-                //fragment.setArguments(bundle);
+                fragment.setArguments(bundle);
 
                 // Replace the current fragment with RoutineDetailFragment
-                //fragmentManager.beginTransaction()
-                //.replace(R.id.fragment_container, fragment)
-                //        .addToBackStack(null)
-                //        .commit();ew fragment or activity passing the clickedRoutine information
+                fragmentManager.beginTransaction()
+                .replace(R.id.na, fragment)
+                        .addToBackStack(null)
+                        .commit();
+                //        ew fragment or activity passing the clickedRoutine information
             }
         });
     }

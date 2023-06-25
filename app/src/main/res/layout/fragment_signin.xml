@@ -48,26 +48,26 @@
                 android:textColor="@color/black"/>
 
             <EditText
+                android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/login_password"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_edittext"
-                android:layout_marginTop="40dp"
-                android:padding="8dp"
-                android:hint="Password"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
-            
+                android:hint="Password"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
             <Button
+                android:id="@+id/loginbtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Login"
-                android:id="@+id/loginbtn"
-                android:textSize="18sp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:backgroundTint="@color/Lavender"
-                app:cornerRadius = "20dp"/>
+                android:text="@string/Login"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
             
             <TextView
                 android:layout_width="wrap_content"

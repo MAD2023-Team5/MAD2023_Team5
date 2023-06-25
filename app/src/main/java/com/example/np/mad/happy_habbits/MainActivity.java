@@ -15,9 +15,12 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -61,33 +64,27 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin,R.id.navigation_signin,R.id.navigation_home,R.id.navigation_dashboard, R.id.navigation_notifications)
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signin, R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-
 
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
         //navView.setSelectedItemId(R.id.navigation_routine);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.navigation_signin  |  destination.getId() == R.id.navigation_signup ) {
+            if (destination.getId() == R.id.navigation_signin | destination.getId() == R.id.navigation_signup) {
                 navView.setVisibility(View.GONE);
             } else {
                 navView.setVisibility(View.VISIBLE);
             }
         });
-
-
+    }
 
 
 
         //dat already inside
 
-
-    }
 
 }
 
