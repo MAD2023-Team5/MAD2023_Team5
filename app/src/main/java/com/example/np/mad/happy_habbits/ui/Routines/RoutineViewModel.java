@@ -9,7 +9,14 @@ public class RoutineViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public RoutineViewModel() {
+    private final WorkoutRoutinesAdapter routineAdapter;
+
+
+
+
+
+    public RoutineViewModel(WorkoutRoutinesAdapter routineAdapter) {
+        this.routineAdapter = routineAdapter;
         mText = new MutableLiveData<>();
         // mText.setValue("This is notifications fragment");
     }
@@ -18,4 +25,6 @@ public class RoutineViewModel extends ViewModel {
         return mText;
     }
     // TODO: Implement the ViewModel
+
+    public   WorkoutRoutinesAdapter getRoutineAdapter(){return  routineAdapter;}
 }

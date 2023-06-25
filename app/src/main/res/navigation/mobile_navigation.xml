@@ -37,7 +37,12 @@
         android:id="@+id/navigation_routine"
         android:name="com.example.np.mad.happy_habbits.ui.Routines.RoutineFragment"
         android:label="@string/title_activity_browsing_routine"
-        tools:layout="@layout/activity_browsing_routine" />
+        tools:layout="@layout/activity_browsing_routine" >
+        <action
+            android:id="@+id/action_navigation_routine_to_navigation_routine_detail"
+            app:destination="@id/navigation_routine_detail"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_user"
@@ -47,9 +52,10 @@
 
     <fragment
         android:id="@+id/navigation_routine_detail"
-        android:name="com.example.np.mad.happy_habbits.ui.Routines.RoutineFragment"
+        android:name="com.example.np.mad.happy_habbits.ui.Routines.RoutineDetailFragment"
         android:label="@string/title_activity_browsing_routine"
-        tools:layout="@layout/routine_detail" />
+        tools:layout="@layout/routine_detail"
+        />
 
 
 </navigation>

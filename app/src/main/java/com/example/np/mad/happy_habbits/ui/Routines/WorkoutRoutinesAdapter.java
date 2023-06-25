@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.Routine;
+import com.example.np.mad.happy_habbits.User;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.Locale;
 // WorkoutRoutinesAdapter.java
 public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.RoutineViewHolder> {
 
+    private final OnItemClickListener listener;
     private List<Routine> routines;
 
     private List<Routine> completeroutine;
@@ -33,20 +36,44 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
     private FragmentManager fragmentManager;
 
-    public WorkoutRoutinesAdapter(FragmentManager fragmentManager) {
+
+    public interface OnItemClickListener {
+        void onItemClick(Routine workoutRoutine);
+    }
+    public WorkoutRoutinesAdapter(FragmentManager fragmentManager,OnItemClickListener listener) {
+        this.fragmentManager=fragmentManager;
+
+        this.listener = listener;
     }
 
     public void setRoutines(List<Routine> routines) {
-        this.routines = routines;
+        this.routines=routines;
+        Log.i("changes_adapter", String.valueOf(this.routines.size()));
+
+        notifyDataSetChanged();
+    }
+
+    public  List<Routine> getRoutines()
+    {
+        return this.routines;
+
+    }
+
+    public void setCompleteroutine(List<Routine> routines) {
+        this.completeroutine = routines;
         Log.i("adapter", String.valueOf(routines.size()));
 
         notifyDataSetChanged();
     }
 
+    public  List<Routine> getCompleteroutine()
+    {
+        return this.completeroutine;
+    }
+
     public void setCompleteroutineRoutine(List<Routine> routines)
     {
         this.completeroutine=routines;
-        Log.i("adapter", String.valueOf(completeroutine.size()));
         notifyDataSetChanged();
     }
 
@@ -58,8 +85,6 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
     public void filter(String query) {
 
-
-        routines.clear();
         Log.i("equal finder",String.valueOf(routines==completeroutine));
 
         if (query.isEmpty()) {
@@ -72,7 +97,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
             for (Routine item : completeroutine) {
                 if (item.getUser().getName().toLowerCase(Locale.getDefault()).contains(query)) {
-                    routines.add(item);
+                    this.routines.add(item);
                     Log.i("adapter","addstuff");
 
                 }
@@ -111,24 +136,8 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
         holder.bind(routine);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // Get the clicked routine
-
-
-                // Create a new instance of RoutineDetailFragment
-                //
-
-                RoutineDetailFragment fragment = new RoutineDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("routine",routine.getRoutineNo()); // Pass the clicked routine to the fragment
-
-                fragment.setArguments(bundle);
-
-                // Replace the current fragment with RoutineDetailFragment
-                fragmentManager.beginTransaction()
-                .replace(R.id.navigation_routine_detail, fragment)
-                        .addToBackStack(null)
-                        .commit();//ew fragment or activity passing the clickedRoutine information
+            public void onClick(View v) {
+                listener.onItemClick(routine);
             }
         });
     }
@@ -142,6 +151,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
         private TextView textViewDescription;
 
+
 //        private TextView textViewLikes;
 //        private TextView textViewDislikes;
 
@@ -153,6 +163,8 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 //            textViewLikes = itemView.findViewById(R.id.text_view_like_count);
 //            textViewDislikes = itemView.findViewById(R.id.text_view_dislike_count);
             textViewTags = itemView.findViewById(R.id.text_view_tags);
+
+
         }
 
         public void bind(Routine routine) {

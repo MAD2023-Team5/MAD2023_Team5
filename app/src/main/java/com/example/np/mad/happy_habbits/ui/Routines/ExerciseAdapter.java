@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.np.mad.happy_habbits.Exercise;
 import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.Sets;
 
@@ -18,7 +17,15 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
     private List<Sets> exerciseList;
 
-    public void setExercise(List<Exercise> exercises) {
+    public void setExercise(List<Sets> exercises)
+    {
+        this.exerciseList=exercises;
+        notifyDataSetChanged();
+    }
+
+    public List<Sets> getExercie()
+    {
+        return this.exerciseList;
     }
 
     public ExerciseAdapter() {
