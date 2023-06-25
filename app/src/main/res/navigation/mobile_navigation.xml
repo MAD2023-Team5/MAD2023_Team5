@@ -38,4 +38,10 @@
         android:name="com.example.np.mad.happy_habbits.ui.Routines.RoutineFragment"
         android:label="@string/title_activity_browsing_routine"
         tools:layout="@layout/activity_browsing_routine" />
+
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.example.np.mad.happy_habbits.ui.Routines.RoutineFragment"
+        android:label="@string/title_activity_user"
+        tools:layout="@layout/activity_user_details" />
 </navigation>

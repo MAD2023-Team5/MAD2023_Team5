@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserProfileFragment extends Fragment {
 
@@ -32,12 +33,11 @@ public class UserProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_user_profile, container, false);
+        View view = inflater.inflate(R.layout.activity_user_details, container, false);
 
         firebaseData = FirebaseDatabase.getInstance().getReference("Users");
-        recyclerViewUsers = view.findViewById(R.id.UserProfileRecyclerView);
-        recyclerViewUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentManager= getActivity().getSupportFragmentManager();
+        String username = view.findViewById(R.id.display_name);
+        String useremail = view.findViewById(R.id.display_email);
         userAdapter = new UserAdapter(fragmentManager);
         recyclerViewUsers.setAdapter(userAdapter);
         retrieveUser();

@@ -4,6 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_browsing_routine">BrowsingRoutine</string>
+    <string name="title_activity_user">User Details</string>
     <string name="Welcome">Welcome</string>
     <string name="Username">Username</string>
     <string name="Password">Password</string>
