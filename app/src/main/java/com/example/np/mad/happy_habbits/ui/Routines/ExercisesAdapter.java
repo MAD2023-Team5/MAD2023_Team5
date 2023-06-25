@@ -1,5 +1,6 @@
 package com.example.np.mad.happy_habbits.ui.Routines;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +14,32 @@ import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.Sets;
 
 import java.util.List;
+import java.util.Set;
 
-public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder> {
+public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder> {
 
     private List<Sets> exerciseList;
 
-    public void setExercise(List<Exercise> exercises) {
+    public void setExercise(List<Sets> exercises)
+    {
+        Log.i("exerciseList", String.valueOf(exercises.size()));
+        this.exerciseList=exercises;
+        notifyDataSetChanged();
     }
 
-    public ExerciseAdapter() {
+    public List<Sets> getExercie()
+    {
+        return this.exerciseList;
+    }
+
+    public ExercisesAdapter() {
         this.exerciseList = exerciseList;
     }
 
     @NonNull
     @Override
     public ExerciseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.routine_detail, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_exercises, parent, false);
         return new ExerciseViewHolder(view);
     }
 
@@ -40,8 +51,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
     @Override
     public int getItemCount() {
-        return exerciseList.size();
+        return exerciseList != null ? exerciseList.size() : 0;
     }
+
 
 
     public class ExerciseViewHolder extends RecyclerView.ViewHolder {
@@ -64,4 +76,3 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         }
     }
 }
-
