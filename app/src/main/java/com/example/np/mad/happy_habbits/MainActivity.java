@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean account_exist;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //creating the bottom navigations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signup, R.id.navigation_routine,R.id.navigation_user,R.id.navigation_routine_exercises)
+        // creating the bottom navigations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signup, R.id.navigation_routine, R.id.navigation_user, R.id.navigation_routine_exercises)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 
-
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.navigateUp(navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
         //navView.setSelectedItemId(R.id.navigation_routine);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
@@ -80,20 +80,14 @@ public class MainActivity extends AppCompatActivity {
                 navView.setVisibility(View.VISIBLE);
             }
         });
-
-
-
-
+    }
+}
 
 //          FirebaseDataUploader fd = new FirebaseDataUploader();
 //          fd.oncreate();
 
 
         //dat already inside
-
-
-    }
-}
 
 //    @SuppressLint("ClickableViewAccessibility")
 //    @Override

@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,20 +54,27 @@ public class ExercisesFragment extends Fragment {
 
         Integer routine = getArguments().getInt("routine");
         String child = "routine" + routine;
-        firebaseData = FirebaseDatabase.getInstance().getReference("Sets").child(child);;
+        firebaseData = FirebaseDatabase.getInstance().getReference("Sets").child(child);
         recyclerView = view.findViewById(R.id.exerciseRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ExercisesAdapter();
         recyclerView.setAdapter(adapter);
         getExercisesForRoutine();
-
+//        ((AppCompatActivity)requireActivity()).getSupportActionBar()
+//                .setDisplayHomeAsUpEnabled(false);
 
 
 
 
         return view;
     }
-
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if (item.getItemId() == R.id.navigation_routine_exercises) {
+//            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_routine_to_navigation_routine_exercises);
+//        }
+//        return true;
+//    }
 
     private void getExercisesForRoutine()
     {

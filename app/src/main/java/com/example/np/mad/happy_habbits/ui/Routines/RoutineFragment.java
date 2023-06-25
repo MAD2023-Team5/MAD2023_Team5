@@ -5,16 +5,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -53,8 +56,11 @@ public class RoutineFragment extends Fragment {
         recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
         recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentManager= getChildFragmentManager();
-        //create a listener to so that so that user can see futher details about a routine.
-        //create a bumdle to pass the info to the new fragment
+        //trying to set up up (back) button in fragment, false bool means no up button
+//        ((AppCompatActivity)requireActivity()).getSupportActionBar()
+//                .setDisplayHomeAsUpEnabled(false);
+        //create a listener to so that so that user can see further details about a routine.
+        //create a bundle to pass the info to the new fragment
         routineAdapter = new WorkoutRoutinesAdapter(fragmentManager, new WorkoutRoutinesAdapter.OnItemClickListener()
         {
 
@@ -84,7 +90,13 @@ public class RoutineFragment extends Fragment {
 
         return view;
     }
-
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if (item.getItemId() == R.id.navigation_routine) {
+//            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_routine_to_navigation_routine_exercises);
+//        }
+//        return true;
+//    }
     //Created a search view, however it cause problems, such as the list utilised becoming null
     //when going to another fragment and coming back.
 
@@ -117,10 +129,6 @@ public class RoutineFragment extends Fragment {
 //        });
 //
 //    }
-
-
-
-
 
     public  void retrieveWorkoutRoutines() {
         //function to add the neccesary data and pushing it into the adapter.
