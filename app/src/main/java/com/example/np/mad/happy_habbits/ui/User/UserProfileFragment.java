@@ -28,7 +28,6 @@ public class UserProfileFragment extends Fragment {
     private DatabaseReference firebaseData;
     private RecyclerView recyclerViewUsers;
     private UserAdapter userAdapter;
-
     private FragmentManager fragmentManager;
 
     @Override

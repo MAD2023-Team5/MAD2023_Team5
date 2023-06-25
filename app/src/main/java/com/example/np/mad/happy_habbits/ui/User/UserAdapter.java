@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.User;
-import com.example.np.mad.happy_habbits.ui.User.UserAdapter;
 
 import org.w3c.dom.Text;
 
@@ -38,7 +37,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.selected_users, parent, false);
+        View view = inflater.inflate(R.layout.activity_user_details, parent, false);
         return new UserViewHolder(view);
     }
 
@@ -57,14 +56,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         private TextView textViewName;
         private TextView textViewEmail;
         private TextView textViewDescription;
-        private TextView textViewUserNo;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.text_view_name);
             textViewEmail = itemView.findViewById(R.id.text_view_email);
             textViewDescription = itemView.findViewById(R.id.text_view_user_description);
-
         }
 
         public void bind(User user) {

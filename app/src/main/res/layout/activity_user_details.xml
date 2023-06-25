@@ -21,14 +21,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- LinearLayout to place items vertically-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <!-- LinearLayout to place items horizontally-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name : "
+                android:text="@string/UserDetailsname"
                 android:id="@+id/name"
                 android:layout_margin="10dp"
                 android:textStyle="bold"
@@ -47,15 +45,12 @@
                 android:id="@+id/text_view_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" name display"
                 android:layout_margin="10dp"
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 />
-
         </LinearLayout>
 
-        <!-- LinearLayout to place items horizontally-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +58,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email : "
+                android:text="@string/Useremail"
                 android:id="@+id/email"
                 android:layout_margin="10dp"
                 android:textStyle="bold"
@@ -74,40 +69,12 @@
                 android:id="@+id/text_view_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" email display"
                 android:textColor="@color/black"
                 android:layout_margin="10dp"
                 android:textSize="25sp"
                 />
         </LinearLayout>
 
-        <!-- LinearLayout to place items horizontally-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="User Number : "
-                android:id="@+id/userno"
-                android:layout_margin="10dp"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:textColor="@color/black"
-                />
-            <TextView
-                android:id="@+id/text_view_user_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" number display"
-                android:textColor="@color/black"
-                android:layout_margin="10dp"
-                android:textSize="25sp"
-                />
-        </LinearLayout>
-
-            <!-- LinearLayout to place items horizontally-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="303dp"
@@ -118,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Description : "
+                android:text="@string/Userdescription"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -128,10 +95,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="273dp"
                 android:layout_margin="10dp"
-                android:text=" description display"
                 android:textColor="@color/black"
                 android:textSize="25sp" />
-
         </LinearLayout>
 
     </LinearLayout>

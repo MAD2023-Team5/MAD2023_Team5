@@ -25,16 +25,7 @@ import java.util.Locale;
 public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.RoutineViewHolder> {
 
     private List<Routine> routines;
-    private View.OnClickListener onClickListener;
     private List<Routine> completeroutine;
-
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
-
-    public interface OnClickListener {
-        void onClick(int position, Routine model);
-    }
 
     private FragmentManager fragmentManager;
 
@@ -128,7 +119,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
                 fragment.setArguments(bundle);
 
-                // Replace the current fragment with RoutineDetailFragment
+                // Replace the current fragment with RoutineFragment
 //                fragmentManager.beginTransaction()
 //                .replace(R.id., fragment)
 //                        .addToBackStack(null)
