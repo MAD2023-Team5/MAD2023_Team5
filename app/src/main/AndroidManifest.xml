@@ -16,8 +16,14 @@
             android:name=".ui.User.UserProfileFragment"
             android:exported="false" />
         <activity
+            android:name=".UserDetails"
+            android:exported="false" />
+        <activity
             android:name=".SignUp"
             android:exported="false" />
+        <activity
+            android:name=".ui.SignIn.SignIn"
+            android:exported="true" />
         <activity
             android:name=".BrowsingRoutines"
             android:exported="false" />
