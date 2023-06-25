@@ -33,11 +33,12 @@ public class UserProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_user_details, container, false);
+        View view = inflater.inflate(R.layout.activity_user_profile, container, false);
 
         firebaseData = FirebaseDatabase.getInstance().getReference("Users");
-        String username = view.findViewById(R.id.display_name);
-        String useremail = view.findViewById(R.id.display_email);
+        recyclerViewUsers = view.findViewById(R.id.UserProfileRecyclerView);
+        recyclerViewUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fragmentManager= getActivity().getSupportFragmentManager();
         userAdapter = new UserAdapter(fragmentManager);
         recyclerViewUsers.setAdapter(userAdapter);
         retrieveUser();
