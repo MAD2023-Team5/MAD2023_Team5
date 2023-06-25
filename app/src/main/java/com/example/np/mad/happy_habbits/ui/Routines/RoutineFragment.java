@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.np.mad.happy_habbits.R;
 import com.example.np.mad.happy_habbits.Routine;
+import com.example.np.mad.happy_habbits.ui.User.UserAdapter;
 import com.example.np.mad.happy_habbits.ui.User.UserProfileFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,11 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoutineFragment extends Fragment {
-
+    private RoutineViewModel viewModel;
     private DatabaseReference firebaseData;
     private RecyclerView recyclerViewRoutines;
     private WorkoutRoutinesAdapter routineAdapter;
-
     private FragmentManager fragmentManager;
 
     @Override
@@ -50,7 +51,7 @@ public class RoutineFragment extends Fragment {
         recyclerViewRoutines.setAdapter(routineAdapter);
 
         retrieveWorkoutRoutines();
-
+        viewModel = new ViewModelProvider(requireActivity()).get(RoutineViewModel.class);
 
 
         SearchView searchView = view.findViewById(R.id.searchview);
@@ -69,6 +70,18 @@ public class RoutineFragment extends Fragment {
             }
         });
 
+        // Applying OnClickListener to our Adapter
+        WorkoutRoutinesAdapter.setOnClickListener(new WorkoutRoutinesAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(RoutineFragment.this, UserProfileFragment.class);
+                // Passing the data to the
+                // User Activity
+                intent.putExtra(NEXT_SCREEN, model);
+                startActivity(intent);
+            }
+            public static final String NEXT_SCREEN = "details_screen";
+        });
         return view;
     }
 
@@ -87,7 +100,6 @@ public class RoutineFragment extends Fragment {
                 workoutRoutines2.addAll(workoutRoutines);
                 routineAdapter.setCompleteroutineRoutine(workoutRoutines2);
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

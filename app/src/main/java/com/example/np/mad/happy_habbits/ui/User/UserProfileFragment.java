@@ -1,7 +1,6 @@
 package com.example.np.mad.happy_habbits.ui.User;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,12 +10,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.np.mad.happy_habbits.R;
-import com.example.np.mad.happy_habbits.Routine;
 import com.example.np.mad.happy_habbits.User;
-import com.example.np.mad.happy_habbits.ui.Routines.WorkoutRoutinesAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
