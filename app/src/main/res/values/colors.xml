@@ -8,4 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Lavender">#8692f7</color>
+
+    <color name="primaryTextColor">#5A5A5A</color>
+    <color name="secondaryTextColor">#757575</color>
+    <color name="dividerColor">#BDBDBD</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="accentColor">#FF4081</color>
+
 </resources>
