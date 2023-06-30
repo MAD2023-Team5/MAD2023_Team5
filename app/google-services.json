@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "894881181714",
+    "firebase_url": "https://happy-habbits-default-rtdb.firebaseio.com",
+    "project_id": "happy-habbits",
+    "storage_bucket": "happy-habbits.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894881181714:android:cc0a2ab5891c7b057d28cb",
+        "android_client_info": {
+          "package_name": "sg.edu.np.mad.happyhabit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894881181714-5q5qhpvr4ts35v5j4uo49m965546823a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWwn1fpq2v8l6nrAmfC9zmgwZEEwakang"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894881181714-5q5qhpvr4ts35v5j4uo49m965546823a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
