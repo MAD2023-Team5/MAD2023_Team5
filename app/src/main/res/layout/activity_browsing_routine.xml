@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/background2"
     tools:context=".ui.Routines.RoutineFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,6 +15,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        tools:listitem="@layout/card_view"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/searchview"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,17 +26,20 @@
         android:id="@+id/searchview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
-        android:queryBackground="@android:color/white"
-        android:queryHint="Search Routines"
+        android:iconifiedByDefault="false"
         android:imeOptions="actionDone"
         android:inputType="text"
-        android:iconifiedByDefault="false"
+        android:queryBackground="@android:color/white"
+        android:queryHint="Search Routines"
         app:closeIcon="@drawable/baseline_close_24"
-        app:searchIcon="@drawable/baseline_search_24"
         app:queryBackground="@android:color/white"
-        app:searchHintIcon="@null" />
+        app:searchHintIcon="@null"
+        app:searchIcon="@drawable/baseline_search_24" />
 
 </RelativeLayout>

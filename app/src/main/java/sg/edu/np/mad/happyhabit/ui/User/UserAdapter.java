@@ -3,6 +3,7 @@ package sg.edu.np.mad.happyhabit.ui.User;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,14 +63,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         private TextView textViewEmail;
         private TextView textViewDescription;
 
+        ImageView userImage;
+
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
+            userImage = itemView.findViewById(R.id.userImage);
             textViewName = itemView.findViewById(R.id.text_view_name);
             textViewEmail = itemView.findViewById(R.id.text_view_email);
             textViewDescription = itemView.findViewById(R.id.text_view_user_description);
         }
 
         public void bind(User user) {
+            //userImage.setImageIcon(//add in user image list);
             textViewName.setText(user.getName());
             textViewEmail.setText(user.getEmail());
             textViewDescription.setText(user.getDescription());

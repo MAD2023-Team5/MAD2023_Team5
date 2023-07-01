@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.imageview.ShapeableImageView;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +30,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     private FragmentManager fragmentManager;
     //create an interface to allow onitemclick to be given as a parameter.
     // This allows for greater resubility of the code
+
     public interface OnItemClickListener {
         void onItemClick(Routine workoutRoutine);
     }
@@ -104,7 +107,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     @Override
     public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.selected_routine, parent, false);
+        View view = inflater.inflate(R.layout.card_view, parent, false);
         return new RoutineViewHolder(view);
     }
 
@@ -166,28 +169,44 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
     public class RoutineViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewDescription;
+//        private TextView textViewDescription;
 
 //        private TextView textViewLikes;
 //        private TextView textViewDislikes;
 
-        private TextView textViewTags;
+//        private TextView textViewTags;
 
-        private TextView textViewName;
+//        private TextView textViewName;
+
+        ShapeableImageView titleImage;
+        TextView routineName;
+        TextView exerciseName;
+
+        TextView userName;
 
         public RoutineViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewName = itemView.findViewById(R.id.text_view_name);
-            textViewTags = itemView.findViewById(R.id.text_view_tags);
+//            textViewDescription = itemView.findViewById(R.id.text_view_description);
+//            textViewName = itemView.findViewById(R.id.text_view_name);
+//            textViewTags = itemView.findViewById(R.id.text_view_tags);
+
+            titleImage = itemView.findViewById(R.id.imageview);
+            routineName = itemView.findViewById(R.id.textRoutine);
+            userName = itemView.findViewById(R.id.textUser);
+            exerciseName = itemView.findViewById(R.id.textExercise);
 
 
         }
 
         public void bind(Routine routine) {
-            textViewDescription.setText(routine.getDescription());
-            textViewName.setText(routine.getUser().getName());
-            textViewTags.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
+            //titleImage.setImageIcon(//place image list here);
+//            textViewDescription.setText(routine.getDescription());
+//            textViewName.setText(routine.getUser().getName());
+//            textViewTags.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
+
+            routineName.setText(routine.getDescription());
+            userName.setText(routine.getUser().getName());
+            exerciseName.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
         }
     }
 }
