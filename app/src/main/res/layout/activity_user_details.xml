@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    tools:context=".UserDetails">
+    tools:context=".ui.User.UserProfileFragment">
 
     <androidx.cardview.widget.CardView
         app:cardElevation="10dp"
@@ -14,12 +14,14 @@
         android:layout_margin="10dp"
         app:cardBackgroundColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/card_layout">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_layout">
 
             <ImageView
                 android:layout_margin="10dp"
@@ -33,10 +35,11 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/linear_layout2">
 
                 <TextView
-                    android:id="@+id/textRoutine"
+                    android:id="@+id/text_view_name"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="#000"
@@ -46,7 +49,7 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/textExercise"
+                    android:id="@+id/text_view_email"
                     android:layout_margin="10dp"
                     android:textColor="#000"
                     android:text="Email"
@@ -54,7 +57,7 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/textUser"
+                    android:id="@+id/text_view_description"
                     android:layout_margin="10dp"
                     android:textColor="#000"
                     android:text="Description"
