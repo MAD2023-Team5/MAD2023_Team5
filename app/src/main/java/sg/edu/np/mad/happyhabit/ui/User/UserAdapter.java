@@ -31,7 +31,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void setRoutines(List<User> users) {
         this.users = users;
         notifyDataSetChanged();
-        //call the function notfydarsetchanged so that the changes in data would be reflected
+        //call the function notifydatasetchanged so that the changes in data would be reflected
     }
 
     public  List<User> getRoutines()

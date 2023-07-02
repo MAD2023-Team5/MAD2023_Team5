@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="wrap_content"
-    tools:context=".UserDetails">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         app:cardElevation="10dp"
@@ -32,18 +31,18 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textRoutine"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="Name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="#000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textExercise"
@@ -55,11 +54,11 @@
 
                 <TextView
                     android:id="@+id/textUser"
-                    android:layout_margin="10dp"
-                    android:textColor="#000"
-                    android:text="Description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="52dp"
+                    android:layout_margin="10dp"
+                    android:text="Description"
+                    android:textColor="#000" />
 
             </LinearLayout>
 
