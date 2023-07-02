@@ -11,7 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.imageview.ShapeableImageView;
+
+import android.widget.ImageView;
 
 import java.util.List;
 import java.util.Locale;
@@ -178,7 +179,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
 //        private TextView textViewName;
 
-        ShapeableImageView titleImage;
+        ImageView titleImage;
         TextView routineName;
         TextView exerciseName;
 

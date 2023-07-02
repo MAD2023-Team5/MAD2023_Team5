@@ -17,7 +17,7 @@
             android:resource="@xml/device_owner_receiver" />
 
         <receiver
-            android:name=".MyDeviceAdminReciever"
+            android:name="sg.edu.np.mad.happyhabit.MyDeviceAdminReciever"
             android:description="@string/app_name"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_DEVICE_ADMIN"
@@ -32,7 +32,7 @@
         </receiver>
 
         <activity
-            android:name=".MainActivity"
+            android:name="sg.edu.np.mad.happyhabit.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
