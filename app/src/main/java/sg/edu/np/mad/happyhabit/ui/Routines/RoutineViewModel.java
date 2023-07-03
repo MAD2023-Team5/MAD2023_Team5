@@ -4,27 +4,48 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
+import sg.edu.np.mad.happyhabit.Routine;
+
 public class RoutineViewModel extends ViewModel {
 
 
-    private final MutableLiveData<String> mText;
 
-    private final WorkoutRoutinesAdapter routineAdapter;
-
-
+    private  List<Routine> routinelist;
+    private  List<Routine> compeleteroutinelist;
 
 
 
-    public RoutineViewModel(WorkoutRoutinesAdapter routineAdapter) {
-        this.routineAdapter = routineAdapter;
-        mText = new MutableLiveData<>();
+
+
+
+
+
+    public RoutineViewModel(List<Routine> routinelist,List<Routine> croutinelist) {
+        this.routinelist=  routinelist;
+        this.compeleteroutinelist=  routinelist;
+
         // mText.setValue("This is notifications fragment");
     }
+    public  RoutineViewModel()
+    {
 
-    public LiveData<String> getText() {
-        return mText;
     }
-    // TODO: Implement the ViewModel
 
-    public   WorkoutRoutinesAdapter getRoutineAdapter(){return  routineAdapter;}
+    public List<Routine> getRoutinelist() {
+        return routinelist;
+    }
+
+    public void setRoutinelist(List<Routine> routinelist) {
+        this.routinelist = routinelist;
+    }
+
+    public List<Routine> getCompeleteroutinelist() {
+        return compeleteroutinelist;
+    }
+
+    public void setCompeleteroutinelist(List<Routine> compeleteroutinelist) {
+        this.compeleteroutinelist = compeleteroutinelist;
+    }
 }
