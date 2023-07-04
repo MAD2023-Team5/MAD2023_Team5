@@ -36,10 +36,9 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
         void onItemClick(Routine workoutRoutine);
     }
 
-    public WorkoutRoutinesAdapter(FragmentManager fragmentManager,List<Routine> routine,List<Routine> completeroutine,OnItemClickListener listener) {
+    public WorkoutRoutinesAdapter(FragmentManager fragmentManager,OnItemClickListener listener) {
         this.fragmentManager=fragmentManager;
-        this.routines=routine;
-        this.completeroutine=completeroutine;
+
 
         this.listener = listener;
     }
@@ -76,41 +75,40 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     public void filter(String query) {
 
 
-//        routines.clear();
-//        Log.i("equal finder",String.valueOf(routines==completeroutine));
-//
-//        if (query.isEmpty()) {
-//            routines.addAll(completeroutine);
-//            Log.i("adapter readded", String.valueOf(routines.size()));
-//        }
-//        else {
-//
-//            query = query.toLowerCase(Locale.getDefault());
-//
-//            for (Routine item : completeroutine) {
-//                if (item.getUser().getName().toLowerCase(Locale.getDefault()).contains(query)) {
-//                    routines.add(item);
-//                    Log.i("adapter","addstuff");
-//
-//                }
-//
-//                for (String tag: item.getTags())
-//                {
-//                    if (tag.toLowerCase(Locale.getDefault()).contains(query)) {
-//                        routines.add(item);
-//                        Log.i("adapter","addstuff");
-//                        break;
-//                    }
-//                }
-//
-//                if (item.getDescription().toLowerCase(Locale.getDefault()).contains(query))
-//                {   Log.i("adapter","addstuff");
-//                    routines.add(item);
-//
-//                }
-//            }
-//        }
-//        notifyDataSetChanged();
+        routines.clear();
+        Log.i("equal finder",String.valueOf(routines==completeroutine));
+
+        if (query.isEmpty()) {
+            routines.addAll(completeroutine);
+            Log.i("adapter readded", String.valueOf(routines.size()));
+        }
+        else {
+
+            query = query.toLowerCase(Locale.getDefault());
+
+            for (Routine item : completeroutine) {
+                if (item.getUser().getName().toLowerCase(Locale.getDefault()).contains(query)) {
+                    routines.add(item);
+                    Log.i("adapter","addstuff");
+
+                }
+
+                for (String tag: item.getTags())
+                {
+                    if (tag.toLowerCase(Locale.getDefault()).contains(query)) {
+                        routines.add(item);
+                        Log.i("adapter","addstuff");
+                        break;
+                    }
+                }
+
+                if (item.getDescription().toLowerCase(Locale.getDefault()).contains(query))
+                {   Log.i("adapter","addstuff");
+                    routines.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
 

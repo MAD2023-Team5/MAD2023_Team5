@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55879a5d-6b37-4e99-bb5a-1930a213e08e" name="Changes" comment="Add the image file">
+    <list default="true" id="55879a5d-6b37-4e99-bb5a-1930a213e08e" name="Changes" comment="Adding the gradle files">
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" afterDir="false" />
@@ -175,7 +175,21 @@
       <option name="project" value="LOCAL" />
       <updated>1688452107334</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Adding the gradle files">
+      <created>1688472886222</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688472886222</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Adding the gradle files">
+      <created>1688472937573</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688472937573</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +206,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="SOLVED THE PROBLEM OF CHANGING ORIENTATION OF APP WHICH CAUSES THE APP TO GO BACK TO PREVIOUS FRAGMENT. hOW TO IMPLEMENT SEARCH VIEW" />
     <MESSAGE value="Add the image file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add the image file" />
+    <MESSAGE value="Adding the gradle files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding the gradle files" />
   </component>
 </project>

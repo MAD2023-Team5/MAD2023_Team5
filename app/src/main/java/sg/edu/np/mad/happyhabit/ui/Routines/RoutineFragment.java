@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,10 @@ public class RoutineFragment extends Fragment {
     private RoutineViewModel viewModel;
 
     private static final String STATE_ID = "id";
+
+    private static final String ROUTINE="routine_list";
     private static final String STATE_ITEMS = "items";
+
 
     private DatabaseReference firebaseData;
     private RecyclerView recyclerViewRoutines;
@@ -46,17 +50,58 @@ public class RoutineFragment extends Fragment {
     private RoutineViewModel routineviewmodel;
     private  SearchView searchView;
 
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_browsing_routine, container, false);
+
+
 
         firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
         recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
         recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentManager= getChildFragmentManager();
         routineviewmodel=new RoutineViewModel();
-        routineAdapter = retrieveWorkoutRoutines();
+
+
+        routineAdapter = new WorkoutRoutinesAdapter(fragmentManager, new WorkoutRoutinesAdapter.OnItemClickListener()
+        {
+
+
+            @Override
+            public void onItemClick(Routine workoutRoutine)
+            {
+                ExercisesFragment fragment = new ExercisesFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("routine", workoutRoutine.getRoutineNo()); // Pass the clicked routine to the fragment
+                fragment.setArguments(bundle);
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.action_navigation_routine_to_navigation_routine_exercises,bundle);
+
+
+
+
+            }
+        });
+
+
+        routineAdapter.setRoutines(new ArrayList<Routine>());
+        routineAdapter.setCompleteroutineRoutine(new ArrayList<Routine>());
+        if (savedInstanceState!=null)
+        {
+            Log.i("bro u here","here");
+            routineAdapter.setCompleteroutineRoutine((List<Routine>) savedInstanceState.getSerializable("routine_list"));
+            routineAdapter.setCompleteroutineRoutine((List<Routine>) savedInstanceState.getSerializable("routine_list"));
+        }
+        else{
+        retrieveWorkoutRoutines();
+        }
+        recyclerViewRoutines.setAdapter(routineAdapter);
+
 
         SearchView searchView = view.findViewById(R.id.searchview);
 
@@ -71,7 +116,7 @@ public class RoutineFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 // Perform filtering or updating of search results based on newText
 
-                //HroutineAdapter.filter("HELLO");
+                routineAdapter.filter(newText);
 
                 return true;
             }
@@ -99,15 +144,15 @@ public class RoutineFragment extends Fragment {
         // Save our own state now
         outState.putInt(STATE_ID,1);
         outState.putSerializable("routine_list", (Serializable) routineAdapter.getRoutines());
-        outState.putSerializable("complete_list", (Serializable) routineAdapter.getRoutines());
-        Log.i(STATE_ID, String.valueOf(outState.getInt(STATE_ID)));
+        outState.putSerializable("complete_list", (Serializable) routineAdapter.getCompleteroutineRoutines());
+        Log.i(STATE_ID+"hello", String.valueOf(((List<Routine>)outState.getSerializable("routine_list")).size()));
     }
 
 
 
 
 
-    public  WorkoutRoutinesAdapter retrieveWorkoutRoutines() {
+    public  void retrieveWorkoutRoutines() {
         //function to add the neccesary data and pushing it into the adapter.
         firebaseData.addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,26 +164,11 @@ public class RoutineFragment extends Fragment {
                 }
                 List<Routine> workoutRoutines2 = new ArrayList<>();
                 workoutRoutines2.addAll(workoutRoutines);
-                routineAdapter = new WorkoutRoutinesAdapter(fragmentManager,workoutRoutines,workoutRoutines2, new WorkoutRoutinesAdapter.OnItemClickListener()
-                {
+                Log.i("List adder","goes in");
+                routineAdapter.setRoutines(workoutRoutines);
+                routineAdapter.setCompleteroutineRoutine(workoutRoutines2);
 
 
-                    @Override
-                    public void onItemClick(Routine workoutRoutine)
-                    {
-                        ExercisesFragment fragment = new ExercisesFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("routine", workoutRoutine.getRoutineNo()); // Pass the clicked routine to the fragment
-                        fragment.setArguments(bundle);
-                        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-                        navController.navigate(R.id.action_navigation_routine_to_navigation_routine_exercises,bundle);
-
-
-
-
-                    }
-                });
-                recyclerViewRoutines.setAdapter(routineAdapter);
 
 
             }
@@ -148,7 +178,7 @@ public class RoutineFragment extends Fragment {
                 // Handle any errors
             }
         });
-        return  routineAdapter;
+
     }
 
 
