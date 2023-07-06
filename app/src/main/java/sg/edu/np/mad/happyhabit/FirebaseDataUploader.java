@@ -16,7 +16,7 @@ public class FirebaseDataUploader {
     public FirebaseDataUploader() {}
 
 
-    public static void oncreate() {
+    public static void onCreate() {
         // Initialize Firebase
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -36,7 +36,7 @@ public class FirebaseDataUploader {
         User user9 = new User(9, "carlos@example.com", "password123", "Fitness enthusiast and outdoor lover", null, "Carlos");
         User user10 = new User(10, "carti@example.com", "password456", "Passionate about healthy living and yoga", null, "Carti");
 
-//        // Using firebase auth for authetication
+//        // Using firebase auth for authentication
 //        auth.createUserWithEmailAndPassword(user1.getEmail(),user1.getPassword());
 //        auth.createUserWithEmailAndPassword(user2.getEmail(),user2.getPassword());
 //        auth.createUserWithEmailAndPassword(user3.getEmail(),user3.getPassword());
@@ -194,7 +194,7 @@ public class FirebaseDataUploader {
 //        Log.i("FIREBASE","Sample data uploaded to Firebase.");
     }
 
-    public static void onupdate()
+    public static void onUpdate()
     {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -202,7 +202,7 @@ public class FirebaseDataUploader {
         rootRef.removeValue()
                 .addOnSuccessListener(aVoid -> Log.i("onupdate!!","succefully deleted"))
                 .addOnFailureListener(e -> Log.i("onupdate!!","Failed to delete data: " + e.getMessage()));
-        oncreate();
+        onCreate();
     }
     public static List<String> generateRandomTags()
     {
