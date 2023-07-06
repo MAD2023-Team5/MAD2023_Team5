@@ -1,5 +1,7 @@
 package sg.edu.np.mad.happyhabit;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
     public BottomNavigationView navView;
 
+    public SharedPreferences sharedPreferences;
+    public SharedPreferences.Editor editor;
+
+    @Override
+    public SharedPreferences getPreferences(int mode) {
+        return super.getPreferences(mode);
+    }
+
     public boolean account_exist;
 
     @Override
@@ -53,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         FirebaseDataUploader Fd = new FirebaseDataUploader();
+
+
+
         Log.i(title, "Create Login Page");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

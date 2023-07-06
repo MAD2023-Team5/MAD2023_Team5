@@ -2,6 +2,8 @@ package sg.edu.np.mad.happyhabit.ui.SignIn;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,12 +25,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import sg.edu.np.mad.happyhabit.R;
 
 public class SignInFragment extends Fragment {
 
     private FirebaseAuth auth;
+
+
     private EditText loginEmail, loginPassword;
     private TextView signuppage;
     private Button loginbtn;
@@ -67,6 +72,12 @@ public class SignInFragment extends Fragment {
                                 //navigation controller used to navigate between fragments.
                                 Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+
+
+                                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("email",email);
+                                editor.apply();
                                 navController.navigate(R.id.navigation_routine);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -97,6 +108,8 @@ public class SignInFragment extends Fragment {
 
         return view;
     }
+
+
 
 
 }

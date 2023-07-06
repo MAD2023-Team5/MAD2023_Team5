@@ -2,6 +2,8 @@ package sg.edu.np.mad.happyhabit.ui.Routines;
 
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -66,9 +68,14 @@ public class RoutineFragment extends Fragment {
         recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentManager= getChildFragmentManager();
         routineviewmodel=new RoutineViewModel();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        String email = sharedPref.getString("email","none");
 
 
-        routineAdapter = new WorkoutRoutinesAdapter(fragmentManager, new WorkoutRoutinesAdapter.OnItemClickListener()
+
+
+        routineAdapter = new WorkoutRoutinesAdapter(fragmentManager, email,new WorkoutRoutinesAdapter.OnItemClickListener()
         {
 
 

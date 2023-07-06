@@ -1,6 +1,7 @@
 package sg.edu.np.mad.happyhabit.ui.Routines;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import sg.edu.np.mad.happyhabit.R;
 import sg.edu.np.mad.happyhabit.Routine;
+import sg.edu.np.mad.happyhabit.RoutineReaction;
+import sg.edu.np.mad.happyhabit.User;
 
 public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutinesAdapter.RoutineViewHolder> {
 
@@ -31,13 +43,25 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     private FragmentManager fragmentManager;
     //create an interface to allow onitemclick to be given as a parameter.
     // This allows for greater resubility of the code
+    private String email;
+
+
+
+    public String getemail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public interface OnItemClickListener {
         void onItemClick(Routine workoutRoutine);
     }
 
-    public WorkoutRoutinesAdapter(FragmentManager fragmentManager,OnItemClickListener listener) {
+    public WorkoutRoutinesAdapter(FragmentManager fragmentManager,String email,OnItemClickListener listener) {
         this.fragmentManager=fragmentManager;
+        this.email=email;
 
 
         this.listener = listener;
@@ -124,39 +148,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     public void onBindViewHolder(@NonNull RoutineViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Routine routine = routines.get(position);
         holder.bind(routine);
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Get the clicked routine
-//
-//
-//                // Create a new instance of RoutineDetailFragment
-//                //
-//
-//                ExercisesFragment fragment = new ExercisesFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("routine",routine.getRoutineNo()); // Pass the clicked routine to the fragment
-//
-//                fragment.setArguments(bundle);
-//
-//                // Replace the current fragment with RoutineDetailFragment
-//                fragmentManager.beginTransaction()
-//                .replace(R.id.navigation_routine_detail, fragment)
-//                        .addToBackStack(null)
-//                        .commit();//ew fragment or activity passing the clickedRoutine information
-//            }
-//        });
 
-//        holder.textViewDescription.setText(routine.getDescription());
-//
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Handle routine item click
-//                // Open ExercisesFragment and pass the routine information
-//                ((BrowsingRoutines) view.getContext()).openExercisesFragment(routine);
-//            }
-//        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +185,9 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
         TextView userName;
 
+
+        ImageView filledDislikeImageView,blankDislikeImageView,filledLikeImageView,blankLikeImageView;
+
         public RoutineViewHolder(@NonNull View itemView) {
             super(itemView);
 //            textViewDescription = itemView.findViewById(R.id.text_view_description);
@@ -204,6 +199,10 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
             userName = itemView.findViewById(R.id.textUser);
             exerciseName = itemView.findViewById(R.id.textExercise);
 
+            blankDislikeImageView=itemView.findViewById(R.id.blank_dislike);
+            filledDislikeImageView=itemView.findViewById(R.id.fill_dislike);
+            filledLikeImageView=itemView.findViewById(R.id.filllike);
+            blankLikeImageView=itemView.findViewById(R.id.blanklike);
 
         }
 
@@ -216,6 +215,149 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
             routineName.setText(routine.getDescription());
             userName.setText(routine.getUser().getName());
             exerciseName.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
+
+            final TaskCompletionSource<User> tcs = new TaskCompletionSource();
+
+            DatabaseReference firebaseData=FirebaseDatabase.getInstance().getReference("Users").child(email.replace(".",""));
+            filledLikeImageView.setVisibility(View.GONE);
+            firebaseData.addListenerForSingleValueEvent(new ValueEventListener() {
+                User user = new User();
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    tcs.setResult(dataSnapshot.getValue(User.class));
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle any errors
+                    tcs.setException(databaseError.toException());
+                }
+
+
+            });
+
+            tcs.getTask().addOnSuccessListener(user -> {
+
+
+                String key = "routine" + routine.getRoutineNo() + "_user" + user.getUserNo();
+                Log.i("LIKEDISLIKE","key");
+                DatabaseReference reactionRef = FirebaseDatabase.getInstance().getReference("Routine_Reactions").child(key);
+                reactionRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            boolean liked = snapshot.child("isliked").getValue(Boolean.class);
+                            boolean disliked = snapshot.child("isdisliked").getValue(Boolean.class);
+
+                            if (liked) {
+                                blankLikeImageView.setVisibility(View.GONE);
+                                filledLikeImageView.setVisibility(View.VISIBLE);
+                            } else {
+                                blankLikeImageView.setVisibility(View.VISIBLE);
+                                filledLikeImageView.setVisibility(View.GONE);
+                            }
+
+                            if (disliked) {
+                                blankDislikeImageView.setVisibility(View.GONE);
+                                filledDislikeImageView.setVisibility(View.VISIBLE);
+                            } else {
+                                blankDislikeImageView.setVisibility(View.VISIBLE);
+                                filledDislikeImageView.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Handle database error if needed
+                    }
+                });
+
+                blankDislikeImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        // Update the Firebase database with the disliked status
+                        updateReactionStatus(key, user, routine, false, true);
+
+
+                        blankDislikeImageView.setVisibility(View.GONE);
+                        filledDislikeImageView.setVisibility(View.VISIBLE);
+                        blankLikeImageView.setVisibility(View.VISIBLE);
+                        filledLikeImageView.setVisibility(View.GONE);
+
+                    }
+                });
+
+                filledDislikeImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Update the Firebase database with the disliked status
+                        updateReactionStatus(key, user, routine, false, false);
+
+
+                        blankDislikeImageView.setVisibility(View.VISIBLE);
+                        filledDislikeImageView.setVisibility(View.GONE);
+
+                    }
+                });
+
+                blankLikeImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Update the Firebase database with the disliked status
+                        updateReactionStatus(key, user, routine, true, false);
+
+
+                        blankDislikeImageView.setVisibility(View.VISIBLE);
+                        filledDislikeImageView.setVisibility(View.GONE);
+                        blankLikeImageView.setVisibility(View.GONE);
+                        filledLikeImageView.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                filledLikeImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Update the Firebase database with the disliked status
+                        updateReactionStatus(key, user, routine, false, false);
+
+
+                        blankLikeImageView.setVisibility(View.VISIBLE);
+                        filledLikeImageView.setVisibility(View.GONE);
+                    }
+                });
+            }).addOnFailureListener(e ->
+            {
+                Log.i("Exeption",e.getMessage());
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
+    }
+
+    private void updateReactionStatus(String key, User user, Routine routine, boolean like, boolean dislike) {
+        RoutineReaction rt = new RoutineReaction(user,routine,like,dislike);
+        FirebaseDatabase.getInstance().getReference("Routine_Reactions").child(key).setValue(rt);
+
+        Log.i("LIKE_DISLIKE","upload");
+
+
     }
 }
