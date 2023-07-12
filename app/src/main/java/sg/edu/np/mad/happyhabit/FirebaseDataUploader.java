@@ -133,6 +133,17 @@ public class FirebaseDataUploader {
         Exercise exercise8 = new Exercise(8, "Jumping Jacks");
         Exercise exercise9 = new Exercise(9, "High Knees");
         Exercise exercise10 = new Exercise(10, "Cobra Stretch");
+        exercise1.setImage("pushup");
+        exercise2.setImage("pushup");
+        exercise3.setImage("pushup");
+        exercise4.setImage("pushup");
+        exercise5.setImage("pushup");
+
+        exercise6.setImage("legraise");
+        exercise7.setImage("legraise");
+        exercise8.setImage("legraise");
+        exercise9.setImage("legraise");
+        exercise10.setImage("legraise");
 
 
 

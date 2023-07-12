@@ -4,6 +4,16 @@ public class Exercise {
     private int exerciseNo;
     private String name;
 
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Exercise() {
         // Default constructor required for Firebase
     }

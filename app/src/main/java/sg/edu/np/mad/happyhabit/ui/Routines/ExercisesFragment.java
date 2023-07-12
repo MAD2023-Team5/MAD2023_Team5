@@ -84,7 +84,7 @@ public class ExercisesFragment extends Fragment {
                     Sets workoutRoutine = snapshot.getValue(Sets.class);
                     workoutRoutines.add(workoutRoutine);
                 }
-                adapter.setExercise(workoutRoutines);
+                adapter.setExercise(workoutRoutines,getContext());
 
 
             }

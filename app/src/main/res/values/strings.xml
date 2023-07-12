@@ -128,4 +128,5 @@
     <string name="title_activity_browsing_users">Personalities\n</string>
     <string name="routine">Routine\n</string>
     <string name="admin_receiver_status_enabled">HELLO WORLD\n</string>
+    <string name="start">START</string>
 </resources>

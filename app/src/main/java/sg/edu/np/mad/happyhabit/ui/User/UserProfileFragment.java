@@ -47,6 +47,7 @@ public class UserProfileFragment extends Fragment {
         recyclerViewUsers.setAdapter(userAdapter);
         retrieveUser();
 
+
         return view;
     }
 
