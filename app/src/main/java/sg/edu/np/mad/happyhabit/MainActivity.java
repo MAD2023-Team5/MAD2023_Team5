@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         FirebaseDataUploader Fd = new FirebaseDataUploader();
-        Fd.onupdate();
+        Fd.onUpdate();
 
 
         Log.i(title, "Create Login Page");
