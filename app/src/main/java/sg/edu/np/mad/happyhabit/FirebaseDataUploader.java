@@ -1,5 +1,6 @@
 package sg.edu.np.mad.happyhabit;
 
+import android.media.Image;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,8 +28,8 @@ public class FirebaseDataUploader {
         // Initialize Firebase Cloud Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-//
-//        // Sample User data
+
+        // Sample User data
         User user1 = new User(1, "johndoe@example.com", "password123", "We're no strangers to love You know the rules and so do I", null, "John");
         User user2 = new User(2, "adam@example.com", "password456", "A full commitment's what I'm thinking of You wouldn't get this from any other guy", null, "Adam");
         User user3 = new User(3, "raycis@example.com", "password123", "I just wanna tell you how I'm feeling Gotta make you understand", null, "Ray Cis");
@@ -75,10 +76,9 @@ public class FirebaseDataUploader {
 //
 //        usersRef.child(user9.getEmail().replace(".","")).setValue(user9);
 //        usersRef.child(user10.getEmail().replace(".","")).setValue(user10);
-//
-//        // Sample Routine data
-//
-//
+
+
+        // Sample Routine data
         Routine routine1 = new Routine(1,user2,"Fitness routine for muscle strength",generateRandomTags());
         Routine routine2 = new Routine(2, user2, "Yoga Flow",generateRandomTags());
         Routine routine3 = new Routine(3,user2,"Fitness routine for muscle strength",generateRandomTags());
@@ -86,13 +86,12 @@ public class FirebaseDataUploader {
         Routine routine5 = new Routine(5,user2,"Fitness routine for muscle strength",generateRandomTags());
         Routine routine6 = new Routine(6, user2, "Yoga Flow",generateRandomTags());
 
-
         Routine routine7 = new Routine(7,user4,"Fitness routine for muscle strength",generateRandomTags());
         Routine routine8 = new Routine(8, user4, "Yoga Flow",generateRandomTags());
         Routine routine9 = new Routine(9,user4,"Fitness routine for muscle strength",generateRandomTags());
         Routine routine10 = new Routine(10, user4, "Yoga Flow",generateRandomTags());
-//
-//
+
+
 //        // Upload Routine data to Firebase
 //        DatabaseReference routinesRef = rootRef.child("Routines");
 //        routinesRef.child("routine"+routine1.getRoutineNo()).setValue(routine1);
@@ -109,24 +108,19 @@ public class FirebaseDataUploader {
 //
 //        routinesRef.child("routine"+routine9.getRoutineNo()).setValue(routine9);
 //        routinesRef.child("routine"+routine10.getRoutineNo()).setValue(routine10);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//        // Sample Exercise data
 
+        // Sample Image data
+        StorageReference images = storageReference.child("Images");
+        StorageReference image1 = images.child("lunges.jpg");
+        StorageReference image2 = images.child("pushup.jpg");
+        StorageReference image3 = images.child("logo.jpg");
+
+        // Sample Video data
+        StorageReference videos = storageReference.child("Videos");
+//        StorageReference video1 = images.child("pushup.jpg");
+//        StorageReference video2 = images.child("pushup2.jpg");
+
+        // Sample Exercise data
         Exercise exercise1 = new Exercise(1, "Push-ups");
         Exercise exercise2 = new Exercise(2, "Mountain Climbers");
         Exercise exercise3 = new Exercise(3, "Sit Up");
@@ -138,8 +132,8 @@ public class FirebaseDataUploader {
         Exercise exercise9 = new Exercise(9, "High Knees");
         Exercise exercise10 = new Exercise(10, "Cobra Stretch");
 
-//
-//
+
+
 //        // Upload Exercise data to Firebase
 //        DatabaseReference exercisesRef = rootRef.child("Exercises");
 //        exercisesRef.child("exercise"+exercise1.getExerciseNo()).setValue(exercise1);
@@ -152,10 +146,10 @@ public class FirebaseDataUploader {
 //        exercisesRef.child("exercise"+exercise8.getExerciseNo()).setValue(exercise8);
 //        exercisesRef.child("exercise"+exercise9.getExerciseNo()).setValue(exercise9);
 //        exercisesRef.child("exercise"+exercise10.getExerciseNo()).setValue(exercise10);
-//
-//
-//
-//
+
+
+
+
 
         // Sample Sets data
         Sets sets1 = new Sets(routine7,exercise3,1,10);
