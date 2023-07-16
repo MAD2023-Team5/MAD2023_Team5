@@ -16,7 +16,7 @@
         android:id="@+id/navigation_signup"
         android:name="sg.edu.np.mad.happyhabit.ui.SignIn.SignUpFragment"
         android:label="@string/title_signin"
-        tools:layout="@layout/activity_sign_up" />
+        tools:layout="@layout/fragment_sign_up" />
 
     <fragment
         android:id="@+id/navigation_routine"
@@ -40,6 +40,13 @@
         android:name="sg.edu.np.mad.happyhabit.ui.Routines.ExercisesFragment"
         android:label="@string/title_activity_browsing_routine"
         tools:layout="@layout/fragment_exercises"
+        />
+
+    <fragment
+        android:id="@+id/navigation_profile_page"
+        android:name="sg.edu.np.mad.happyhabit.ui.Profile.ProfileFragment"
+        android:label="Profile Page"
+        tools:layout="@layout/fragment_profile_container"
         />
 
 

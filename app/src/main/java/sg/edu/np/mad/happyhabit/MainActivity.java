@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 ////            setSupportActionBar(toolbar);
 
         // creating the bottom navigations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signup, R.id.navigation_routine, R.id.navigation_user, R.id.navigation_routine_exercises)
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signup, R.id.navigation_routine, R.id.navigation_user, R.id.navigation_routine_exercises, R.id.navigation_profile_page)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 
