@@ -6,6 +6,8 @@ public class Exercise {
 
     private String image;
 
+
+
     public String getImage() {
         return image;
     }
@@ -41,16 +43,6 @@ public class Exercise {
     }
 
 
-    public void read_database()
-    {
-
-        //convert class to database//
-    }
-    public void write_database()
-    {
 
 
-
-
-    }
 }

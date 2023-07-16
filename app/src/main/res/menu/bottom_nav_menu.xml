@@ -11,10 +11,5 @@
         android:icon="@drawable/baseline_person_24"
         android:title="@string/User" />
 
-    <item
-        android:id="@+id/navigation_profile_page"
-        android:icon="@drawable/baseline_person_24"
-        android:title="Profile Page" />
-
 
 </menu>

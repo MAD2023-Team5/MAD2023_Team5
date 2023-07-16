@@ -79,17 +79,17 @@ public class FirebaseDataUploader {
         // Sample Routine data
 
 
-        Routine routine1 = new Routine(1,user2," muscle strength",generateRandomTags());
+        Routine routine1 = new Routine(1,user2,"Muscle Strength",generateRandomTags());
         Routine routine2 = new Routine(2, user2, "Yoga Flow",generateRandomTags());
-        Routine routine3 = new Routine(3,user2,"muscle strength",generateRandomTags());
+        Routine routine3 = new Routine(3,user2,"Muscle Strength",generateRandomTags());
         Routine routine4 = new Routine(4, user2, "Yoga Flow",generateRandomTags());
-        Routine routine5 = new Routine(5,user2," muscle strength",generateRandomTags());
+        Routine routine5 = new Routine(5,user2,"Muscle Strength",generateRandomTags());
         Routine routine6 = new Routine(6, user2, "Yoga Flow",generateRandomTags());
 
 
-        Routine routine7 = new Routine(7,user4,"muscle strength",generateRandomTags());
+        Routine routine7 = new Routine(7,user4,"Muscle Strength",generateRandomTags());
         Routine routine8 = new Routine(8, user4, "Yoga Flow",generateRandomTags());
-        Routine routine9 = new Routine(9,user4,"muscle strength",generateRandomTags());
+        Routine routine9 = new Routine(9,user4,"Muscle Strength",generateRandomTags());
         Routine routine10 = new Routine(10, user4, "Yoga Flow",generateRandomTags());
 
 
@@ -174,11 +174,11 @@ public class FirebaseDataUploader {
         Sets sets3 = new Sets(routine7,exercise2,3,20);
         Sets sets4 = new Sets(routine8,exercise2,1,20);
         Sets sets5 = new Sets(routine8,exercise3,2,10);;
-        Sets sets6 = new Sets(routine8,exercise6,7,120);
-        Sets sets7 = new Sets(routine9,exercise5,3,15);
-        Sets sets8 = new Sets(routine9,exercise6,7,20);
-        Sets sets9 = new Sets(routine10,exercise5,6,15);
-        Sets sets10 = new Sets(routine10,exercise9,7,7);
+        Sets sets6 = new Sets(routine8,exercise6,3,"120");
+        Sets sets7 = new Sets(routine9,exercise5,1,15);
+        Sets sets8 = new Sets(routine9,exercise6,2,"20");
+        Sets sets9 = new Sets(routine10,exercise5,1,15);
+        Sets sets10 = new Sets(routine10,exercise9,1,7);
 
 
         Sets sets21 = new Sets(routine6,exercise3,1,10);
@@ -186,23 +186,23 @@ public class FirebaseDataUploader {
         Sets sets23 = new Sets(routine6,exercise2,3,20);
         Sets sets24 = new Sets(routine5,exercise2,1,20);
         Sets sets25 = new Sets(routine5,exercise3,2,10);;
-        Sets sets26 = new Sets(routine5,exercise6,7,120);
-        Sets sets27 = new Sets(routine4,exercise5,3,15);
-        Sets sets28 = new Sets(routine4,exercise6,7,20);
-        Sets sets29 = new Sets(routine3,exercise5,6,15);
-        Sets sets30 = new Sets(routine3,exercise9,7,7);
+        Sets sets26 = new Sets(routine5,exercise6,3,"120");
+        Sets sets27 = new Sets(routine4,exercise5,1,15);
+        Sets sets28 = new Sets(routine4,exercise6,2,20);
+        Sets sets29 = new Sets(routine3,exercise5,3,15);
+        Sets sets30 = new Sets(routine3,exercise9,4,7);
 
 
         Sets sets31 = new Sets(routine2,exercise3,1,10);
         Sets sets32 = new Sets(routine2,exercise1,2,5);
         Sets sets33 = new Sets(routine2,exercise2,3,20);
-        Sets sets34 = new Sets(routine2,exercise2,1,20);
-        Sets sets35 = new Sets(routine2,exercise3,2,10);;
-        Sets sets36 = new Sets(routine1,exercise6,7,120);
-        Sets sets37 = new Sets(routine1,exercise5,3,15);
-        Sets sets38 = new Sets(routine1,exercise6,7,20);
-        Sets sets39 = new Sets(routine1,exercise5,6,15);
-        Sets sets40 = new Sets(routine1,exercise9,7,7);
+        Sets sets34 = new Sets(routine2,exercise2,4,20);
+        Sets sets35 = new Sets(routine2,exercise3,5,10);;
+        Sets sets36 = new Sets(routine1,exercise6,1,"120");
+        Sets sets37 = new Sets(routine1,exercise5,2,15);
+        Sets sets38 = new Sets(routine1,exercise6,3,"20");
+        Sets sets39 = new Sets(routine1,exercise5,4,15);
+        Sets sets40 = new Sets(routine1,exercise9,5,7);
 
 
 

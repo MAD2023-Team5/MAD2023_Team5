@@ -1,10 +1,14 @@
 package sg.edu.np.mad.happyhabit.ui.Routines;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,10 +24,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import sg.edu.np.mad.happyhabit.R;
+import sg.edu.np.mad.happyhabit.Routine;
 import sg.edu.np.mad.happyhabit.Sets;
 
 
@@ -56,11 +67,37 @@ public class ExercisesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.exerciseRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ExercisesAdapter();
+        adapter.setExercise(new ArrayList<Sets>(),getContext());
         recyclerView.setAdapter(adapter);
         getExercisesForRoutine();
 //        ((AppCompatActivity)requireActivity()).getSupportActionBar()
 //                .setDisplayHomeAsUpEnabled(false);
 
+
+        Button btn = view.findViewById(R.id.start);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                exnoFragment fragment = new exnoFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("set_list", (Serializable) adapter.getExercie());
+                bundle.putInt("pos",0);
+
+
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_exno,bundle);
+
+
+
+
+
+
+
+            }
+        });
 
 
 
@@ -84,6 +121,22 @@ public class ExercisesFragment extends Fragment {
                     Sets workoutRoutine = snapshot.getValue(Sets.class);
                     workoutRoutines.add(workoutRoutine);
                 }
+                Collections.sort(workoutRoutines, new Comparator<Sets>() {
+                    @Override
+                    public int compare(Sets o1, Sets o2){
+                        if (o1.getPlacement() > o2.getPlacement())
+                        {
+                            return 1;
+                        } else if (o2.getPlacement()< o2.getPlacement())
+                        {
+                            return-1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+                });
                 adapter.setExercise(workoutRoutines,getContext());
 
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_signin">
+    app:startDestination="@+id/navigation_routine">
 
 
 
@@ -16,7 +16,7 @@
         android:id="@+id/navigation_signup"
         android:name="sg.edu.np.mad.happyhabit.ui.SignIn.SignUpFragment"
         android:label="@string/title_signin"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/activity_sign_up" />
 
     <fragment
         android:id="@+id/navigation_routine"
@@ -43,11 +43,11 @@
         />
 
     <fragment
-        android:id="@+id/navigation_profile_page"
-        android:name="sg.edu.np.mad.happyhabit.ui.Profile.ProfileFragment"
-        android:label="Profile Page"
-        tools:layout="@layout/fragment_profile_container"
+        android:id="@+id/navigation_exno"
+        android:name="sg.edu.np.mad.happyhabit.ui.Routines.exnoFragment"
+        tools:layout="@layout/fragment_exno"
         />
+
 
 
 </navigation>

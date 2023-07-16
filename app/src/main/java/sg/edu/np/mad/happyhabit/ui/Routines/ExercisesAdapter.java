@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.np.mad.happyhabit.R;
@@ -33,7 +34,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         this.context = context;
     }
 
-    public void setExercise(List<Sets> exercises, Context context)
+    public void setExercise(List<Sets> exercises,Context context)
     {
         Log.i("exerciseList", String.valueOf(exercises.size()));
         this.exerciseList=exercises;
@@ -46,8 +47,9 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         return this.exerciseList;
     }
 
-    public ExercisesAdapter() {
-        this.exerciseList = exerciseList;
+    public ExercisesAdapter()
+    {
+
     }
 
     @NonNull
@@ -68,6 +70,10 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         return exerciseList != null ? exerciseList.size() : 0;
     }
 
+    public void setExercise(ArrayList<Sets> sets)
+    {
+        this.exerciseList=sets;
+    }
 
 
     public class ExerciseViewHolder extends RecyclerView.ViewHolder {
