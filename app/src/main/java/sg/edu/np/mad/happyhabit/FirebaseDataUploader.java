@@ -118,7 +118,7 @@ public class FirebaseDataUploader {
         // Sample Video data
         StorageReference videos = storageReference.child("Videos");
 //        StorageReference video1 = images.child("pushup.jpg");
-//        StorageReference video2 = images.child("pushup2.jpg");
+//        StorageReference video2 = images.child("lunges.jpg");
 
         // Sample Exercise data
         Exercise exercise1 = new Exercise(1, "Push-ups");

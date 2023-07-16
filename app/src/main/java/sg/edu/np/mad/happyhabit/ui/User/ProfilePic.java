@@ -1,12 +1,14 @@
 package sg.edu.np.mad.happyhabit.ui.User;
 
 import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import static sg.edu.np.mad.happyhabit.FirebaseDataUploader.onUpdate;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,18 +22,26 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,87 +67,120 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import sg.edu.np.mad.happyhabit.FirebaseDataUploader;
 import sg.edu.np.mad.happyhabit.R;
 
-public class ProfilePic extends AppCompatActivity {
+public class ProfilePic extends Fragment {
 
     Bitmap myBitmap;
     Uri picUri;
 
-
+    // a static variable to get a reference of our application context
+    public static Context contextOfApplication;
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
+    }
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
-
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK
+                        && result.getData() != null) {
+                    Uri photoUri = result.getData().getData();
+                    //use photoUri here
+                }
+            }
+    );
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.capture_image);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).setContentView(R.layout.capture_image);
+        Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         // Floating action button (fab) onclick caller
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view ->
-            startActivityForResult(getPickImageChooserIntent(), 200));
+        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        Intent pickIntent = new Intent();
+        pickIntent.setType("image/*");
+        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-//        // Floating action button (fab) receiver
-//        private val getResult =
-//                registerForActivityResult(
-//                        ActivityResultContracts.StartActivityForResult()
-//                ) {
-//            if (it.resultCode == Activity.RESULT_OK) {
-//                val value = it.data?.getStringExtra("input")
-//            }
-//        }
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        String pickTitle = "Select or take a new Picture";
+        Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+        chooserIntent.putExtra
+                (
+                        Intent.EXTRA_INITIAL_INTENTS,
+                        new Intent[] { takePhotoIntent }
+                );
+
+        fab.setOnClickListener(view-> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            launcher.launch(intent);
+        });
+
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        // Here we need to check if the activity that was triggers was the Image Gallery.
+                        // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
+                        // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
+                        Bitmap bitmap;
+                        Intent data = result.getData();
+                        contextOfApplication = getActivity().getApplicationContext();
+                        Context applicationContext = ProfilePic.getContextOfApplication();
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            ImageView imageView = (ImageView) getView().findViewById(R.id.imageView);
+                            if (getPickImageResultUri(data) != null) {
+                                picUri = getPickImageResultUri(data);
+                                try {
+                                    myBitmap = MediaStore.Images.Media.getBitmap(applicationContext.getContentResolver(), picUri);
+                                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
+                                    myBitmap = getResizedBitmap(myBitmap, 500);
+
+                                    CircleImageView croppedImageView = (CircleImageView) getView().findViewById(R.id.img_profile);
+                                    croppedImageView.setImageBitmap(myBitmap);
+                                    imageView.setImageBitmap(myBitmap);
+                                }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else {
+                                bitmap = (Bitmap) data.getExtras().get("data");
+                                myBitmap = bitmap;
+                                CircleImageView croppedImageView = (CircleImageView) getView().findViewById(R.id.img_profile);
+                                if (croppedImageView != null) {
+                                    croppedImageView.setImageBitmap(myBitmap);
+                                }
+                                imageView.setImageBitmap(myBitmap);
+                            }
+                        }
+                    }
+                });
+
         permissions.add(CAMERA);
         permissionsToRequest = findUnAskedPermissions(permissions);
-        // get the permissions we have asked for before but are not granted;
-        // to be stored in a global list for later access.
-
+//         get the permissions we have asked for before but are not granted;
+//         to be stored in a global list for later access.
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-
             if (permissionsToRequest.size() > 0)
                 requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
-
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_navigation_routine_to_navigation_routine_exercises) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
-//     Create a chooser intent to select the source to get image from.<br/>
-//     The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br/>
-//     All possible sources are added to the intent chooser.
     public Intent getPickImageChooserIntent() {
 
         // Determine URI of camera image to save.
         Uri outputFileUri = getCaptureImageOutputUri();
 
         List<Intent> allIntents = new ArrayList<>();
-        PackageManager packageManager = getPackageManager();
+        PackageManager packageManager = ((AppCompatActivity)getActivity()).getPackageManager();
 
         // collect all camera intents
         Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -183,13 +226,13 @@ public class ProfilePic extends AppCompatActivity {
     }
 
 //     Get URI to image received from capture by camera.
-
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
-        File getImage = getExternalCacheDir();
+        File getImage = ((AppCompatActivity)getActivity()).getExternalCacheDir();
         if (getImage != null) {
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "profile.png"));
         }
+        UploadImageToFirebase(outputFileUri);
         return outputFileUri;
     }
 
@@ -203,70 +246,20 @@ public class ProfilePic extends AppCompatActivity {
 //    }
 
 // upload & store image into firebase storage
-//    private void UploadProfPic(Uri image_uri) {
-//
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//        final StorageReference strRef = storageReference.child("users/"+ email_i +"/profile.jpg");
-//        strRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Toast.makeText(getApplicationContext(), "Image has been uploaded", Toast.LENGTH_LONG).show();
-//                strRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        Picasso.get().load(uri).fit().into(profPic);
-//                        imgRef = uri.toString();
-//
-//                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-//                        DatabaseReference usersRef = rootRef.child("users");
-//                        Map<String, Object> updates = new HashMap<String, Object>();
-//                        updates.put("profile_url", imgRef);
-//                        usersRef.child(uid).updateChildren(updates).addOnSuccessListener(strRef);
-//                        }
-//                    });
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull /*@org.jetbrains.annotations.NotNull*/ Exception e) {
-//                Toast.makeText(getApplicationContext(), "Failed to update profile picture", Toast.LENGTH_LONG).show();
-//                }
-//            });
-//    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Here we need to check if the activity that was triggers was the Image Gallery.
-        // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
-        // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
-        Bitmap bitmap;
-        if (resultCode == Activity.RESULT_OK) {
-            ImageView imageView = findViewById(R.id.imageView);
-            if (getPickImageResultUri(data) != null) {
-                picUri = getPickImageResultUri(data);
-                try {
-                    myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picUri);
-                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
-                    myBitmap = getResizedBitmap(myBitmap, 500);
-
-                    CircleImageView croppedImageView = (CircleImageView) findViewById(R.id.img_profile);
-                    croppedImageView.setImageBitmap(myBitmap);
-                    imageView.setImageBitmap(myBitmap);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
+    private void UploadImageToFirebase(Uri image) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference fileRef = storageReference.child("images/profile.png");
+        fileRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
             }
-            else {
-                bitmap = (Bitmap) data.getExtras().get("data");
-                myBitmap = bitmap;
-                CircleImageView croppedImageView = findViewById(R.id.img_profile);
-                if (croppedImageView != null) {
-                    croppedImageView.setImageBitmap(myBitmap);
-                }
-                imageView.setImageBitmap(myBitmap);
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull /*@org.jetbrains.annotations.NotNull*/ Exception e) {
+                Toast.makeText(getActivity().getApplicationContext(), "Failed to update profile picture", Toast.LENGTH_LONG).show();
             }
-        }
+        });
     }
 
     private static Bitmap rotateImageIfRequired(Bitmap img, Uri selectedImage) throws IOException {
@@ -325,7 +318,7 @@ public class ProfilePic extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // save file url in bundle as it will be null on screen orientation
@@ -334,7 +327,7 @@ public class ProfilePic extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
         // get the file url
@@ -356,7 +349,7 @@ public class ProfilePic extends AppCompatActivity {
     private boolean hasPermission(String permission) {
         if (canMakeSmores()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+                return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE));
             }
         }
         return true;
