@@ -2,6 +2,7 @@ package sg.edu.np.mad.happyhabit.ui.User;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.ContentValues.TAG;
 
 import static sg.edu.np.mad.happyhabit.FirebaseDataUploader.onUpdate;
 
@@ -65,10 +66,10 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import sg.edu.np.mad.happyhabit.FirebaseDataUploader;
+import sg.edu.np.mad.happyhabit.Manifest;
 import sg.edu.np.mad.happyhabit.R;
 
 public class ProfilePic extends Fragment {
-
     Bitmap myBitmap;
     Uri picUri;
 
@@ -116,12 +117,7 @@ public class ProfilePic extends Fragment {
                         new Intent[] { takePhotoIntent }
                 );
 
-        fab.setOnClickListener(view-> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            launcher.launch(intent);
-        });
-
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -163,6 +159,16 @@ public class ProfilePic extends Fragment {
                     }
                 });
 
+        fab.setOnClickListener(view-> {
+            requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION);
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            launcher.launch(intent);
+        });
+
+        // Restore instance state function
+        // get the file url
+        picUri = savedInstanceState.getParcelable("pic_uri");
+
         permissions.add(CAMERA);
         permissionsToRequest = findUnAskedPermissions(permissions);
 //         get the permissions we have asked for before but are not granted;
@@ -174,56 +180,56 @@ public class ProfilePic extends Fragment {
         }
     }
 
-    public Intent getPickImageChooserIntent() {
-
-        // Determine URI of camera image to save.
-        Uri outputFileUri = getCaptureImageOutputUri();
-
-        List<Intent> allIntents = new ArrayList<>();
-        PackageManager packageManager = ((AppCompatActivity)getActivity()).getPackageManager();
-
-        // collect all camera intents
-        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            if (outputFileUri != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            }
-            allIntents.add(intent);
-        }
-
-        // collect all gallery intents
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
-        for (ResolveInfo res : listGallery) {
-            Intent intent = new Intent(galleryIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            allIntents.add(intent);
-        }
-
-        // the main intent is the last in the list so pickup the useless one
-        Intent mainIntent = allIntents.get(allIntents.size() - 1);
-        for (Intent intent : allIntents) {
-            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
-                mainIntent = intent;
-                break;
-            }
-        }
-        allIntents.remove(mainIntent);
-
-        // Create a chooser from the main intent
-        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
-
-        // Add all other intents
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-
-        return chooserIntent;
-    }
+//    public Intent getPickImageChooserIntent() {
+//
+//        // Determine URI of camera image to save.
+//        Uri outputFileUri = getCaptureImageOutputUri();
+//
+//        List<Intent> allIntents = new ArrayList<>();
+//        PackageManager packageManager = ((AppCompatActivity)getActivity()).getPackageManager();
+//
+//        // collect all camera intents
+//        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+//        for (ResolveInfo res : listCam) {
+//            Intent intent = new Intent(captureIntent);
+//            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+//            intent.setPackage(res.activityInfo.packageName);
+//            if (outputFileUri != null) {
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//            }
+//            allIntents.add(intent);
+//        }
+//
+//        // collect all gallery intents
+//        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        galleryIntent.setType("image/*");
+//        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
+//        for (ResolveInfo res : listGallery) {
+//            Intent intent = new Intent(galleryIntent);
+//            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+//            intent.setPackage(res.activityInfo.packageName);
+//            allIntents.add(intent);
+//        }
+//
+//        // the main intent is the last in the list so pickup the useless one
+//        Intent mainIntent = allIntents.get(allIntents.size() - 1);
+//        for (Intent intent : allIntents) {
+//            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
+//                mainIntent = intent;
+//                break;
+//            }
+//        }
+//        allIntents.remove(mainIntent);
+//
+//        // Create a chooser from the main intent
+//        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
+//
+//        // Add all other intents
+//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+//
+//        return chooserIntent;
+//    }
 
 //     Get URI to image received from capture by camera.
     private Uri getCaptureImageOutputUri() {
@@ -256,7 +262,7 @@ public class ProfilePic extends Fragment {
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull /*@org.jetbrains.annotations.NotNull*/ Exception e) {
+            public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getActivity().getApplicationContext(), "Failed to update profile picture", Toast.LENGTH_LONG).show();
             }
         });
@@ -302,36 +308,25 @@ public class ProfilePic extends Fragment {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-//     Get the URI of the selected image from {@link #getPickImageChooserIntent()}.<br/>
+
+//     Get the URI of the selected image
 //     Will return the correct URI for camera and gallery image.
 //     @param data the returned data of the activity result
-
     public Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
         if (data != null) {
             String action = data.getAction();
             isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
         }
-
-
         return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         // save file url in bundle as it will be null on screen orientation
         // changes
         outState.putParcelable("pic_uri", picUri);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // get the file url
-        picUri = savedInstanceState.getParcelable("pic_uri");
     }
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
@@ -349,65 +344,37 @@ public class ProfilePic extends Fragment {
     private boolean hasPermission(String permission) {
         if (canMakeSmores()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE));
+                return (ContextCompat.checkSelfPermission(contextOfApplication, permission) == PackageManager.PERMISSION_GRANTED);
             }
         }
         return true;
     }
 
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
-                .create()
-                .show();
-    }
+//    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+//
+//        new AlertDialog.Builder(contextOfApplication)
+//                .setMessage(message)
+//                .setPositiveButton("OK", okListener)
+//                .setNegativeButton("Cancel", null)
+//                .create()
+//                .show();
+//    }
 
     private boolean canMakeSmores() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-
-            case ALL_PERMISSIONS_RESULT:
-                for (String perms : permissionsToRequest) {
-                    if (hasPermission(perms)) {
-
-                    } else {
-
-                        permissionsRejected.add(perms);
-                    }
+    private ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            result -> {
+                if (result) {
+                    Log.e(TAG, "onActivityResult: PERMISSION GRANTED");
+                    // PERMISSION GRANTED
+                } else {
+                    Log.e(TAG, "onActivityResult: PERMISSION DENIED");
+                    // PERMISSION DENIED
                 }
-
-                if (permissionsRejected.size() > 0) {
-
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
-                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                                                Log.d("API123", "Permission rejected " + permissionsRejected.size());
-
-                                                requestPermissions(permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
-                                        }
-                                    });
-                            return;
-                        }
-                    }
-
-                }
-                break;
-        }
-
-    }
+            }
+    );
 }
