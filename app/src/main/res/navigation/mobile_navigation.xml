@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_creation">
+    app:startDestination="@+id/navigation_signin">
 
 
 
@@ -55,11 +55,21 @@
 
 
     <fragment
-        android:id="@+id/navigation_profile_page"
+        android:id="@+id/navigation_profile"
         android:name="sg.edu.np.mad.happyhabit.ui.Profile.ProfileFragment"
         android:label="Profile Page"
-        tools:layout="@layout/fragment_profile_container"
-        />
+        tools:layout="@layout/fragment_profile2">
+        <action
+        android:id="@+id/action_navigation_profile_to_navigation_edit_profile"
+        app:destination="@id/navigation_edit_profile"
+        app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/navigation_edit_profile"
+        android:name="sg.edu.np.mad.happyhabit.ui.Profile.EditProfileFragment"
+        android:label="Edit Profile Page"
+        tools:layout="@layout/fragment_edit_profile">
+    </fragment>
 
 </navigation>
