@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:text="Exercise"
+    android:textSize="15sp"
+    android:textColor="@color/black"
+    android:padding="5dp"
+    android:drawableRight="@drawable/baseline_arrow_drop_down"></TextView>

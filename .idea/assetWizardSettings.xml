@@ -11,10 +11,24 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/arrow_drop_down/baseline_arrow_drop_down_24.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="push_ups_1" />
+                            <entry key="outputName" value="baseline_arrow_drop_down" />
                             <entry key="sourceFile" value="C:\Users\vibu\MAD2023_Team5\app\src\main\res\drawable\Push-ups-1.svg" />
                           </map>
                         </option>
