@@ -95,9 +95,10 @@ public class ProfilePic extends Fragment {
             }
     );
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ((AppCompatActivity)getActivity()).setContentView(R.layout.capture_image);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_user_profile, container, false);
+
+        getActivity().setContentView(R.layout.capture_image);
         Toolbar toolbar = getView().findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
@@ -159,10 +160,13 @@ public class ProfilePic extends Fragment {
                     }
                 });
 
-        fab.setOnClickListener(view-> {
-            requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION);
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            launcher.launch(intent);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                launcher.launch(intent);
+            }
         });
 
         // Restore instance state function
@@ -178,6 +182,7 @@ public class ProfilePic extends Fragment {
             if (permissionsToRequest.size() > 0)
                 requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
+        return view;
     }
 
 //    public Intent getPickImageChooserIntent() {
