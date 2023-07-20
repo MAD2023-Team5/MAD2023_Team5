@@ -34,7 +34,6 @@ public class UserProfileFragment extends Fragment {
     private RecyclerView recyclerViewUsers;
     private UserAdapter userAdapter;
     private FragmentManager fragmentManager;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user_profile, container, false);

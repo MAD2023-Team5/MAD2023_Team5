@@ -16,8 +16,12 @@
         android:id="@+id/navigation_signup"
         android:name="sg.edu.np.mad.happyhabit.ui.SignIn.SignUpFragment"
         android:label="@string/title_signin"
-        tools:layout="@layout/activity_sign_up" />
-
+        tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/navigation_captureImage"
+        android:name="sg.edu.np.mad.happyhabit.ui.User.ProfilePic"
+        android:label="@string/title_capture_image"
+        tools:layout="@layout/capture_image" />
     <fragment
         android:id="@+id/navigation_routine"
         android:name="sg.edu.np.mad.happyhabit.ui.Routines.RoutineFragment"

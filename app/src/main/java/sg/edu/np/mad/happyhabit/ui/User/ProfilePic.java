@@ -1,12 +1,15 @@
 package sg.edu.np.mad.happyhabit.ui.User;
 
 import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.ContentValues.TAG;
 
 import static sg.edu.np.mad.happyhabit.FirebaseDataUploader.onUpdate;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,217 +23,254 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import sg.edu.np.mad.happyhabit.FirebaseDataUploader;
+import sg.edu.np.mad.happyhabit.Manifest;
 import sg.edu.np.mad.happyhabit.R;
 
-public class ProfilePic extends AppCompatActivity {
-
+public class ProfilePic extends Fragment {
     Bitmap myBitmap;
     Uri picUri;
 
-
+    // a static variable to get a reference of our application context
+    public static Context contextOfApplication;
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
+    }
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
 
     private final static int ALL_PERMISSIONS_RESULT = 107;
-
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK
+                        && result.getData() != null) {
+                    Uri photoUri = result.getData().getData();
+                    //use photoUri here
+                }
+            }
+    );
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.capture_image);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_user_profile, container, false);
 
-        // Floating action button (fab) caller
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            startActivityForResult(getPickImageChooserIntent(), 200);
+        getActivity().setContentView(R.layout.capture_image);
+        Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+        // Floating action button (fab) onclick caller
+        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        Intent pickIntent = new Intent();
+        pickIntent.setType("image/*");
+        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        String pickTitle = "Select or take a new Picture";
+        Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+        chooserIntent.putExtra
+                (
+                        Intent.EXTRA_INITIAL_INTENTS,
+                        new Intent[] { takePhotoIntent }
+                );
+
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        // Here we need to check if the activity that was triggers was the Image Gallery.
+                        // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
+                        // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
+                        Bitmap bitmap;
+                        Intent data = result.getData();
+                        contextOfApplication = getActivity().getApplicationContext();
+                        Context applicationContext = ProfilePic.getContextOfApplication();
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            ImageView imageView = (ImageView) getView().findViewById(R.id.imageView);
+                            if (getPickImageResultUri(data) != null) {
+                                picUri = getPickImageResultUri(data);
+                                try {
+                                    myBitmap = MediaStore.Images.Media.getBitmap(applicationContext.getContentResolver(), picUri);
+                                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
+                                    myBitmap = getResizedBitmap(myBitmap, 500);
+
+                                    CircleImageView croppedImageView = (CircleImageView) getView().findViewById(R.id.img_profile);
+                                    croppedImageView.setImageBitmap(myBitmap);
+                                    imageView.setImageBitmap(myBitmap);
+                                }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else {
+                                bitmap = (Bitmap) data.getExtras().get("data");
+                                myBitmap = bitmap;
+                                CircleImageView croppedImageView = (CircleImageView) getView().findViewById(R.id.img_profile);
+                                if (croppedImageView != null) {
+                                    croppedImageView.setImageBitmap(myBitmap);
+                                }
+                                imageView.setImageBitmap(myBitmap);
+                            }
+                        }
+                    }
+                });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                launcher.launch(intent);
+            }
         });
 
-//        // Floating action button (fab) receiver
-//        private val getResult =
-//                registerForActivityResult(
-//                        ActivityResultContracts.StartActivityForResult()
-//                ) {
-//            if (it.resultCode == Activity.RESULT_OK) {
-//                val value = it.data?.getStringExtra("input")
-//            }
-//        }
+        // Restore instance state function
+        // get the file url
+        picUri = savedInstanceState.getParcelable("pic_uri");
+
         permissions.add(CAMERA);
         permissionsToRequest = findUnAskedPermissions(permissions);
-        // get the permissions we have asked for before but are not granted;
-        // to be stored in a global list for later access.
-
+//         get the permissions we have asked for before but are not granted;
+//         to be stored in a global list for later access.
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-
             if (permissionsToRequest.size() > 0)
                 requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
-
+        return view;
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
+//    public Intent getPickImageChooserIntent() {
 //
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
+//        // Determine URI of camera image to save.
+//        Uri outputFileUri = getCaptureImageOutputUri();
 //
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_navigation_routine_to_navigation_routine_exercises) {
-//            return true;
+//        List<Intent> allIntents = new ArrayList<>();
+//        PackageManager packageManager = ((AppCompatActivity)getActivity()).getPackageManager();
+//
+//        // collect all camera intents
+//        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+//        for (ResolveInfo res : listCam) {
+//            Intent intent = new Intent(captureIntent);
+//            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+//            intent.setPackage(res.activityInfo.packageName);
+//            if (outputFileUri != null) {
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//            }
+//            allIntents.add(intent);
 //        }
 //
-//        return super.onOptionsItemSelected(item);
+//        // collect all gallery intents
+//        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        galleryIntent.setType("image/*");
+//        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
+//        for (ResolveInfo res : listGallery) {
+//            Intent intent = new Intent(galleryIntent);
+//            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+//            intent.setPackage(res.activityInfo.packageName);
+//            allIntents.add(intent);
+//        }
+//
+//        // the main intent is the last in the list so pickup the useless one
+//        Intent mainIntent = allIntents.get(allIntents.size() - 1);
+//        for (Intent intent : allIntents) {
+//            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
+//                mainIntent = intent;
+//                break;
+//            }
+//        }
+//        allIntents.remove(mainIntent);
+//
+//        // Create a chooser from the main intent
+//        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
+//
+//        // Add all other intents
+//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+//
+//        return chooserIntent;
 //    }
 
-//     Create a chooser intent to select the source to get image from.<br/>
-//     The source can be camera's (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br/>
-//     All possible sources are added to the intent chooser.
-    public Intent getPickImageChooserIntent() {
-
-        // Determine URI of camera image to save.
-        Uri outputFileUri = getCaptureImageOutputUri();
-
-        List<Intent> allIntents = new ArrayList<>();
-        PackageManager packageManager = getPackageManager();
-
-        // collect all camera intents
-        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            if (outputFileUri != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            }
-            allIntents.add(intent);
-        }
-
-        // collect all gallery intents
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
-        for (ResolveInfo res : listGallery) {
-            Intent intent = new Intent(galleryIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            allIntents.add(intent);
-        }
-
-        // the main intent is the last in the list so pickup the useless one
-        Intent mainIntent = allIntents.get(allIntents.size() - 1);
-        for (Intent intent : allIntents) {
-            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
-                mainIntent = intent;
-                break;
-            }
-        }
-        allIntents.remove(mainIntent);
-
-        // Create a chooser from the main intent
-        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
-
-        // Add all other intents
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-
-        return chooserIntent;
-    }
-
 //     Get URI to image received from capture by camera.
-
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
-        File getImage = getExternalCacheDir();
+        File getImage = ((AppCompatActivity)getActivity()).getExternalCacheDir();
         if (getImage != null) {
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "profile.png"));
         }
+        UploadImageToFirebase(outputFileUri);
         return outputFileUri;
     }
 
-//    // store image into firebase storage
 //    private FirebaseDataUploader UploadPic() {
 //        // Create a storage reference from our app
 //        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 //        Uri image = getCaptureImageOutputUri();
 //        StorageReference ImagesRef = storageReference.child("images/profile.png");
 //        onUpdate();
+//        return new FirebaseDataUploader();
 //    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap;
-        if (resultCode == Activity.RESULT_OK) {
-
-            ImageView imageView = findViewById(R.id.imageView);
-
-            if (getPickImageResultUri(data) != null) {
-                picUri = getPickImageResultUri(data);
-
-                try {
-                    myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picUri);
-                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
-                    myBitmap = getResizedBitmap(myBitmap, 500);
-
-                    CircleImageView croppedImageView = (CircleImageView) findViewById(R.id.img_profile);
-                    croppedImageView.setImageBitmap(myBitmap);
-                    imageView.setImageBitmap(myBitmap);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-            } else {
-
-
-                bitmap = (Bitmap) data.getExtras().get("data");
-
-                myBitmap = bitmap;
-                CircleImageView croppedImageView = findViewById(R.id.img_profile);
-                if (croppedImageView != null) {
-                    croppedImageView.setImageBitmap(myBitmap);
-                }
-
-                imageView.setImageBitmap(myBitmap);
-
+// upload & store image into firebase storage
+    private void UploadImageToFirebase(Uri image) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference fileRef = storageReference.child("images/profile.png");
+        fileRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
             }
-
-        }
-
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity().getApplicationContext(), "Failed to update profile picture", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private static Bitmap rotateImageIfRequired(Bitmap img, Uri selectedImage) throws IOException {
@@ -273,36 +313,25 @@ public class ProfilePic extends AppCompatActivity {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-//     Get the URI of the selected image from {@link #getPickImageChooserIntent()}.<br/>
+
+//     Get the URI of the selected image
 //     Will return the correct URI for camera and gallery image.
 //     @param data the returned data of the activity result
-
     public Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
         if (data != null) {
             String action = data.getAction();
             isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
         }
-
-
         return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         // save file url in bundle as it will be null on screen orientation
         // changes
         outState.putParcelable("pic_uri", picUri);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // get the file url
-        picUri = savedInstanceState.getParcelable("pic_uri");
     }
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
@@ -320,65 +349,37 @@ public class ProfilePic extends AppCompatActivity {
     private boolean hasPermission(String permission) {
         if (canMakeSmores()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+                return (ContextCompat.checkSelfPermission(contextOfApplication, permission) == PackageManager.PERMISSION_GRANTED);
             }
         }
         return true;
     }
 
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
-                .create()
-                .show();
-    }
+//    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+//
+//        new AlertDialog.Builder(contextOfApplication)
+//                .setMessage(message)
+//                .setPositiveButton("OK", okListener)
+//                .setNegativeButton("Cancel", null)
+//                .create()
+//                .show();
+//    }
 
     private boolean canMakeSmores() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-
-            case ALL_PERMISSIONS_RESULT:
-                for (String perms : permissionsToRequest) {
-                    if (hasPermission(perms)) {
-
-                    } else {
-
-                        permissionsRejected.add(perms);
-                    }
+    private ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            result -> {
+                if (result) {
+                    Log.e(TAG, "onActivityResult: PERMISSION GRANTED");
+                    // PERMISSION GRANTED
+                } else {
+                    Log.e(TAG, "onActivityResult: PERMISSION DENIED");
+                    // PERMISSION DENIED
                 }
-
-                if (permissionsRejected.size() > 0) {
-
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
-                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                                                Log.d("API123", "Permission rejected " + permissionsRejected.size());
-
-                                                requestPermissions(permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
-                                        }
-                                    });
-                            return;
-                        }
-                    }
-
-                }
-                break;
-        }
-
-    }
+            }
+    );
 }
