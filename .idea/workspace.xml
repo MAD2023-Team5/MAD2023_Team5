@@ -10,23 +10,151 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55879a5d-6b37-4e99-bb5a-1930a213e08e" name="Changes" comment="Merging branches">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/Food.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/almonds.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/apple.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/apple_juice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/apple_pie.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/asparagus.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/avocado.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/baby_corn.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/baguette.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/banana.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bandung.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/barley_water.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bean_sprouts.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bee_hoon.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/beef.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/biryani.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/biryani_rice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/blueberry.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bok_choy.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/broccoli.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/brown_rice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bubble_tea.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bubor_cha_cha.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/burnt_cheesecake.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cabbage.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/calamansi_juice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/capsicum.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/carrot.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cashews.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cauliflower.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chapati.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/char_kway_teow.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chendol.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cheng_tng.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chia_seeds.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chicken_breast.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chicken_chop.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chicken_tikka_masala.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chickpeas.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chinese_spinach.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chocolate_chip_cookie.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chocolate_ice_cream.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chrysanthemum_tea.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cookies_and_cream_ice_cream.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cornflakes.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cottage_cheese.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/creme_brule.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cucumber.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/dim_sum.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/dragon_fruit.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/durian.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/egg_noodle.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/eggplant.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/eggs.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/fish_head_curry.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/fresh_coconut_water.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/grapes.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/grass_jelly_drink.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/greek_feta_cheese.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/greek_yogurt.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/green_bean_soup.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/green_tea.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/guava.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/hainanese_chicken_rice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/herbal_jelly.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ice_kachang.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/jackfruit.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/kangkong.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/kimchi_fried_rice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/kiwi.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/kopi.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/laksa.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lemon_tea.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lentils.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lime_juice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/long_bean.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lychee.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mackerel.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mango.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mashed_potato.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mee_goreng.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/milo.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mint_chocolate_chip_ice_cream.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/murtabak.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/naan.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/nasi_lemak.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/new_york_cheesecake.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/okra.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/orange.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/orange_juice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pad_thai.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pancakes.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/papaya.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/passion_fruit.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/passion_fruit_juice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pasta.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/peanut_butter.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pear.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pho.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pineapple.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pizza.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/popiah_skin.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pork.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/potato.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/potatoes.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pulut_hitam_with_coconut_milk.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/quinoa.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/raspberry.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/red_bean_soup.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rendang.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ribena.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/roti_prata.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sago_pudding.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/salmon.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sambal_stingray.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sardines.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/satay.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/shrimp.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sourdough_bread.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/soy_milk.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/spaghetti_bolognese.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/spinach.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/strawberry.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/strawberry_ice_cream.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sugarcane_juice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sushi.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sweet_potato.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tapioca.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tau_suan_with_you_tiao.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/teh_tarik.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tiramisu.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tofu.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tom_yum_soup.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tomato.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/vanilla_ice_cream.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/walnuts.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/watermelon.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/watermelon_juice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/white_bread.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/white_rice.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/zucchini.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/navEditor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/navEditor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/EditProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/EditProfileFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/User/ProfilePic.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/User/ProfilePic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_edit_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_edit_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/FirebaseDataUploader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/FirebaseDataUploader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +162,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\kueke\.android\avd\Pixel_6_API_33_2.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\angcl\.android\avd\Pixel_3a_API_33_x86_64.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -44,8 +172,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
-        <option value="Class" />
         <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -95,8 +223,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "last_directory_selection": "C:/Users/kimlu/Desktop/Ngee Ann Poly/Year 3 Semester 1/MAD/Asg/Latest Push/app/src/main/res/drawable",
-    "last_opened_file_path": "C:/Users/kueke/ImagePicker",
+    "last_directory_selection": "C:/Users/angcl/Documents/MAD/MAD2023_Team5/app/src/main/res/drawable",
+    "last_opened_file_path": "C:/Users/angcl/Documents/MAD/MAD2023_Team5/app/src/main/res/drawable",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
@@ -108,11 +236,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\angcl\Documents\MAD\MAD2023_Team5\app\src\main\res\drawable" />
       <recent name="C:\Users\kimlu\Desktop\Ngee Ann Poly\Year 3 Semester 1\MAD\Asg\PushTime\app\src\main\res\layout" />
       <recent name="C:\Users\vibu\MAD2023_Team5\app\src\main\java\sg\edu\np\mad\happyhabit\ui\Profile" />
       <recent name="C:\Users\vibu\MAD2023_Team5\app\src\main\res\layout" />
       <recent name="C:\Users\kimlu\Desktop\Ngee Ann Poly\Year 3 Semester 1\MAD\Asg\Latest Push\app\src\main\res\drawable" />
-      <recent name="C:\Users\kimlu\Desktop\Ngee Ann Poly\Year 3 Semester 1\MAD\Asg\Latest Push\app\src\main\res\layout" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\vibu\MAD2023_Team5\app\src\main\java\sg\edu\np\mad\happyhabit\ui\Routines" />
