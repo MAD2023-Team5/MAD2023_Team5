@@ -9,37 +9,21 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55879a5d-6b37-4e99-bb5a-1930a213e08e" name="Changes" comment="Created the flow of routines, the ui is rather funky,would go back into it after i done with other parts.">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/ChangePasswordFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_change_password.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" afterDir="false" />
+    <list default="true" id="55879a5d-6b37-4e99-bb5a-1930a213e08e" name="Changes" comment="change oncreate in profilepic to oncreateview">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/navEditor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/navEditor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/EditProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/EditProfileFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/ProfileFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_edit_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_edit_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile_container.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_container.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/FirebaseDataUploader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/FirebaseDataUploader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\kimlu\.android\avd\Pixel_4_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\kueke\.android\avd\Pixel_6_API_33_2.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -73,7 +57,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Ern_Wu_Copy" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -100,7 +84,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
     "last_directory_selection": "C:/Users/kimlu/Desktop/Ngee Ann Poly/Year 3 Semester 1/MAD/Asg/Latest Push/app/src/main/res/drawable",
-    "last_opened_file_path": "C:/Users/kimlu/Desktop/Ngee Ann Poly/Year 3 Semester 1/MAD/Asg/PushTime/app/src/main/res/layout",
+    "last_opened_file_path": "C:/Users/kueke/AndroidStudioProjects/MAD2023_Team5",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",

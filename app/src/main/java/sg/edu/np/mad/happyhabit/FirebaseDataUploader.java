@@ -27,7 +27,7 @@ public class FirebaseDataUploader {
         // Initialize Firebase Cloud Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-//
+
 //        // Sample User data
         User user1 = new User(1, "johndoe@example.com", "password123", "We're no strangers to love You know the rules and so do I", null, "John");
         User user2 = new User(2, "adam@example.com", "password456", "A full commitment's what I'm thinking of You wouldn't get this from any other guy", null, "Adam");
@@ -111,17 +111,16 @@ public class FirebaseDataUploader {
         routinesRef.child("routine"+routine10.getRoutineNo()).setValue(routine10);
 
 
+        // Sample Image data
+        StorageReference images = storageReference.child("Images");
+        StorageReference image1 = images.child("lunges.jpg");
+        StorageReference image2 = images.child("pushup.jpg");
+        StorageReference image3 = images.child("logo.jpg");
 
-
-
-
-
-
-
-
-
-
-
+        // Sample Video data
+        StorageReference videos = storageReference.child("Videos");
+//        StorageReference video1 = images.child("pushup.jpg");
+//        StorageReference video2 = images.child("lunges.jpg");
 
 
 
