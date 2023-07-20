@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -79,19 +81,20 @@ public class ProfileFragment extends Fragment {
                 transaction.commit();
             }
         });
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToEditProfileFragment();
+            }
+        });
 
         return view;
-//        editProfileButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                navigateToEditProfileFragment();
-//            }
-//        });
-//
-//        return view;
-//    }
-//
-//    private void navigateToEditProfileFragment() {
+    }
+
+    private void navigateToEditProfileFragment() {
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigate(R.id.navigation_edit_profile);
 //        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 //        transaction.replace(R.id.fragment_container, new EditProfileFragment());
 //        transaction.addToBackStack(null);
