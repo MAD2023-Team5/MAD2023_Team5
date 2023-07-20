@@ -21,6 +21,9 @@
     <string name="CreateAcc">Create Account</string>
     <string name="Create">Create</string>
     <string name="Cancel">Cancel</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="changeImage">Change Image</string>
+    <string name="saveChanges">Save Changes</string>
     <string name="template">My Templates</string>
     <string name="create_template">Create New Template</string>
     <string name="Template">Create your own unique fitness routine designed for your personal well-being!</string>

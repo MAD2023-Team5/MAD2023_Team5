@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Profile"
+        android:text="@string/editProfile"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
@@ -33,9 +33,16 @@
         android:layout_marginBottom="16dp" />
 
     <Button
+        android:id="@+id/changeImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/changeImage"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Changes" />
+        android:text="@string/saveChanges" />
 
 </LinearLayout>

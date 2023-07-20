@@ -63,10 +63,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import sg.edu.np.mad.happyhabit.FirebaseDataUploader;
-import sg.edu.np.mad.happyhabit.Manifest;
 import sg.edu.np.mad.happyhabit.R;
 
 public class ProfilePic extends Fragment {
@@ -96,14 +96,12 @@ public class ProfilePic extends Fragment {
     );
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_user_profile, container, false);
+        View view = inflater.inflate(R.layout.capture_image, container, false);
 
-        getActivity().setContentView(R.layout.capture_image);
-        Toolbar toolbar = getView().findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        getActivity().setContentView(R.layout.capture_image);
 
         // Floating action button (fab) onclick caller
-        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         Intent pickIntent = new Intent();
         pickIntent.setType("image/*");
         pickIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -120,42 +118,43 @@ public class ProfilePic extends Fragment {
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        // Here we need to check if the activity that was triggers was the Image Gallery.
-                        // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
-                        // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
-                        Bitmap bitmap;
-                        Intent data = result.getData();
-                        contextOfApplication = getActivity().getApplicationContext();
-                        Context applicationContext = ProfilePic.getContextOfApplication();
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            ImageView imageView = (ImageView) getView().findViewById(R.id.imageView);
-                            if (getPickImageResultUri(data) != null) {
-                                picUri = getPickImageResultUri(data);
-                                try {
-                                    myBitmap = MediaStore.Images.Media.getBitmap(applicationContext.getContentResolver(), picUri);
-                                    myBitmap = rotateImageIfRequired(myBitmap, picUri);
-                                    myBitmap = getResizedBitmap(myBitmap, 500);
+                result -> {
+                    // Here we need to check if the activity that was triggers was the Image Gallery.
+                    // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
+                    // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
+                    Bitmap bitmap;
+                    Intent data = result.getData();
+                    contextOfApplication = requireActivity().getApplicationContext();
+                    Context applicationContext = ProfilePic.getContextOfApplication();
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+                        if (getPickImageResultUri(data) != null) {
+                            picUri = getPickImageResultUri(data);
+                            // get the file url
+                            assert savedInstanceState != null;
+                            picUri = savedInstanceState.getParcelable("pic_uri");
+                            try {
+                                myBitmap = MediaStore.Images.Media.getBitmap(applicationContext.getContentResolver(), picUri);
+                                myBitmap = rotateImageIfRequired(myBitmap, picUri);
+                                myBitmap = getResizedBitmap(myBitmap, 500);
 
-                                    CircleImageView croppedImageView = (CircleImageView) getView().findViewById(R.id.img_profile);
-                                    croppedImageView.setImageBitmap(myBitmap);
-                                    imageView.setImageBitmap(myBitmap);
-                                }
-                                catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            else {
-                                bitmap = (Bitmap) data.getExtras().get("data");
-                                myBitmap = bitmap;
-                                CircleImageView croppedImageView = (CircleImageView) getView().findViewById(R.id.img_profile);
-                                if (croppedImageView != null) {
-                                    croppedImageView.setImageBitmap(myBitmap);
-                                }
+                                CircleImageView croppedImageView = (CircleImageView) view.findViewById(R.id.img_profile);
+                                croppedImageView.setImageBitmap(myBitmap);
                                 imageView.setImageBitmap(myBitmap);
                             }
+                            catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            assert data != null;
+                            bitmap = (Bitmap) data.getExtras().get("data");
+                            myBitmap = bitmap;
+                            CircleImageView croppedImageView = (CircleImageView) view.findViewById(R.id.img_profile);
+                            if (croppedImageView != null) {
+                                croppedImageView.setImageBitmap(myBitmap);
+                            }
+                            imageView.setImageBitmap(myBitmap);
                         }
                     }
                 });
@@ -239,7 +238,7 @@ public class ProfilePic extends Fragment {
 //     Get URI to image received from capture by camera.
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
-        File getImage = ((AppCompatActivity)getActivity()).getExternalCacheDir();
+        File getImage = ((AppCompatActivity) requireActivity()).getExternalCacheDir();
         if (getImage != null) {
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "profile.png"));
         }
@@ -263,12 +262,12 @@ public class ProfilePic extends Fragment {
         fileRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity().getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity().getApplicationContext(), "Failed to update profile picture", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireActivity().getApplicationContext(), "Failed to update profile picture", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -327,7 +326,7 @@ public class ProfilePic extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         // save file url in bundle as it will be null on screen orientation
         // changes
@@ -370,7 +369,7 @@ public class ProfilePic extends Fragment {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
             result -> {
                 if (result) {

@@ -11,6 +11,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import sg.edu.np.mad.happyhabit.R;
+import sg.edu.np.mad.happyhabit.ui.User.ProfilePic;
 
 public class EditProfileFragment extends Fragment {
 
@@ -28,6 +31,7 @@ public class EditProfileFragment extends Fragment {
     private EditText editTextName;
     private EditText editTextDescription;
     private Button saveButton;
+    private Button changeImage;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -83,6 +87,15 @@ public class EditProfileFragment extends Fragment {
 //        transaction.commit();
 //    }
 //}
+        changeImage = view.findViewById(R.id.changeImage);
+        changeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the capture image page
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_captureImage);
+            }
+        });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
