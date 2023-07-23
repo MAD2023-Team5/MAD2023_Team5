@@ -144,10 +144,12 @@ public class FirebaseDataUploader {
         exercise5.setImage("pushup");
 
         exercise6.setImage("legraise");
+        exercise6.setIstime(true);
         exercise7.setImage("legraise");
         exercise8.setImage("legraise");
         exercise9.setImage("legraise");
         exercise10.setImage("legraise");
+        exercise10.setIstime(true);
 
 
 

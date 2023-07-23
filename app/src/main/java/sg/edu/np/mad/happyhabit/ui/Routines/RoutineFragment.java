@@ -160,6 +160,7 @@ public class RoutineFragment extends Fragment {
 
     public  void retrieveWorkoutRoutines() {
         //function to add the neccesary data and pushing it into the adapter.
+
         firebaseData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

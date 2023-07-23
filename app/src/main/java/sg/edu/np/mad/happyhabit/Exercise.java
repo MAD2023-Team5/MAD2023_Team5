@@ -6,7 +6,15 @@ public class Exercise {
 
     private String image;
 
+        private boolean istime;
 
+    public boolean isIstime() {
+        return istime;
+    }
+
+    public void setIstime(boolean istime) {
+        this.istime = istime;
+    }
 
     public String getImage() {
         return image;

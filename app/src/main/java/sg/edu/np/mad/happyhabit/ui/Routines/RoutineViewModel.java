@@ -22,9 +22,13 @@ public class RoutineViewModel extends ViewModel {
 
 
 
+
+
+
     public RoutineViewModel(List<Routine> routinelist,List<Routine> croutinelist) {
         this.routinelist=  routinelist;
         this.compeleteroutinelist=  routinelist;
+
 
         // mText.setValue("This is notifications fragment");
     }

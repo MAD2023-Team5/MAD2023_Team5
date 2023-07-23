@@ -1,82 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_grey"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_exercise"
+            android:layout_width="150dp"
+            android:layout_height="40dp"></androidx.appcompat.widget.AppCompatSpinner>
+    </FrameLayout>
+
 
     <EditText
+        android:id="@+id/edit_no_of_sets"
 
-        android:id="@+id/textView3"
-        android:layout_width="75dp"
-        android:layout_height="39dp"
-
-        android:layout_marginStart="296dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="49dp"
-        android:gravity="center_vertical"
+        android:background="@drawable/round_grey"
+        android:layout_weight="1"
+        android:hint="No of reps"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/addbutton"
-        android:layout_width="40dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#171616"
-        android:text="+"
-        android:textSize="9sp"
-        app:cornerRadius="180dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="117dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="48dp"
-        android:paddingLeft="-40dp"
-        android:paddingRight="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="91dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center_vertical"
-        android:text="No of Reps"
-        app:layout_constraintBottom_toTopOf="@+id/addbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view2"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="40dp"
+        android:inputType="number"></EditText>
+    <ImageView
+        android:id="@+id/image_remove"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_close"
+        app:tint="@color/black"></ImageView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

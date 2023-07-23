@@ -58,14 +58,12 @@ public class exnoFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_exno, container, false);
 
-
         //getting the class for the specific instance of the fragment.
         position=getArguments().getInt("pos");
         setsList= (ArrayList<Sets>) getArguments().getSerializable("set_list");
         Sets set = setsList.get(position);
         prev=view.findViewById(R.id.previous_layout);
         skip=view.findViewById(R.id.skip_layout);
-
 
         //configuring the layout based on position
         //and setting up movements
@@ -94,7 +92,6 @@ public class exnoFragment extends Fragment {
 
         }
 
-
        if (position+1==setsList.size())
         {
             skip.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +109,8 @@ public class exnoFragment extends Fragment {
 
                 }
             });
+
+
 
         }
        else
@@ -145,9 +144,6 @@ public class exnoFragment extends Fragment {
 
 
 
-
-
-
         //check for which type of layout needed(the one with stopwatch or nah)
 
         if(set.getTime()==null)
@@ -156,10 +152,24 @@ public class exnoFragment extends Fragment {
 
             donebutton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    move_up_down(setsList, position+1);
+                public void onClick(View v)
+                {
+
+                    if (position+1==setsList.size())
+                    {
+                        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                        navController.navigate(R.id.navigation_routine);
+
+                    }
+                    else
+                    {
+                        move_up_down(setsList, position + 1);
+                    }
                 }
             });
+
+
+
 
         }
         else {
@@ -235,7 +245,12 @@ public class exnoFragment extends Fragment {
             @Override
             public void onFinish() {
 
+                if (position+1==setsList.size())
+                {
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                    navController.navigate(R.id.navigation_routine);
 
+                }
                 move_up_down(setsList, position + 1);
 
 

@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/arrow_drop_down/baseline_arrow_drop_down_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../AppData/Local/Android/Sdk/icons/material/materialicons/mode_edit/baseline_mode_edit_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_arrow_drop_down" />
+                            <entry key="color" value="131212" />
+                            <entry key="outputName" value="edit_pencil" />
                             <entry key="sourceFile" value="C:\Users\vibu\MAD2023_Team5\app\src\main\res\drawable\Push-ups-1.svg" />
                           </map>
                         </option>

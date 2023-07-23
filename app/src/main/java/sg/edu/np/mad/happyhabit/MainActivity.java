@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,7 +21,10 @@ import androidx.navigation.ui.NavigationUI;
 import sg.edu.np.mad.happyhabit.databinding.ActivityMainBinding;
 import sg.edu.np.mad.happyhabit.ui.Routines.RoutineFragment;
 
-public class MainActivity extends AppCompatActivity {
+
+
+
+public class MainActivity extends AppCompatActivity{
 
     String title = "Main Activity";
     private ActivityMainBinding binding;

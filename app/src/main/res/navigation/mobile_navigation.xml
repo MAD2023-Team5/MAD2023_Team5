@@ -60,6 +60,12 @@
         android:label="Profile Page"
         tools:layout="@layout/fragment_profile_container"
         />
+    <fragment
+        android:id="@+id/navigation_set_creation"
+        android:name="sg.edu.np.mad.happyhabit.ui.Routines.SetCreation_Fragment"
+        tools:layout="@layout/fragment_set_creation">
+
+    </fragment>
 
 
 </navigation>

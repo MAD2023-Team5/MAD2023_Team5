@@ -1,8 +1,9 @@
 package sg.edu.np.mad.happyhabit;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Routine {
+public class Routine implements Serializable {
     private int routineNo;
     private List<Sets> setsList;
     private User user;

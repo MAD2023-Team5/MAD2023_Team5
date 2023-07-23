@@ -17,8 +17,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="121dp"
-        android:layout_marginBottom="177dp"
+        android:layout_marginStart="118dp"
+        android:layout_marginBottom="152dp"
         android:backgroundTint="#060227"
         android:text="Done"
         android:textAlignment="center"
@@ -117,8 +117,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="85dp"
-        android:layout_marginBottom="175dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginBottom="147dp"
         android:gravity="center_vertical"
         android:text="x10"
         android:textAlignment="center"
@@ -133,8 +133,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginBottom="340dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginBottom="309dp"
         android:fontFamily="serif"
         android:text="Push Up"
         android:textAlignment="center"
@@ -155,5 +155,33 @@
         android:layout_marginEnd="0dp"
         android:background="#6474FF"
         android:src="@drawable/pushup" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="211dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="0dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Image"
+        android:textColor="#0E0E0E"
+        app:cornerRadius="0dp"
+
+        />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="211dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="202dp"
+        android:layout_marginEnd="-2dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Video"
+        android:textColor="#0E0E0E"
+        app:cornerRadius="0dp" />
 
 </RelativeLayout>
