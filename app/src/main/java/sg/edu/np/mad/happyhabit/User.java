@@ -1,11 +1,13 @@
 package sg.edu.np.mad.happyhabit;
 
+import android.graphics.Bitmap;
+
 public class User {
     private int userNo;
     private String email;
     private String password;
     private String description;
-    private String image;
+    private Bitmap image;
 
     private String Name;
 
@@ -13,7 +15,7 @@ public class User {
         // Default constructor required for Firebase
     }
 
-    public User(int userNo, String email, String password, String description, String image,String name) {
+    public User(int userNo, String email, String password, String description, Bitmap image, String name) {
         this.userNo = userNo;
         this.email = email;
         this.password = password;
@@ -62,11 +64,11 @@ public class User {
         this.description = description;
     }
 
-    public String getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
     public void read_database()
