@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_signin">
+    app:startDestination="@+id/navigation_user_routine">
 
 
 
@@ -62,19 +62,11 @@
         android:id="@+id/navigation_profile"
         android:name="sg.edu.np.mad.happyhabit.ui.Profile.ProfileFragment"
         android:label="Profile Page"
-        tools:layout="@layout/fragment_profile_container"
-        />
-    <fragment
-        android:id="@+id/navigation_set_creation"
-        android:name="sg.edu.np.mad.happyhabit.ui.Routines.SetCreation_Fragment"
-        tools:layout="@layout/fragment_set_creation">
-
-    </fragment>
         tools:layout="@layout/fragment_profile2">
         <action
-        android:id="@+id/action_navigation_profile_to_navigation_edit_profile"
-        app:destination="@id/navigation_edit_profile"
-        app:enterAnim="@anim/nav_default_enter_anim" />
+            android:id="@+id/action_navigation_profile_to_navigation_edit_profile"
+            app:destination="@id/navigation_edit_profile"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
 
     <fragment
@@ -82,6 +74,17 @@
         android:name="sg.edu.np.mad.happyhabit.ui.Profile.EditProfileFragment"
         android:label="Edit Profile Page"
         tools:layout="@layout/fragment_edit_profile">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_set_creation"
+        android:name="sg.edu.np.mad.happyhabit.ui.Routines.SetCreation_Fragment"
+        tools:layout="@layout/fragment_set_creation">
+</fragment>
+    <fragment android:id="@+id/navigation_user_routine"
+        android:name="sg.edu.np.mad.happyhabit.ui.Routines.UserRoutineFragment"
+        tools:layout="@layout/fragment_user_routine">
+
     </fragment>
 
 </navigation>

@@ -50,6 +50,9 @@ public class SetCreation_Fragment extends Fragment {
     Button buttonAdd;
     Button buttonSubmitList;
 
+    public interface ExerciseDataCallback {
+        void onExerciseDataRetrieved(List<String> exerciseNames);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -60,24 +63,57 @@ public class SetCreation_Fragment extends Fragment {
         buttonAdd = view.findViewById(R.id.button_add);
         buttonSubmitList = view.findViewById(R.id.button_submit_list);
 
+
+
         firebaseexData = FirebaseDatabase.getInstance().getReference("Exercises");
-        retrieveExercise();
-
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        retrieveExercise(new ExerciseDataCallback() {
             @Override
-            public void onClick(View v) {
-                addView();
-            }
-        });
+            public void onExerciseDataRetrieved(List<String> exerciseNames)
+            {
 
 
 
-        buttonSubmitList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               saveroutine();
-            }
-        });
+
+                buttonAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addView(exerciseNames);
+                    }
+                });
+
+
+
+                buttonSubmitList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        saveroutine();
+                    }
+                });
+
+                if (getArguments()!=null)
+                {
+                    List<Sets> sets= (List<Sets>) getArguments().getSerializable("sets");
+                    Log.i("editing", String.valueOf(sets.size()));
+                    for (Sets i:sets)
+
+                    {
+                        addView(i,exerciseNames);
+
+                    }
+
+
+
+                }
+                else
+                {
+                    addView(exerciseNames);
+                }
+
+
+
+            }});
+
+
 
 
 
@@ -85,7 +121,7 @@ public class SetCreation_Fragment extends Fragment {
         return  view;
     }
 
-    private void addView()
+    private void addView(List<String>  exerciseName)
     {
 
 
@@ -98,7 +134,7 @@ public class SetCreation_Fragment extends Fragment {
 
 
 
-        List<String> getexericesName=mViewModel.getexericesName();
+        List<String> getexericesName=exerciseName;
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,getexericesName);
         arrayAdapter.setDropDownViewResource(R.layout.spinner_adapter);
@@ -108,14 +144,18 @@ public class SetCreation_Fragment extends Fragment {
         spinnerex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
                 String name = getexericesName.get(position);
-                if (position != 0) {
+                if (position != 0)
+                {
                     Exercise exercise = mViewModel.getExerciseList().get(position - 1);
 
-                    if (exercise.isIstime()) {
+                    if (exercise.isIstime())
+                    {
                         editText.setHint("Duration(S)");
-                    } else {
+                    } else
+                    {
                         // Handle the case when exercise is not time-based
                         editText.setHint("No of Sets");
                     }
@@ -139,6 +179,81 @@ public class SetCreation_Fragment extends Fragment {
 
     }
 
+    private void addView(Sets i,List<String> exerciseName)
+    {
+
+
+
+        View routineView = getLayoutInflater().inflate(R.layout.routine_creation_card,null,false);
+
+        EditText editText = (EditText)routineView.findViewById(R.id.edit_no_of_sets);
+        Spinner spinnerex = (Spinner)routineView.findViewById(R.id.spinner_exercise);
+        ImageView imageClose= (ImageView)routineView.findViewById(R.id.image_remove);
+
+
+
+
+        List<String> getexericesName=exerciseName;
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,getexericesName);
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_adapter);
+        spinnerex.setAdapter(arrayAdapter);
+
+
+        spinnerex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String name = getexericesName.get(position);
+                if (position != 0)
+                {
+                    Exercise exercise = mViewModel.getExerciseList().get(position - 1);
+
+                    if (exercise.isIstime())
+                    {
+                        editText.setHint("Duration(S)");
+                    } else
+                    {
+                        // Handle the case when exercise is not time-based
+                        editText.setHint("No of Sets");
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle the case when nothing is selected
+            }
+
+
+        });
+
+        imageClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeView(routineView);
+            }
+        });
+
+        Log.i("Stes", String.valueOf(i.getExercise().getName()));
+
+        if (i.getExercise().isIstime())
+        {
+            editText.setText(i.getTime());
+        }
+        else
+        {
+            Log.i("test", String.valueOf(i.getNoofSets()));
+            editText.setText(String.valueOf((i.getNoofSets())));
+        }
+
+        spinnerex.setSelection(getexericesName.indexOf(i.getExercise().getName()));
+
+        layoutList.addView(routineView);
+
+    }
+
 
 
     private void removeView(View view){
@@ -154,7 +269,7 @@ public class SetCreation_Fragment extends Fragment {
         if (result==true)
         {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.navigation_routine);
+            navController.navigate(R.id.navigation_user_routine);
 
         }
 
@@ -167,7 +282,7 @@ public class SetCreation_Fragment extends Fragment {
 
     }
 
-    public  void retrieveExercise() {
+    public  void retrieveExercise(ExerciseDataCallback callback) {
         //get the data into
 
         firebaseexData.addValueEventListener(new ValueEventListener() {
@@ -186,6 +301,9 @@ public class SetCreation_Fragment extends Fragment {
 
                 exersiseName.add(0,"Exercise");
                 mViewModel.setexericesName(exersiseName);
+
+
+                callback.onExerciseDataRetrieved(exersiseName);
 
 
 
@@ -241,7 +359,7 @@ public class SetCreation_Fragment extends Fragment {
                     {
 
 
-                        if ((int) Long.parseLong(editText.getText().toString()) >= 600)
+                        if ((int) Long.parseLong(editText.getText().toString()) <= 600)
                         {
                             sets = new Sets(routine, exercise, i + 1, editText.getText().toString());
 

@@ -32,6 +32,8 @@ public class RoutineCreationViewModel extends ViewModel {
         return exericesName;
     }
 
+
+
     public void setexericesName(List<String> exericesName) {
         this.exericesName = exericesName;
     }

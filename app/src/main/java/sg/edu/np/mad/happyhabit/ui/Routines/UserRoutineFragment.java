@@ -1,10 +1,8 @@
 package sg.edu.np.mad.happyhabit.ui.Routines;
 
+import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,74 +27,97 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import sg.edu.np.mad.happyhabit.R;
 import sg.edu.np.mad.happyhabit.Routine;
+import sg.edu.np.mad.happyhabit.Sets;
 import sg.edu.np.mad.happyhabit.User;
 
 public class UserRoutineFragment extends Fragment {
 
     private DatabaseReference firebaseData;
     private RecyclerView recyclerViewRoutines;
-    private UserRoutinesAdapter routineAdapter;
+    private UserRoutinesAdapter userroutineAdapter;
     private FragmentManager fragmentManager;
 
-    private RoutineViewModel routineviewmodel;
+    private UserRoutineViewModel routineviewmodel;
     private SearchView searchView;
 
-    private UserRoutineViewModel mViewModel;
+    private ImageView addbutton;
 
-    public static UserRoutineFragment newInstance() {
-        return new UserRoutineFragment();
-    }
+
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
+        User user=new User(1,"s","a","sa","s","s");
         View view = inflater.inflate(R.layout.fragment_user_routine, container, false);
         firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
         recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
         recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentManager= getChildFragmentManager();
-        routineviewmodel=new RoutineViewModel();
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String uid = firebaseAuth.getCurrentUser().getEmail();
+        routineviewmodel=new UserRoutineViewModel(uid, new ArrayList<Sets>());
+
 
         // Retrieve user information from Firebase database using the UID
 
-        DatabaseReference firebaseuser= FirebaseDatabase.getInstance().getReference("Users").child(uid.replace(".",""));
-        firebaseuser.addListenerForSingleValueEvent(new ValueEventListener() {
+        userroutineAdapter = new UserRoutinesAdapter(new UserRoutinesAdapter.OnItemClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Retrieve user data
-                User name = dataSnapshot.getValue(User.class);
-                mViewModel.setUser(name);
+            public void onItemClick(Routine routine) {
+                getExercisesForRoutine(routine);
 
 
-                // Update the views with user information
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle database error
             }
         });
 
 
 
 
-        routineAdapter = new UserRoutinesAdapter();
 
-
-        routineAdapter.setRoutines(new ArrayList<Routine>());
-        routineAdapter.setCompleteroutineRoutine(new ArrayList<Routine>());
+        userroutineAdapter.setRoutines(new ArrayList<Routine>());
+        userroutineAdapter.setCompleteroutineRoutine(new ArrayList<Routine>());
         retrieveWorkoutRoutines();
 
-        recyclerViewRoutines.setAdapter(routineAdapter);
+        recyclerViewRoutines.setAdapter(userroutineAdapter);
+
+        SearchView searchView = view.findViewById(R.id.searchview);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Perform search operation or desired action with the submitted query
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Perform filtering or updating of search results based on newText
+
+                userroutineAdapter.filter(newText);
+
+                return true;
+            }
+        });
+
+        addbutton =view.findViewById(R.id.createbutton);
+        addbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_creation);
+            }
+        });
 
         return  view;
 
@@ -112,15 +134,18 @@ public class UserRoutineFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Routine workoutRoutine = snapshot.getValue(Routine.class);
 
-                    if (mViewModel.getUser().equals(workoutRoutine.getUser())){
+                    if (routineviewmodel.getUser().equals(workoutRoutine.getUser().getEmail()))
+                    {
                     workoutRoutines.add(workoutRoutine);
+                    Log.i("yooo",workoutRoutine.getUser().getEmail());
                     }
+                    else{continue;}
                 }
                 List<Routine> workoutRoutines2 = new ArrayList<>();
                 workoutRoutines2.addAll(workoutRoutines);
                 Log.i("List adder","goes in");
-                routineAdapter.setRoutines(workoutRoutines);
-                routineAdapter.setCompleteroutineRoutine(workoutRoutines2);
+                userroutineAdapter.setRoutines(workoutRoutines);
+                userroutineAdapter.setCompleteroutineRoutine(workoutRoutines2);
 
 
 
@@ -134,6 +159,60 @@ public class UserRoutineFragment extends Fragment {
         });
 
     }
+    private void getExercisesForRoutine(Routine routine)
+
+    {   String child = "routine" + routine.getRoutineNo();
+
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference("Sets").child(child);
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Sets> SetRoutines = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.i("getting data","getting Dta");
+                    Sets workoutRoutine = snapshot.getValue(Sets.class);
+                    SetRoutines.add(workoutRoutine);
+                }
+                Collections.sort(SetRoutines, new Comparator<Sets>() {
+                    @Override
+                    public int compare(Sets o1, Sets o2){
+                        if (o1.getPlacement() > o2.getPlacement())
+                        {
+                            return 1;
+                        } else if (o2.getPlacement()< o2.getPlacement())
+                        {
+                            return-1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+                });
+                Log.i("edittext", String.valueOf(SetRoutines.size()));
+
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("editroutine", routine); // Pass the clicked routine to the fragment
+                bundle.putSerializable("sets", (Serializable) SetRoutines);
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_creation,bundle);
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors
+                Log.i("getexerciseforroutines","no data");
+            }
+        });
+
+    }
+
+
 
 
 

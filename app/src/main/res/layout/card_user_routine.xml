@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/edit_pencil"
                 android:id="@+id/edit"
-                android:paddingLeft="-200dp"
+                android:paddingLeft="-180dp"
                 />
 
 

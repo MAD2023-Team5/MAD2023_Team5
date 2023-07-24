@@ -19,6 +19,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -51,6 +52,7 @@ public class RoutineFragment extends Fragment {
 
     private RoutineViewModel routineviewmodel;
     private  SearchView searchView;
+    private ImageView addbutton;
 
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
@@ -125,6 +127,15 @@ public class RoutineFragment extends Fragment {
                 routineAdapter.filter(newText);
 
                 return true;
+            }
+        });
+
+        addbutton =view.findViewById(R.id.imageView);
+        addbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_creation);
             }
         });
 

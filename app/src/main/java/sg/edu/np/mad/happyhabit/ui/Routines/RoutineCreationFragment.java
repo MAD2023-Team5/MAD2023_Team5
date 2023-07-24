@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import java.util.List;
 import sg.edu.np.mad.happyhabit.Exercise;
 import sg.edu.np.mad.happyhabit.R;
 import sg.edu.np.mad.happyhabit.Routine;
+import sg.edu.np.mad.happyhabit.Sets;
 import sg.edu.np.mad.happyhabit.User;
 
 public class RoutineCreationFragment extends Fragment {
@@ -58,9 +60,12 @@ public class RoutineCreationFragment extends Fragment {
         return new RoutineCreationFragment();
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+
 
         View view=inflater.inflate(R.layout.fragment_routine_creation, container, false);
 
@@ -105,7 +110,22 @@ public class RoutineCreationFragment extends Fragment {
 
 
 
+        if (getArguments()!=null)
+        {
+                Routine routine = (Routine) getArguments().getSerializable("editroutine");
+                mViewModel.setUser(routine.getUser());
+                description.setText(routine.getDescription());
+            if (routine.getTags()!=null){
+            for (String tag:routine.getTags())
+            {
+                addTagChip(tag,tags);
+                tagInputField.setText("");
 
+            }
+            }
+        }
+        else
+        {
 //
 //
 //
@@ -132,7 +152,8 @@ public class RoutineCreationFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
                 // Handle database error
             }
-        });
+            });
+        }
 
         //// saving routine
 
@@ -163,10 +184,21 @@ public class RoutineCreationFragment extends Fragment {
             return;
         }
 
-        Routine routine1 = new Routine(max+1,mViewModel.getUser(),description.getText().toString(),tags);
-        Bundle bundle = new Bundle();
 
+        Routine routine1;
+        Bundle bundle =  new Bundle();
+        if (getArguments()!=null)
+        {
+            routine1 = (Routine) getArguments().getSerializable("editroutine");
+            List<Sets> sets = (List<Sets>) getArguments().getSerializable("sets");
+            Log.i("routinecreationedit", String.valueOf(sets.size()));
+            bundle.putSerializable("sets", (Serializable) sets);
 
+        }
+        else
+        {
+            routine1 = new Routine(max + 1, mViewModel.getUser(), description.getText().toString(), tags);
+        }
 
         bundle.putSerializable("routine", (Serializable) routine1);
 
@@ -174,58 +206,6 @@ public class RoutineCreationFragment extends Fragment {
         navController.navigate(R.id.navigation_set_creation,bundle);
 
     }
-
-//    private void addView()
-//    {
-//
-//
-//        final View routineView = getLayoutInflater().inflate(R.layout.routine_creation_card,null,false);
-//
-//        EditText editText = (EditText)routineView.findViewById(R.id.rep_no);
-//        Spinner spinnerex = (Spinner)routineView.findViewById(R.id.spinner);
-//        ImageView imageClose= (ImageView)routineView.findViewById(R.id.cancel_button);
-//
-//        TextView textView = (TextView)routineView.findViewById(R.id.desc_text);
-//
-//
-//        List<String> getexericesName=mViewModel.getexericesName();
-//
-//        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,getexericesName);
-//       arrayAdapter.setDropDownViewResource(R.layout.spinner_adapter);
-//        spinnerex.setAdapter(arrayAdapter);
-//
-//
-////        String name= spinnerex.getSelectedItem().toString();
-////
-////        Integer postion=getexericesName.indexOf(name);
-////
-////        Exercise exercise=mViewModel.getExerciseList().get(postion);
-////
-////        if (exercise.isIstime())
-////        {
-////            textView.setText("Duration(S)");
-////
-////        }
-//
-//        imageClose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                removeView(routineView);
-//            }
-//        });
-//
-//        layoutList.addView(routineView);
-//
-//    }
-//
-//
-//    private void removeView(View view){
-//
-//        layoutList.removeView(view);
-//
-//    }
-
-
 
 
 

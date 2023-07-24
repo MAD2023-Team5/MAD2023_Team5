@@ -214,7 +214,13 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
             routineName.setText(routine.getDescription());
             userName.setText(routine.getUser().getName());
-            exerciseName.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
+            if (routine.getTags()!=null) {
+                exerciseName.setText(String.valueOf(routine.getTags()).replace("[", "").replace("]", ""));
+            }
+            else
+            {
+                exerciseName.setVisibility(View.GONE);
+            }
 
             final TaskCompletionSource<User> tcs = new TaskCompletionSource();
 

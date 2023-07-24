@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -22,16 +23,22 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
 
 
     private List<Routine> routines;
-
+    private final OnItemClickListener listener;
     private List<Routine> completeroutine;
 
 
 
-
-
-    public UserRoutinesAdapter() {
-
+    public interface OnItemClickListener {
+        void onItemClick(Routine routine);
     }
+
+
+
+    public UserRoutinesAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
 
     public void setRoutines(List<Routine> routines) {
         this.routines = routines;
@@ -114,6 +121,13 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
     public void onBindViewHolder(@NonNull UserRoutineViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Routine routine = routines.get(position);
         holder.bind(routine);
+        holder.editimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //calling the function on bind as it is easier get the routine information.
+            public void onClick(View v) {
+                listener.onItemClick(routine);
+            }
+        });;
 
     }
 
@@ -133,14 +147,14 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
 
 //        private TextView textViewName;
 
-        ImageView titleImage;
+        ImageView titleImage,editimage;
         TextView routineName;
         TextView exerciseName;
 
         TextView userName;
 
 
-        ImageView filledDislikeImageView,blankDislikeImageView,filledLikeImageView,blankLikeImageView;
+
 
         public UserRoutineViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -152,6 +166,7 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
             routineName = itemView.findViewById(R.id.textRoutine);
             userName = itemView.findViewById(R.id.textUser);
             exerciseName = itemView.findViewById(R.id.textExercise);
+            editimage=itemView.findViewById(R.id.edit);
 
 
         }
@@ -164,8 +179,12 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
 
             routineName.setText(routine.getDescription());
             userName.setText(routine.getUser().getName());
-            exerciseName.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
-
+            if (routine.getTags()!=null) {
+                exerciseName.setText(String.valueOf(routine.getTags()).replace("[", "").replace("]", ""));
+            }
+            else {
+                exerciseName.setVisibility(View.GONE);
+            }
 
 
 
