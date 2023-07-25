@@ -98,7 +98,7 @@
                     app:trackThickness="8dp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/totalintakeproteins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19.5"
@@ -109,14 +109,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/totalproteins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="of 97"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-                    app:layout_constraintStart_toEndOf="@+id/textView4" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/totalintakeproteins"
+                    app:layout_constraintStart_toEndOf="@+id/totalintakeproteins" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
                     app:trackThickness="8dp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/totalintakefats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="7.5"
@@ -157,14 +157,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator2" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/totalfats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="of 28.7"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
-                    app:layout_constraintStart_toEndOf="@+id/textView6" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/totalintakefats"
+                    app:layout_constraintStart_toEndOf="@+id/totalintakefats" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
                     app:trackThickness="8dp" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/totalintakecarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="37.7"
@@ -203,13 +203,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator3" />
 
                 <TextView
+                    android:id="@+id/totalcarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="of 161.6"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-                    app:layout_constraintStart_toEndOf="@+id/textView8" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/totalintakecarbs"
+                    app:layout_constraintStart_toEndOf="@+id/totalintakecarbs" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -264,7 +265,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/bprotein"
+                        android:id="@+id/totalbcalorie"
                         android:text="390 kcal" />
 
                     <TextView
@@ -284,7 +285,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:id="@+id/bfats"
+                        android:id="@+id/bprotein"
                         android:text="19.5 kcal" />
 
                     <TextView
@@ -304,7 +305,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:id="@+id/bcarbs"
+                        android:id="@+id/bfats"
                         android:text="7.5 kcal" />
 
                     <TextView
@@ -324,6 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
+                        android:id="@+id/bcarbs"
                         android:text="37.7 kcal" />
                 </LinearLayout>
 
@@ -339,6 +341,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/b_Add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -405,7 +408,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/lunch">
 
                     <TextView
-                        android:id="@+id/lprotein"
+                        android:id="@+id/totallcalorie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="390 kcal" />
@@ -424,7 +427,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/lfats"
+                        android:id="@+id/lprotein"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
@@ -444,7 +447,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/lcarbs"
+                        android:id="@+id/lfats"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
@@ -467,11 +470,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
+                        android:id="@+id/lcarbs"
                         android:text="37.7 kcal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutl">
+
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/l_Add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -485,7 +500,7 @@
                     app:icon="@drawable/ic_add"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutl" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -536,7 +551,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/dinner">
 
                     <TextView
-                        android:id="@+id/dprotein"
+                        android:id="@+id/totaldcalorie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="390 kcal" />
@@ -555,7 +570,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/dfats"
+                        android:id="@+id/dprotein"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
@@ -575,7 +590,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/dcarbs"
+                        android:id="@+id/dfats"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
@@ -598,11 +613,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
+                        android:id="@+id/dcarbs"
                         android:text="37.7 kcal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutd">
+
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/d_Add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -616,7 +643,7 @@
                     app:icon="@drawable/ic_add"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutd" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

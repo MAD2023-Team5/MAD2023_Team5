@@ -86,5 +86,9 @@
         tools:layout="@layout/fragment_user_routine">
 
     </fragment>
+    <fragment
+        android:id="@+id/calorieTrackerFragment"
+        android:name="sg.edu.np.mad.happyhabit.ui.CalorieTracker.CalorieTrackerFragment"
+        android:label="CalorieTrackerFragment" />
 
 </navigation>
