@@ -41,6 +41,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="Back">Return</string>
+    <string name="CalorieTracker">Calorie Tracker</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

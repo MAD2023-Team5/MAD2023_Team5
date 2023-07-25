@@ -11,6 +11,11 @@
         android:icon="@drawable/baseline_person_24"
         android:title="@string/User" />
 
+    <item
+        android:id="@+id/navigation_calorietracker"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/CalorieTracker" />
+
 
     <item
         android:id="@+id/navigation_profile"
