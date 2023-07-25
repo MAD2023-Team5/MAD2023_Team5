@@ -3,6 +3,7 @@ package sg.edu.np.mad.happyhabit.ui.Routines;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.FragmentManager;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -58,68 +59,69 @@ public class UserRoutineFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        User user=new User(1,"s","a","sa","s","s");
+//        Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+//        User user=new User(99,"s","a","sa", bitmap,"s");
         View view = inflater.inflate(R.layout.fragment_user_routine, container, false);
-        firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
-        recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
-        recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fragmentManager= getChildFragmentManager();
+//        firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
+//        recyclerViewRoutines = view.findViewById(R.id.BrowsingRoutinesRecyclerView);
+//        recyclerViewRoutines.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        fragmentManager= getChildFragmentManager();
+//
+//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//        String uid = firebaseAuth.getCurrentUser().getEmail();
+//        routineviewmodel=new UserRoutineViewModel(uid, new ArrayList<Sets>());
+//
+//
+//        // Retrieve user information from Firebase database using the UID
+//
+//        userroutineAdapter = new UserRoutinesAdapter(new UserRoutinesAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(Routine routine) {
+//                getExercisesForRoutine(routine);
+//
+//
+//            }
+//        });
+//
+//
+//
+//
+//
+//        userroutineAdapter.setRoutines(new ArrayList<Routine>());
+//        userroutineAdapter.setCompleteroutineRoutine(new ArrayList<Routine>());
+//        retrieveWorkoutRoutines();
+//
+//        recyclerViewRoutines.setAdapter(userroutineAdapter);
+//
+//        SearchView searchView = view.findViewById(R.id.searchview);
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                // Perform search operation or desired action with the submitted query
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                // Perform filtering or updating of search results based on newText
+//
+//                userroutineAdapter.filter(newText);
+//
+//                return true;
+//            }
+//        });
+//
+//        addbutton =view.findViewById(R.id.createbutton);
+//        addbutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main);
+//                navController.navigate(R.id.navigation_creation);
+//            }
+//        });
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        String uid = firebaseAuth.getCurrentUser().getEmail();
-        routineviewmodel=new UserRoutineViewModel(uid, new ArrayList<Sets>());
-
-
-        // Retrieve user information from Firebase database using the UID
-
-        userroutineAdapter = new UserRoutinesAdapter(new UserRoutinesAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Routine routine) {
-                getExercisesForRoutine(routine);
-
-
-            }
-        });
-
-
-
-
-
-        userroutineAdapter.setRoutines(new ArrayList<Routine>());
-        userroutineAdapter.setCompleteroutineRoutine(new ArrayList<Routine>());
-        retrieveWorkoutRoutines();
-
-        recyclerViewRoutines.setAdapter(userroutineAdapter);
-
-        SearchView searchView = view.findViewById(R.id.searchview);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Perform search operation or desired action with the submitted query
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Perform filtering or updating of search results based on newText
-
-                userroutineAdapter.filter(newText);
-
-                return true;
-            }
-        });
-
-        addbutton =view.findViewById(R.id.createbutton);
-        addbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main);
-                navController.navigate(R.id.navigation_creation);
-            }
-        });
-
-        return  view;
+        return view;
 
     }
     public  void retrieveWorkoutRoutines() {

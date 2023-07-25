@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import java.io.Closeable;
+import java.util.ArrayList;
 
+import sg.edu.np.mad.happyhabit.Sets;
 import sg.edu.np.mad.happyhabit.User;
 
 public class UserRoutineViewModel extends ViewModel {
@@ -18,6 +20,9 @@ public class UserRoutineViewModel extends ViewModel {
     public UserRoutineViewModel(User user, @NonNull Closeable... closeables) {
         super(closeables);
         this.user = user;
+    }
+
+    public UserRoutineViewModel(String uid, ArrayList<Sets> sets) {
     }
 
     public User getUser() {

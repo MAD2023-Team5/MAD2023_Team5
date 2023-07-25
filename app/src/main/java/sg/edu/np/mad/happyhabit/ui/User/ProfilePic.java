@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -63,6 +65,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,7 +115,23 @@ public class ProfilePic extends Fragment {
         // Floating action button (fab) & captured image
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         click_image_id = (CircleImageView) view.findViewById(R.id.img_profile);
+        firebaseAuth = FirebaseAuth.getInstance();
+        String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", "");;
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
+        databaseReference.child(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String data = dataSnapshot.child("image").getValue(String.class);
+                Bitmap image = StringToBitMap(data);
+                click_image_id.setImageBitmap(image);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle database error
+            }
+        });
         // Floating action button (fab) onclick caller
         Intent pickIntent = new Intent();
         pickIntent.setType("image/*");
@@ -139,7 +158,7 @@ public class ProfilePic extends Fragment {
                     contextOfApplication = requireActivity().getApplicationContext();
                     Context applicationContext = ProfilePic.getContextOfApplication();
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+                        ImageView imageView = view.findViewById(R.id.imageView);
                         if (getPickImageResultUri(data) != null) {
                             picUri = getPickImageResultUri(data);
                             // get the file url
@@ -151,22 +170,9 @@ public class ProfilePic extends Fragment {
                                 CircleImageView croppedImageView = click_image_id;
                                 croppedImageView.setImageBitmap(myBitmap);
                                 imageView.setImageBitmap(myBitmap);
-
-                                String userEmail = firebaseAuth.getCurrentUser().getEmail();
-                                databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-                                databaseReference.child(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        databaseReference.child(userEmail).child("image").setValue(croppedImageView);
-                                        Log.v(TAG, "ACTIVITY SUCCESSFUL");
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        // Handle database error
-                                        Log.e(TAG, "DATABASE CANCELLED");
-                                    }
-                                });
+                                String image = BitMapToString(myBitmap);
+                                databaseReference.child(userEmail).child("image").setValue(image);
+                                Log.v(TAG, "ACTIVITY SUCCESSFUL");
                             }
                             catch (IOException e) {
                                 e.printStackTrace();
@@ -212,6 +218,7 @@ public class ProfilePic extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(requireActivity().getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
+                Log.v(TAG, "IMAGE UPLOADED");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -261,6 +268,30 @@ public class ProfilePic extends Fragment {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
+    // Convert bitmap image to string for database
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    // Convert string from database to bitmap image
+    /**
+     * @param encodedString
+     * @return bitmap (from given string)
+     */
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 
 //     Get the URI of the selected image
 //     Will return the correct URI for camera and gallery image.
