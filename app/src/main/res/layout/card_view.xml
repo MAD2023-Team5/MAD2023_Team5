@@ -102,9 +102,28 @@
                     android:layout_marginStart="96dp"
                     android:layout_marginTop="-3dp"
                     android:baselineAligned="false"
-                    android:rotationY="180"
                     android:visibility="gone"
                     app:srcCompat="@drawable/baseline_thumb_down_alt_24" />
+
+                <TextView
+                    android:id="@+id/nolike"
+                    android:layout_width="41dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="46dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/nodislike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="52dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="TextView" />
 
 
             </RelativeLayout>

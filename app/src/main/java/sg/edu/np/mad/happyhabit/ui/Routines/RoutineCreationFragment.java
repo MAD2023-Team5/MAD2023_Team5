@@ -1,13 +1,21 @@
 package sg.edu.np.mad.happyhabit.ui.Routines;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCaller;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +44,7 @@ import sg.edu.np.mad.happyhabit.Routine;
 import sg.edu.np.mad.happyhabit.Sets;
 import sg.edu.np.mad.happyhabit.User;
 
-public class RoutineCreationFragment extends Fragment {
+public class RoutineCreationFragment extends Fragment  {
 
     private RoutineCreationViewModel mViewModel;
     private EditText tagInputField,description;
@@ -49,7 +57,9 @@ public class RoutineCreationFragment extends Fragment {
 
     private  FirebaseAuth firebaseAuth;
 
+    private static final int PICK_IMAGE_REQUEST = 1;
 
+    private  ImageView imageView;
 
     private DatabaseReference firebaseData,firebaseexData,firebaseuser;
 
@@ -157,6 +167,18 @@ public class RoutineCreationFragment extends Fragment {
 
         //// saving routine
 
+       imageView=view.findViewById(R.id.imageselect);
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+
+
+            }
+        });
+
+
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,6 +277,25 @@ public class RoutineCreationFragment extends Fragment {
         });
 
     }
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+
+//            Uri imageUri = data.getData();
+            // Set the selected image to your ImageView
+//            imageView.setImageURI(imageUri);
+
+        }
+        else{}
+    }
+
 
 //
 //    public  void retrieveExercise() {

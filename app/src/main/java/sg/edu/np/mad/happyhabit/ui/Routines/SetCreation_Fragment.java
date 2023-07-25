@@ -92,12 +92,17 @@ public class SetCreation_Fragment extends Fragment {
 
                 if (getArguments()!=null)
                 {
-                    List<Sets> sets= (List<Sets>) getArguments().getSerializable("sets");
-                    Log.i("editing", String.valueOf(sets.size()));
-                    for (Sets i:sets)
+                    if(getArguments().getSerializable("sets")!=null) {
+                        List<Sets> sets = (List<Sets>) getArguments().getSerializable("sets");
+                        Log.i("editing", String.valueOf(sets.size()));
+                        for (Sets i : sets) {
+                            addView(i, exerciseNames);
 
+                        }
+                    }
+                    else
                     {
-                        addView(i,exerciseNames);
+                        addView(exerciseNames);
 
                     }
 

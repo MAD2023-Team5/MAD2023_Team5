@@ -41,13 +41,13 @@ public class RoutineReaction {
     }
 
 
-    public RoutineReaction(User user, Routine routine, boolean isliked, boolean isdisliked) {
+    public RoutineReaction( boolean isliked, boolean isdisliked,Routine routine,User user) {
         this.user = user;
         this.routine = routine;
         this.isliked = isliked;
         this.isdisliked = isdisliked;
     }
 
-
-
+    public RoutineReaction() {
+    }
 }

@@ -247,7 +247,7 @@ public class FirebaseDataUploader {
 
 
         // Sample Routine_Reactions data
-        RoutineReaction routineReaction1 = new RoutineReaction(user1,routine3,true,false);
+        RoutineReaction routineReaction1 = new RoutineReaction(true,false,routine2,user1);
        // RoutineReaction routineReaction2 = new RoutineReaction(user2, "routine2", false, true);
 
         // Upload Routine_Reactions data to Firebase

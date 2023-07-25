@@ -24,6 +24,8 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
 
     private List<Routine> routines;
     private final OnItemClickListener listener;
+
+    private  final  OnItemClickListener deletelistener;
     private List<Routine> completeroutine;
 
 
@@ -34,8 +36,9 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
 
 
 
-    public UserRoutinesAdapter(OnItemClickListener listener) {
+    public UserRoutinesAdapter(OnItemClickListener listener,OnItemClickListener deletelistener) {
         this.listener = listener;
+        this.deletelistener=deletelistener;
     }
 
 
@@ -129,6 +132,13 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
             }
         });;
 
+        holder.deleteimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletelistener.onItemClick(routine);
+            }
+        });
+
     }
 
     @Override
@@ -147,7 +157,7 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
 
 //        private TextView textViewName;
 
-        ImageView titleImage,editimage;
+        ImageView titleImage,editimage,deleteimage;
         TextView routineName;
         TextView exerciseName;
 
@@ -167,6 +177,7 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
             userName = itemView.findViewById(R.id.textUser);
             exerciseName = itemView.findViewById(R.id.textExercise);
             editimage=itemView.findViewById(R.id.edit);
+            deleteimage=itemView.findViewById(R.id.delete_routine);
 
 
         }

@@ -81,8 +81,8 @@
 
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="205dp"
         android:hint="Add Tags"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,14 +107,26 @@
         android:layout_width="156dp"
         android:layout_height="wrap_content"
 
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/tagsContainer"
+
+
         android:layout_alignParentEnd="true"
-
-
-        android:layout_marginTop="305dp"
-        android:layout_marginEnd="125dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="121dp"
+        android:layout_marginEnd="137dp"
         android:text="next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tagInputField" />
+
+    <ImageView
+        android:id="@+id/imageselect"
+        android:layout_width="84dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="295dp"
+        android:layout_marginEnd="29dp"
+        tools:srcCompat="@drawable/baseline_folder_24" />
+
 
 </RelativeLayout>

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -19,9 +20,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,11 +54,15 @@ public class exnoFragment extends Fragment {
 
     private  ImageView eximage;
 
-    private Button donebutton;
+    private Button donebutton,imagebutton,videobutton;
 
     private RelativeLayout prev,skip;
 
     private Long milliLeft,sec,min;
+
+    private VideoView video;
+
+    private FrameLayout frameLayout;
 
 
     @Override
@@ -131,14 +143,73 @@ public class exnoFragment extends Fragment {
         extext=view.findViewById(R.id.exercise_title);
         extextno=view.findViewById(R.id.ecercise_no_of_sets);
         donebutton=view.findViewById(R.id.done_button);
+        imagebutton=view.findViewById(R.id.imagebutton);
+        videobutton=view.findViewById(R.id.videobutton);
+
+        video=view.findViewById(R.id.video);
+        frameLayout=view.findViewById(R.id.videoframe);
 
 
+        eximage.setVisibility(View.VISIBLE);
+
+        frameLayout.setVisibility(View.GONE);
 
 
         String path = set.getExercise().getImage();
         int res= getContext().getResources().getIdentifier(path, "drawable", getContext().getPackageName());
         eximage.setImageResource(res);
 
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        String videoPath = "Videos/"+path+".mp4"; // Replace with the actual path of your video
+        StorageReference videoRef = storage.getReference().child(videoPath);
+        // Set up the video playback
+
+        MediaController mediaController = new MediaController(getContext());
+        mediaController.setAnchorView(video);
+        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setVolume(0f, 0f);
+                mp.setLooping(true);
+            }
+        });
+
+        videoRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            // Once the download URL is retrieved, set it as the data source for the VideoView
+            video.setVideoURI(uri);
+
+            video.setMediaController(mediaController);
+            video.requestFocus();
+            video.start(); // Start playing the video
+        }).addOnFailureListener(exception -> {
+            Log.i("ERROR", String.valueOf(exception));
+            // Handle any errors that occur during the download or playback process
+            // For example, the video file might not exist in Firebase Storage
+        });
+
+
+        imagebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eximage.setVisibility(View.VISIBLE);
+
+                frameLayout.setVisibility(View.GONE);
+
+
+            }
+        });
+
+        videobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eximage.setVisibility(View.GONE);
+
+                frameLayout.setVisibility(View.VISIBLE);
+
+
+            }
+        });
 
         extext.setText(set.getExercise().getName());
 

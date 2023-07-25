@@ -181,7 +181,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
         ImageView titleImage;
         TextView routineName;
-        TextView exerciseName;
+        TextView exerciseName,nolikes,nodislikes;
 
         TextView userName;
 
@@ -198,6 +198,8 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
             routineName = itemView.findViewById(R.id.textRoutine);
             userName = itemView.findViewById(R.id.textUser);
             exerciseName = itemView.findViewById(R.id.textExercise);
+            nodislikes=itemView.findViewById(R.id.nodislike);
+            nolikes=itemView.findViewById(R.id.nolike);
 
             blankDislikeImageView=itemView.findViewById(R.id.blank_dislike);
             filledDislikeImageView=itemView.findViewById(R.id.fill_dislike);
@@ -211,6 +213,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 //            textViewDescription.setText(routine.getDescription());
 //            textViewName.setText(routine.getUser().getName());
 //            textViewTags.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
+
 
             routineName.setText(routine.getDescription());
             userName.setText(routine.getUser().getName());
@@ -244,34 +247,80 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
 
             });
+            blankLikeImageView.setVisibility(View.VISIBLE);
+            blankDislikeImageView.setVisibility(View.VISIBLE);
+            filledLikeImageView.setVisibility(View.GONE);
+            filledDislikeImageView.setVisibility(View.GONE);
+
 
             tcs.getTask().addOnSuccessListener(user -> {
 
 
                 String key = "routine" + routine.getRoutineNo() + "_user" + user.getUserNo();
                 Log.i("LIKEDISLIKE","key");
-                DatabaseReference reactionRef = FirebaseDatabase.getInstance().getReference("Routine_Reactions").child(key);
+                DatabaseReference reactionRef = FirebaseDatabase.getInstance().getReference("Routine_Reactions");
+
                 reactionRef.addValueEventListener(new ValueEventListener() {
+
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            boolean liked = snapshot.child("isliked").getValue(Boolean.class);
-                            boolean disliked = snapshot.child("isdisliked").getValue(Boolean.class);
 
-                            if (liked) {
-                                blankLikeImageView.setVisibility(View.GONE);
-                                filledLikeImageView.setVisibility(View.VISIBLE);
-                            } else {
-                                blankLikeImageView.setVisibility(View.VISIBLE);
-                                filledLikeImageView.setVisibility(View.GONE);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        nolikes.setText("0");
+                        nodislikes.setText("0");
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                            RoutineReaction reaction = snapshot.getValue(RoutineReaction.class);
+                            Routine routine1=snapshot.child("routine").getValue(Routine.class);
+                            User user1=snapshot.child("user").getValue(User.class);
+
+
+                            if (routine1.getRoutineNo() == routine.getRoutineNo()) {
+                                Log.i("ROUTINES", String.valueOf(routine.getRoutineNo()));
+                                boolean liked = snapshot.child("isliked").getValue(Boolean.class);
+                                boolean disliked = snapshot.child("isdisliked").getValue(Boolean.class);
+
+                                if(liked)
+                                {
+                                    Integer likes=Integer.parseInt((String)nolikes.getText())+1;
+                                    nolikes.setText(String.valueOf(likes));
+
+
+
+
+                                }
+                                else if (disliked) {
+
+
+                                    Integer dislikes=Integer.parseInt((String)nodislikes.getText())+1;
+                                    nodislikes.setText(String.valueOf(dislikes));
+
+                                }
+                                if(user1.getUserNo()==user.getUserNo())
+                                {
+                                    if (liked) {
+                                        blankLikeImageView.setVisibility(View.GONE);
+                                        filledLikeImageView.setVisibility(View.VISIBLE);
+                                    } else {
+                                        blankLikeImageView.setVisibility(View.VISIBLE);
+                                        filledLikeImageView.setVisibility(View.GONE);
+                                    }
+
+                                    if (disliked) {
+                                        blankDislikeImageView.setVisibility(View.GONE);
+                                        filledDislikeImageView.setVisibility(View.VISIBLE);
+                                    } else {
+                                        blankDislikeImageView.setVisibility(View.VISIBLE);
+                                        filledDislikeImageView.setVisibility(View.GONE);
+                                    }
+                                }
+                                else
+                                {
+                                    continue;
+                                }
                             }
-
-                            if (disliked) {
-                                blankDislikeImageView.setVisibility(View.GONE);
-                                filledDislikeImageView.setVisibility(View.VISIBLE);
-                            } else {
-                                blankDislikeImageView.setVisibility(View.VISIBLE);
-                                filledDislikeImageView.setVisibility(View.GONE);
+                            else
+                            {
+                                continue;
                             }
                         }
                     }
@@ -281,6 +330,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                         // Handle database error if needed
                     }
                 });
+
 
                 blankDislikeImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -296,6 +346,9 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                         blankLikeImageView.setVisibility(View.VISIBLE);
                         filledLikeImageView.setVisibility(View.GONE);
 
+                        Integer dislikes=Integer.parseInt((String)nodislikes.getText())+1;
+                        nodislikes.setText(String.valueOf(dislikes));
+
                     }
                 });
 
@@ -308,6 +361,9 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
                         blankDislikeImageView.setVisibility(View.VISIBLE);
                         filledDislikeImageView.setVisibility(View.GONE);
+
+                        Integer dislikes=Integer.parseInt((String)nodislikes.getText())-1;
+                        nodislikes.setText(String.valueOf(dislikes));
 
                     }
                 });
@@ -323,6 +379,9 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                         filledDislikeImageView.setVisibility(View.GONE);
                         blankLikeImageView.setVisibility(View.GONE);
                         filledLikeImageView.setVisibility(View.VISIBLE);
+
+                        Integer likes=Integer.parseInt((String)nolikes.getText())+1;
+                        nolikes.setText(String.valueOf(likes));
                     }
                 });
 
@@ -335,6 +394,8 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
                         blankLikeImageView.setVisibility(View.VISIBLE);
                         filledLikeImageView.setVisibility(View.GONE);
+                        Integer likes=Integer.parseInt((String)nolikes.getText())-1;
+                        nolikes.setText(String.valueOf(likes));
                     }
                 });
             }).addOnFailureListener(e ->
@@ -359,7 +420,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
     }
 
     private void updateReactionStatus(String key, User user, Routine routine, boolean like, boolean dislike) {
-        RoutineReaction rt = new RoutineReaction(user,routine,like,dislike);
+        RoutineReaction rt = new RoutineReaction(like,dislike,routine,user);
         FirebaseDatabase.getInstance().getReference("Routine_Reactions").child(key).setValue(rt);
 
         Log.i("LIKE_DISLIKE","upload");
