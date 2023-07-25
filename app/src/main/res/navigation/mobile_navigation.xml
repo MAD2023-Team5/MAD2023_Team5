@@ -62,7 +62,7 @@
         android:id="@+id/navigation_profile"
         android:name="sg.edu.np.mad.happyhabit.ui.Profile.ProfileFragment"
         android:label="Profile Page"
-        tools:layout="@layout/fragment_profile2">
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_navigation_profile_to_navigation_edit_profile"
             app:destination="@id/navigation_edit_profile"

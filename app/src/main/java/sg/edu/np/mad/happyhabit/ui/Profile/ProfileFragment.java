@@ -1,15 +1,15 @@
 package sg.edu.np.mad.happyhabit.ui.Profile;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -20,7 +20,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import sg.edu.np.mad.happyhabit.R;
@@ -35,12 +34,16 @@ public class ProfileFragment extends Fragment {
     private TextView textViewDescription;
     private TextView textViewEmail;
 
+    private TextView textViewPassword;
+
     private Button editProfileButton;
+    private Button showHideBtn;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile2, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         firebaseAuth = FirebaseAuth.getInstance();
@@ -51,6 +54,9 @@ public class ProfileFragment extends Fragment {
         textViewDescription = view.findViewById(R.id.pfpDescription);
         textViewEmail = view.findViewById(R.id.pfpEmail);
         editProfileButton = view.findViewById(R.id.editProfileButton);
+        textViewPassword = view.findViewById(R.id.pfpPassword);
+        showHideBtn = view.findViewById(R.id.showHideBtn);
+
 
         databaseReference.child(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -58,16 +64,36 @@ public class ProfileFragment extends Fragment {
                 String name = dataSnapshot.child("name").getValue(String.class);
                 String description = dataSnapshot.child("description").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
+                String password = dataSnapshot.child("password").getValue(String.class);
+
 
                 textViewUserName.setText(name);
                 textViewName.setText(name);
                 textViewDescription.setText(description);
                 textViewEmail.setText(email);
+                textViewPassword.setText(password);
+                textViewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Handle database error
+            }
+        });
+
+        showHideBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                editTextPassword = view.findViewById(R.id.pfpPassword);
+                if (showHideBtn.getText().toString().equals("Show")) {
+                    textViewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//                    editTextPassword.setText(password);
+                    showHideBtn.setText("Hide");
+                } else {
+                    textViewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    showHideBtn.setText("Show");
+                }
             }
         });
 
@@ -95,9 +121,5 @@ public class ProfileFragment extends Fragment {
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
         navController.navigate(R.id.navigation_edit_profile);
-//        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//        transaction.replace(R.id.fragment_container, new EditProfileFragment());
-//        transaction.addToBackStack(null);
-//        transaction.commit();
     }
 }
