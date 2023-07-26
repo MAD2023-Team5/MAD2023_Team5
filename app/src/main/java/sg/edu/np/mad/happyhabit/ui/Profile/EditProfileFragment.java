@@ -42,6 +42,7 @@ public class EditProfileFragment extends Fragment {
     String originalName, originalDescription, originalEmail;
 
     private Button saveButton;
+    private Button changeImage;
     private ProfilePicViewModel viewModel;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -162,6 +163,15 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
+        changeImage = view.findViewById(R.id.changeImage);
+        changeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the capture image page
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigate(R.id.navigation_captureImage);
+            }
+        });
         return view;
     }
     private boolean isNameChanged() {

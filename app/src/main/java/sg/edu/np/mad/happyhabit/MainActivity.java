@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity{
 
 
         navView = findViewById(R.id.nav_view);
-////            Toolbar toolbar = findViewById(R.id.toolbar);
-////            setSupportActionBar(toolbar);
+//            Toolbar toolbar = findViewById(R.id.toolbar);
+//            setSupportActionBar(toolbar);
 
         // creating the bottom navigations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_signin, R.id.navigation_signup, R.id.navigation_routine, R.id.navigation_user, R.id.navigation_calorietracker, R.id.navigation_routine_exercises,R.id.navigation_exno,  R.id.navigation_profile, R.id.navigation_edit_profile)

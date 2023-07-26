@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -137,24 +138,10 @@ public class ProfilePic extends Fragment implements Serializable {
             }
         });
 
-        Intent pickIntent = new Intent();
-        pickIntent.setType("image/*");
-        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        String pickTitle = "Select or take a new Picture";
-        Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-        chooserIntent.putExtra
-                (
-                        Intent.EXTRA_INITIAL_INTENTS,
-                        new Intent[] { takePhotoIntent }
-                );
-
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    // Here we need to check if the activity that was triggers was the Image Gallery.
-                    // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
+                    // Here we need to check if the activity that was triggers was the Image Camera.
                     // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
                     // Determine URI of camera image to save.
 
@@ -174,8 +161,8 @@ public class ProfilePic extends Fragment implements Serializable {
                                 CircleImageView croppedImageView = click_image_id;
                                 croppedImageView.setImageBitmap(myBitmap);
                                 imageView.setImageBitmap(myBitmap);
-                                String image = BitMapToString(myBitmap);
-                                databaseReference.child(userEmail).child(image).setValue(image);
+                                String newImage = BitMapToString(myBitmap);
+                                databaseReference.child(userEmail).child(newImage).setValue(newImage);
                                 UploadImageToFirebaseStorage(picUri);
                                 Log.v(TAG, "ACTIVITY SUCCESSFUL");
                             }
@@ -196,7 +183,7 @@ public class ProfilePic extends Fragment implements Serializable {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             // Start the activity with camera_intent
             launcher.launch(intent);
-            // Navigate to the edit profile page
+            // Navigate back to the profile page
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.navigation_edit_profile);
         });
