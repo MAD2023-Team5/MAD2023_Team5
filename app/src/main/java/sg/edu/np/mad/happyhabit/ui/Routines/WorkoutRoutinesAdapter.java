@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.database.DataSnapshot;
@@ -213,7 +216,16 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 //            textViewDescription.setText(routine.getDescription());
 //            textViewName.setText(routine.getUser().getName());
 //            textViewTags.setText(String.valueOf(routine.getTags()).replace("[","").replace("]",""));
-
+            if(routine.getUrl()!=null)
+            {
+                Glide.with(itemView)
+                        .load(routine.getUrl())
+                        .apply(new RequestOptions()// Optional placeholder while loading
+                                .error(R.drawable.girl_exercise_2) // Optional error image if loading fails
+                                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image for better performance
+                        )
+                        .into(titleImage);
+            }
 
             routineName.setText(routine.getDescription());
             userName.setText(routine.getUser().getName());

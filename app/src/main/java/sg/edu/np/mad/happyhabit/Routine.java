@@ -1,13 +1,30 @@
 package sg.edu.np.mad.happyhabit;
 
+import android.annotation.SuppressLint;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class Routine implements Serializable {
+@SuppressLint("ParcelCreator")
+public class Routine extends AbstractRoutine implements Serializable {
     private int routineNo;
     private List<Sets> setsList;
     private User user;
     private String description;
+
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     private List<String> Tags;
     private int LikeCount;
@@ -142,6 +159,13 @@ public class Routine implements Serializable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
 
+    }
 }

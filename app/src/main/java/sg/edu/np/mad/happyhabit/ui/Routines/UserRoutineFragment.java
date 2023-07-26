@@ -88,20 +88,16 @@ public class UserRoutineFragment extends Fragment {
 
 
             }
-        }, new UserRoutinesAdapter.OnItemClickListener() {
+        }, new UserRoutinesAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemClick(Routine routine)
-            {
+            public void onItemLongClick(Routine routine) {
                 showDeleteConfirmationDialog(routine);
 
             }
         });
 
 
-
-
-
-        userroutineAdapter.setRoutines(new ArrayList<Routine>());
+                userroutineAdapter.setRoutines(new ArrayList<Routine>());
         userroutineAdapter.setCompleteroutineRoutine(new ArrayList<Routine>());
         retrieveWorkoutRoutines();
 
@@ -186,7 +182,8 @@ public class UserRoutineFragment extends Fragment {
     }
     private void getExercisesForRoutine(Routine routine)
 
-    {   String child = "routine" + routine.getRoutineNo();
+    {
+        String child = "routine" + routine.getRoutineNo();
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("Sets").child(child);
         db.addValueEventListener(new ValueEventListener() {
@@ -218,7 +215,7 @@ public class UserRoutineFragment extends Fragment {
 
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("editroutine", routine); // Pass the clicked routine to the fragment
+                bundle.putSerializable("editroutine", (Serializable) routine); // Pass the clicked routine to the fragment
                 bundle.putSerializable("sets", (Serializable) SetRoutines);
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
                 navController.navigate(R.id.navigation_creation,bundle);

@@ -5,6 +5,10 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+
 
 import androidx.activity.result.ActivityResultCaller;
 import androidx.activity.result.ActivityResultLauncher;
@@ -33,10 +37,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import sg.edu.np.mad.happyhabit.Exercise;
 import sg.edu.np.mad.happyhabit.R;
@@ -97,6 +105,8 @@ public class RoutineCreationFragment extends Fragment  {
         tagInputField = view.findViewById(R.id.tagInputField);
         addTagButton = view.findViewById(R.id.addTagButton);
         tagsContainer = view.findViewById(R.id.tagsContainer);
+        imageView=view.findViewById(R.id.getImage);
+        imageView.setVisibility(View.VISIBLE);
 
         tags= new ArrayList<>();
 
@@ -125,6 +135,7 @@ public class RoutineCreationFragment extends Fragment  {
                 Routine routine = (Routine) getArguments().getSerializable("editroutine");
                 mViewModel.setUser(routine.getUser());
                 description.setText(routine.getDescription());
+
             if (routine.getTags()!=null){
             for (String tag:routine.getTags())
             {
@@ -132,6 +143,17 @@ public class RoutineCreationFragment extends Fragment  {
                 tagInputField.setText("");
 
             }
+            }
+
+            if(routine.getUrl()!=null)
+            {
+                Glide.with(this)
+                        .load(routine.getUrl())
+                        .apply(new RequestOptions()// Optional placeholder while loading
+                                .error(R.drawable.girl_exercise_2) // Optional error image if loading fails
+                                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image for better performance
+                        )
+                        .into(imageView);
             }
         }
         else
@@ -166,9 +188,8 @@ public class RoutineCreationFragment extends Fragment  {
         }
 
         //// saving routine
+//
 
-       imageView=view.findViewById(R.id.imageselect);
-        imageView.setVisibility(View.VISIBLE);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,7 +243,8 @@ public class RoutineCreationFragment extends Fragment  {
             routine1 = new Routine(max + 1, mViewModel.getUser(), description.getText().toString(), tags);
         }
 
-        bundle.putSerializable("routine", (Serializable) routine1);
+        bundle.putSerializable("routine", routine1);
+        routine1.setUrl(mViewModel.getURL());
 
         NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main);
         navController.navigate(R.id.navigation_set_creation,bundle);
@@ -278,8 +300,12 @@ public class RoutineCreationFragment extends Fragment  {
 
     }
     private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Log.i("TESTING",intent.toString());
+        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+
     }
 
     @Override
@@ -288,12 +314,54 @@ public class RoutineCreationFragment extends Fragment  {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
 
-//            Uri imageUri = data.getData();
-            // Set the selected image to your ImageView
-//            imageView.setImageURI(imageUri);
+            Uri imageUri = data.getData();
+//             Set the selected image to your ImageView
+            imageView.setImageURI(imageUri);
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+
+
+            String imageName = generateImageNameFromUri(imageUri);
+
+// Create a reference to the image file in Firebase Storage
+            StorageReference storageRef = storage.getReference().child("routine_images").child(imageName);
+
+// Upload the image data to the Storage reference
+            UploadTask uploadTask = storageRef.putFile(imageUri);
+
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                // Image upload is successful, you can get the download URL of the image
+                storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    // uri contains the download URL of the uploaded image
+                    String imageUrl = uri.toString();
+                    mViewModel.setURL(imageUrl);
+
+
+                    // Now you can save this URL to your Firebase Realtime Database or Firestore
+                    // or use it as needed in your app.
+                }).addOnFailureListener(e -> {
+                    // Handle any errors while getting the download URL
+                    Log.e("FirebaseStorage", "Error getting download URL: " + e.getMessage());
+                });
+            }).addOnFailureListener(exception -> {
+                // Handle any errors while uploading the image
+                Log.e("FirebaseStorage", "Error uploading image: " + exception.getMessage());
+            });
+
+
 
         }
-        else{}
+        else
+        {
+            Log.i("TESTING ","GOES TO ELSE STATEMENT");
+        }
+    }
+
+    private String generateImageNameFromUri(Uri imageUri) {
+        String timeStamp = String.valueOf(System.currentTimeMillis());
+        String randomString = UUID.randomUUID().toString();
+        return timeStamp + "_" + randomString;
     }
 
 

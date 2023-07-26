@@ -130,14 +130,14 @@ public class RoutineFragment extends Fragment {
             }
         });
 
-        addbutton =view.findViewById(R.id.imageView);
-        addbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main);
-                navController.navigate(R.id.navigation_creation);
-            }
-        });
+//        addbutton =view.findViewById(R.id.imageView);
+//        addbutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main);
+//                navController.navigate(R.id.navigation_creation);
+//            }
+//        });
 
 
 

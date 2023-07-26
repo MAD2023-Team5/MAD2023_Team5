@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -25,18 +29,23 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
     private List<Routine> routines;
     private final OnItemClickListener listener;
 
-    private  final  OnItemClickListener deletelistener;
+    private  final OnItemLongClickListener deletelistener;
     private List<Routine> completeroutine;
 
 
 
     public interface OnItemClickListener {
         void onItemClick(Routine routine);
+
+    }
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Routine routine);
     }
 
 
 
-    public UserRoutinesAdapter(OnItemClickListener listener,OnItemClickListener deletelistener) {
+    public UserRoutinesAdapter(OnItemClickListener listener,OnItemLongClickListener deletelistener) {
         this.listener = listener;
         this.deletelistener=deletelistener;
     }
@@ -124,7 +133,7 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
     public void onBindViewHolder(@NonNull UserRoutineViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Routine routine = routines.get(position);
         holder.bind(routine);
-        holder.editimage.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             //calling the function on bind as it is easier get the routine information.
             public void onClick(View v) {
@@ -135,7 +144,7 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
         holder.deleteimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletelistener.onItemClick(routine);
+                deletelistener.onItemLongClick(routine);
             }
         });
 
@@ -196,6 +205,18 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
             else {
                 exerciseName.setVisibility(View.GONE);
             }
+
+            if(routine.getUrl()!=null)
+            {
+                Glide.with(itemView)
+                        .load(routine.getUrl())
+                        .apply(new RequestOptions()// Optional placeholder while loading
+                                .error(R.drawable.girl_exercise_2) // Optional error image if loading fails
+                                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image for better performance
+                        )
+                        .into(titleImage);
+            }
+
 
 
 

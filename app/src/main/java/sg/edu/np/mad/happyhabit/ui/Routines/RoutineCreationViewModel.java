@@ -18,6 +18,8 @@ public class RoutineCreationViewModel extends ViewModel {
 
     private List<String> exericesName;
 
+    private String URL;
+
     public User getUser() {
         return user;
     }
@@ -64,6 +66,14 @@ public class RoutineCreationViewModel extends ViewModel {
 
     public void setExerciseList(List<Exercise> exerciseList) {
         this.exerciseList = exerciseList;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 // TODO: Implement the ViewModel
 }
