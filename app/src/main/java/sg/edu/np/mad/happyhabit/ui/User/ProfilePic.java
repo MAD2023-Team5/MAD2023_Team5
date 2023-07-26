@@ -49,6 +49,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -68,6 +69,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,11 +80,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import sg.edu.np.mad.happyhabit.FirebaseDataUploader;
 import sg.edu.np.mad.happyhabit.R;
 
-public class ProfilePic extends Fragment {
+public class ProfilePic extends Fragment implements Serializable {
     Bitmap myBitmap;
     Uri picUri;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
+    private ProfilePicViewModel viewModel;
     
     // Define the button and imageview type variable
     FloatingActionButton fab;
@@ -95,8 +98,6 @@ public class ProfilePic extends Fragment {
         return contextOfApplication;
     }
 
-    // Define the pic id
-    private final static int ALL_PERMISSIONS_RESULT = 107;
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -119,20 +120,23 @@ public class ProfilePic extends Fragment {
         String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", "");;
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
+        viewModel = new ViewModelProvider(requireActivity()).get(ProfilePicViewModel.class);
         databaseReference.child(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String data = dataSnapshot.child("image").getValue(String.class);
                 Bitmap image = StringToBitMap(data);
                 click_image_id.setImageBitmap(image);
+                Log.e(TAG, "Database Read");
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle database error
+                Log.e(TAG, "Database Error");
             }
         });
-        // Floating action button (fab) onclick caller
+
         Intent pickIntent = new Intent();
         pickIntent.setType("image/*");
         pickIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -161,8 +165,8 @@ public class ProfilePic extends Fragment {
                         ImageView imageView = view.findViewById(R.id.imageView);
                         if (getPickImageResultUri(data) != null) {
                             picUri = getPickImageResultUri(data);
-                            // get the file url
-//                            onSaveInstanceState(savedInstanceState);
+
+                            // BitMap is data structure of image file which store the image in memory
                             try {
                                 myBitmap = MediaStore.Images.Media.getBitmap(applicationContext.getContentResolver(), picUri);
                                 myBitmap = getResizedBitmap(myBitmap, 500);
@@ -171,16 +175,18 @@ public class ProfilePic extends Fragment {
                                 croppedImageView.setImageBitmap(myBitmap);
                                 imageView.setImageBitmap(myBitmap);
                                 String image = BitMapToString(myBitmap);
-                                databaseReference.child(userEmail).child("image").setValue(image);
+                                databaseReference.child(userEmail).child(image).setValue(image);
+                                UploadImageToFirebaseStorage(picUri);
                                 Log.v(TAG, "ACTIVITY SUCCESSFUL");
                             }
                             catch (IOException e) {
-                                e.printStackTrace();
+                                throw new RuntimeException(e);
                             }
                         }
                         else {
                             //cancelled
                             Toast.makeText(ProfilePic.getContextOfApplication(), "Cancelled...", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "ACTIVITY FAILED");
                         }
                     }
                 });
@@ -188,30 +194,42 @@ public class ProfilePic extends Fragment {
         fab.setOnClickListener(v -> {
             // Create the camera_intent ACTION_IMAGE_CAPTURE it will open the camera for capture the image
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            // Start the activity with camera_intent, and request pic id
+            // Start the activity with camera_intent
             launcher.launch(intent);
             // Navigate to the edit profile page
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigate(R.id.navigation_edit_profile);
         });
 
-
         return view;
     }
 
-//     Get URI to image received from capture by camera.
+    // Get URI to image received from capture by camera.
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
         File getImage = ((AppCompatActivity) requireActivity()).getExternalCacheDir();
         if (getImage != null) {
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "profile.png"));
         }
-        UploadImageToFirebase(outputFileUri);
         return outputFileUri;
     }
 
+//     Get the URI of the selected image
+//     Will return the correct URI for camera and gallery image.
+//     @param data the returned data of the activity result
+    public Uri getPickImageResultUri(Intent data) {
+        boolean isCamera = true;
+        if (data != null) {
+            String action = data.getAction();
+            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+        }
+        Log.e(TAG, "IMAGE COLLECTED");
+        return isCamera ? getCaptureImageOutputUri() : data.getData();
+    }
+
+
 // upload & store image into firebase storage
-    private void UploadImageToFirebase(Uri image) {
+    private void UploadImageToFirebaseStorage(Uri image) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference fileRef = storageReference.child("images/profile.png");
         fileRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -278,31 +296,14 @@ public class ProfilePic extends Fragment {
     }
 
     // Convert string from database to bitmap image
-    /**
-     * @param encodedString
-     * @return bitmap (from given string)
-     */
     public Bitmap StringToBitMap(String encodedString){
         try {
             byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
+            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         } catch(Exception e) {
             e.getMessage();
             return null;
         }
-    }
-
-//     Get the URI of the selected image
-//     Will return the correct URI for camera and gallery image.
-//     @param data the returned data of the activity result
-    public Uri getPickImageResultUri(Intent data) {
-        boolean isCamera = true;
-        if (data != null) {
-            String action = data.getAction();
-            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
-        }
-        return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
 
 //    @Override

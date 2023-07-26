@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import sg.edu.np.mad.happyhabit.R;
 import sg.edu.np.mad.happyhabit.ui.User.ProfilePic;
+import sg.edu.np.mad.happyhabit.ui.User.ProfilePicViewModel;
 
 public class EditProfileFragment extends Fragment {
 
@@ -40,12 +42,13 @@ public class EditProfileFragment extends Fragment {
     String originalName, originalDescription, originalEmail;
 
     private Button saveButton;
-
+    private ProfilePicViewModel viewModel;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
+        viewModel = new ViewModelProvider(requireActivity()).get(ProfilePicViewModel.class);
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         firebaseAuth = FirebaseAuth.getInstance();
         String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", "");

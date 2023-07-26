@@ -22,6 +22,9 @@
         android:name="sg.edu.np.mad.happyhabit.ui.User.ProfilePic"
         android:label="@string/title_capture_image"
         tools:layout="@layout/capture_image" />
+        <action
+            android:id="@+id/action_image_to_edit_profile"
+            app:popUpTo="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/navigation_routine"
         android:name="sg.edu.np.mad.happyhabit.ui.Routines.RoutineFragment"
@@ -80,7 +83,8 @@
         android:id="@+id/navigation_set_creation"
         android:name="sg.edu.np.mad.happyhabit.ui.Routines.SetCreation_Fragment"
         tools:layout="@layout/fragment_set_creation">
-</fragment>
+    </fragment>
+
     <fragment android:id="@+id/navigation_user_routine"
         android:name="sg.edu.np.mad.happyhabit.ui.Routines.UserRoutineFragment"
         tools:layout="@layout/fragment_user_routine">

@@ -8,8 +8,9 @@ import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
     private int userNo;
     private String email;
     private String password;

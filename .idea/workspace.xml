@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55879a5d-6b37-4e99-bb5a-1930a213e08e" name="Changes" comment="Base files for Calorie Tracker (no codes in)">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/baseline_folder_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garbage.xml" afterDir="false" />
+    <list default="true" id="55879a5d-6b37-4e99-bb5a-1930a213e08e" name="Changes" comment="Merging branches">
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" afterDir="false" />
@@ -19,21 +17,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/FirebaseDataUploader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/FirebaseDataUploader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/RoutineReaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/RoutineReaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/RoutineCreationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/RoutineCreationFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/SetCreation_Fragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/SetCreation_Fragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/UserRoutineFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/UserRoutineFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/UserRoutinesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/UserRoutinesAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/WorkoutRoutinesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/WorkoutRoutinesAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/exnoFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Routines/exnoFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/card_user_routine.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/card_user_routine.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/card_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/card_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_exno.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_exno.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_routine_creation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_routine_creation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_routine.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_routine.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/EditProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/Profile/EditProfileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/User/ProfilePic.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/sg/edu/np/mad/happyhabit/ui/User/ProfilePic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_user_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_user_details.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
@@ -42,7 +32,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\vibu\.android\avd\Pixel_6_API_33_1.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\kueke\.android\avd\Pixel_6_API_33_2.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -54,7 +44,6 @@
         <option value="resourceFile" />
         <option value="layoutResourceFile" />
         <option value="Class" />
-        <option value="layoutResourceFile_vertical" />
       </list>
     </option>
   </component>
@@ -105,7 +94,7 @@
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/angcl/Documents/MAD/MAD2023_Team5/app/src/main/res/drawable&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kimlu/Desktop/Ngee Ann Poly/Year 3 Semester 1/MAD/Asg/Newest Push&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/angcl/Documents/MAD/MAD2023_Team5/app/src/main/res/drawable&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -117,14 +106,13 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\angcl\Documents\MAD\MAD2023_Team5_final\app\src\main\res\layout" />
       <recent name="C:\Users\angcl\Documents\MAD\MAD2023_Team5\app\src\main\res\drawable" />
       <recent name="C:\Users\kimlu\Desktop\Ngee Ann Poly\Year 3 Semester 1\MAD\Asg\PushTime\app\src\main\res\layout" />
       <recent name="C:\Users\vibu\MAD2023_Team5\app\src\main\java\sg\edu\np\mad\happyhabit\ui\Profile" />
       <recent name="C:\Users\vibu\MAD2023_Team5\app\src\main\res\layout" />
+      <recent name="C:\Users\kimlu\Desktop\Ngee Ann Poly\Year 3 Semester 1\MAD\Asg\Latest Push\app\src\main\res\drawable" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\angcl\Documents\MAD\MAD2023_Team5_final\app\src\main\res\drawable" />
       <recent name="C:\Users\vibu\MAD2023_Team5\app\src\main\java\sg\edu\np\mad\happyhabit\ui\Routines" />
     </key>
     <key name="android.template.426457035">
@@ -134,10 +122,6 @@
       <recent name="sg.edu.np.mad.happyhabit.ui.User" />
       <recent name="sg.edu.np.mad.happyhabit.ui.SignIn" />
       <recent name="sg.edu.np.mad.happyhabit.ui.Routines" />
-      <recent name="sg.edu.np.mad.happyhabit.ui" />
-    </key>
-    <key name="android.template.-1117035522">
-      <recent name="sg.edu.np.mad.happyhabit.ui.CalorieTracker" />
       <recent name="sg.edu.np.mad.happyhabit.ui" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">

@@ -8,6 +8,7 @@
     android:background="#415A9E"
     tools:context=".MainActivity"
     android:windowSoftInputMode="adjustNothing"
+    android:fitsSystemWindows="true"
     android:label="@string/app_name">
 <!--    android:paddingTop="?attr/actionBarSize"-->
 
@@ -15,6 +16,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingClass" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
