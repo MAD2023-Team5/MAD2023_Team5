@@ -85,10 +85,8 @@ public class ProfileFragment extends Fragment {
         showHideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                editTextPassword = view.findViewById(R.id.pfpPassword);
                 if (showHideBtn.getText().toString().equals("Show")) {
                     textViewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                    editTextPassword.setText(password);
                     showHideBtn.setText("Hide");
                 } else {
                     textViewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -97,16 +95,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        editProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to the EditProfileFragment
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new EditProfileFragment());
-                transaction.addToBackStack(null); // Optional: Add to back stack for fragment navigation
-                transaction.commit();
-            }
-        });
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
