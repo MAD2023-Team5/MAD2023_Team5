@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity{
         sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-//        FirebaseDataUploader Fd = new FirebaseDataUploader();
-//        Fd.onUpdate();
+        FirebaseDataUploader Fd = new FirebaseDataUploader();
+        Fd.onUpdate();
 
 
         Log.i(title, "Create Login Page");

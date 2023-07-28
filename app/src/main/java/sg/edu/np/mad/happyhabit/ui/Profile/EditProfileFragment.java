@@ -31,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import sg.edu.np.mad.happyhabit.R;
-import sg.edu.np.mad.happyhabit.ui.User.ProfilePicViewModel;
+import sg.edu.np.mad.happyhabit.ui.Profile.ProfilePicViewModel;
 
 public class EditProfileFragment extends Fragment {
 

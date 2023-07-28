@@ -19,7 +19,7 @@
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/navigation_captureImage"
-        android:name="sg.edu.np.mad.happyhabit.ui.User.ProfilePic"
+        android:name="sg.edu.np.mad.happyhabit.ui.Profile.ProfilePic"
         android:label="@string/title_capture_image"
         tools:layout="@layout/capture_image" />
         <action
