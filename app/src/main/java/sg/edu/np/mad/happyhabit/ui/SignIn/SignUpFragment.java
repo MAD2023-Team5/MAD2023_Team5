@@ -23,14 +23,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import sg.edu.np.mad.happyhabit.R;
+import sg.edu.np.mad.happyhabit.User;
+import sg.edu.np.mad.happyhabit.ui.Profile.EditProfileFragment;
 
 public class SignUpFragment extends Fragment {
 
     private SignUpviewmodel mViewModel;
 
     private FirebaseAuth auth;
+
+    private FirebaseDatabase database;
 
     public static SignUpFragment newInstance() {
         return new SignUpFragment();
@@ -69,11 +75,21 @@ public class SignUpFragment extends Fragment {
                 }
 
                 auth.createUserWithEmailAndPassword(user, passWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+
+
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            User user1 = new User(10,user,passWord,"","","");
+                            FirebaseDatabase fd= FirebaseDatabase.getInstance();
+                            DatabaseReference rootRef = fd.getReference().child("Users");
+                            rootRef.child( user1.getEmail().replace(".","")).setValue(user1);
+
                             Toast.makeText(getContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getContext(), SignInFragment.class));
+                            startActivity(new Intent(getContext(), EditProfileFragment.class));
                         } else {
                             Toast.makeText(getContext(), "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

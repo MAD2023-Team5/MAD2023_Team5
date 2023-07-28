@@ -54,6 +54,10 @@ public class RoutineFragment extends Fragment {
     private  SearchView searchView;
     private ImageView addbutton;
 
+    public static Fragment newInstance() {
+        return  newInstance();
+    }
+
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -101,9 +105,7 @@ public class RoutineFragment extends Fragment {
         routineAdapter.setCompleteroutineRoutine(new ArrayList<Routine>());
         if (savedInstanceState!=null)
         {
-            Log.i("bro u here","here");
-            routineAdapter.setCompleteroutineRoutine((List<Routine>) savedInstanceState.getSerializable("routine_list"));
-            routineAdapter.setCompleteroutineRoutine((List<Routine>) savedInstanceState.getSerializable("routine_list"));
+            retrieveWorkoutRoutines();
         }
         else{
         retrieveWorkoutRoutines();

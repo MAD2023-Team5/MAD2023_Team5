@@ -24,6 +24,7 @@ public class FirebaseDataUploader {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference rootRef = database.getReference();
 
+
         // Initialize Firebase Cloud Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
