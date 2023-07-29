@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ public class FoodDialog {
     Dialog dialog;
     List<Food> list;
     RecyclerView recyclerView;
+
+    ImageView foodImage;
     DatabaseReference mFoodRef, selectedFood;
     FirebaseAuth mAuth;
     FirebaseUser user;

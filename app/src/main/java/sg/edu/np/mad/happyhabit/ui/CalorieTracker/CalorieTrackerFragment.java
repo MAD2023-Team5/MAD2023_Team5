@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,9 +31,12 @@ import sg.edu.np.mad.happyhabit.R;
 public class CalorieTrackerFragment extends Fragment {
 
     DatabaseReference selectedFood;
-    List<Food> listFood;
-    TextView breakfastList, dinnerList, lunchList, foodCalTv, dinnerCalTv, lunchCalTv;
+    List<Food> listFood, foodlist;
+    TextView foodCalTv, dinnerCalTv, lunchCalTv, breakfastList, lunchList, dinnerList;
+    RecyclerView breakfastRecyclerView, lunchRecyclerView, dinnerRecyclerView;
     TextView intakecalorie;
+
+    Button addBreakfast, lunchAddButton, dinnerAddButton;
 
     int totalBreakfastCalories = 0;
     int totalDinnerCalories = 0;
@@ -47,18 +53,43 @@ public class CalorieTrackerFragment extends Fragment {
 
         selectedFood = FirebaseDatabase.getInstance().getReference().child("SelectedFood");
 
-        lunchList = rootView.findViewById(R.id.lunchList);
-        dinnerList = rootView.findViewById(R.id.dinnerList);
+        lunchRecyclerView = rootView.findViewById(R.id.lunchRecyclerView);
+        dinnerRecyclerView = rootView.findViewById(R.id.dinnerRecyclerView);
         intakecalorie = rootView.findViewById(R.id.intakecalorie);
         lunchCalTv = rootView.findViewById(R.id.lunchCalTv);
         dinnerCalTv = rootView.findViewById(R.id.dinnerCalTv);
-        breakfastList = rootView.findViewById(R.id.breakfastList);
+        breakfastRecyclerView = rootView.findViewById(R.id.breakfastRecyclerView);
         foodCalTv = rootView.findViewById(R.id.foodCalTv);
+        addBreakfast = rootView.findViewById(R.id.addBreakfast);
+        lunchAddButton = rootView.findViewById(R.id.lunchAddBtton);
+        dinnerAddButton = rootView.findViewById(R.id.dinnerAddBtton);
         listFood = new ArrayList<>();
         FirebaseApp.initializeApp(requireContext());
 
+
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+
+        user = mAuth.getInstance().getCurrentUser();
+
+
+        addBreakfast.setOnClickListener(view -> {
+            FoodDialog foodDialog = new FoodDialog(getContext(), "Breakfast");
+            foodDialog.show();
+
+        });
+
+        lunchAddButton.setOnClickListener(view -> {
+            FoodDialog foodDialog = new FoodDialog(getContext(), "Lunch");
+            foodDialog.show();
+        });
+
+        dinnerAddButton.setOnClickListener(view -> {
+            FoodDialog foodDialog = new FoodDialog(getContext(), "Dinner");
+            foodDialog.show();
+        });
+
 
         selectedFood.child("A").child("Breakfast").addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,7 +114,54 @@ public class CalorieTrackerFragment extends Fragment {
             }
         });
 
-        // Add similar ValueEventListener for Lunch and Dinner
+        selectedFood.child("A").child("Lunch").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    StringBuffer stringBuffer = new StringBuffer();
+                    int calories = 0;
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        Food food = snapshot1.getValue(Food.class);
+                        stringBuffer.append(food.getFoodName() + " ");
+                        calories = calories + food.getFoodCalorie();
+                    }
+                    lunchList.setText(stringBuffer.toString());
+                    lunchCalTv.setText(calories + " kcal");
+                    totalLunchCalories = calories;
+                    sumupCal();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        selectedFood.child("A").child("Dinner").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    StringBuffer stringBuffer = new StringBuffer();
+                    int calories = 0;
+
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        Food food = snapshot1.getValue(Food.class);
+                        stringBuffer.append(food.getFoodName() + " ");
+                        calories = calories + food.getFoodCalorie();
+                    }
+                    dinnerList.setText(stringBuffer.toString());
+                    dinnerCalTv.setText(calories + " kcal");
+                    totalDinnerCalories = calories;
+                    sumupCal();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         return rootView;
     }
@@ -91,4 +169,5 @@ public class CalorieTrackerFragment extends Fragment {
     private void sumupCal() {
         intakecalorie.setText(totalBreakfastCalories + totalDinnerCalories + totalLunchCalories + "");
     }
+
 }

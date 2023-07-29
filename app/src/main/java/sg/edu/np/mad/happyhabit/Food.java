@@ -12,7 +12,7 @@ public class Food {
     public Food() {
     }
 
-    public Food(int foodCalorie, String foodCat, String foodName, int foodNo, int foodServing, boolean isSelected) {
+    public Food(int foodNo, String foodName, String foodCat, int foodServing, int foodCalorie, boolean isSelected) {
         this.foodCalorie = foodCalorie;
         this.foodCat = foodCat;
         this.foodName = foodName;

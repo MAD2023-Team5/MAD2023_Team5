@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_signin">
+    app:startDestination="@id/navigation_calorietracker">
 
 
 
@@ -90,8 +90,9 @@
         tools:layout="@layout/fragment_user_routine">
 
     </fragment>
+
     <fragment
-        android:id="@+id/calorieTrackerFragment"
+        android:id="@+id/navigation_calorietracker"
         android:name="sg.edu.np.mad.happyhabit.ui.CalorieTracker.CalorieTrackerFragment"
         android:label="CalorieTrackerFragment" />
 

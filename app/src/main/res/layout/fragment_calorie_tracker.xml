@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    tools:context=".MainActivity"
     android:background="@color/Lavender">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -251,13 +253,12 @@
                     app:layout_constraintEnd_toEndOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/breakfastList"
-                    android:layout_width="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/breakfastRecyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text=""
-                    android:textSize="18sp"
+                    android:layout_margin="8dp"
+                    android:scrollbars="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/breakfast"
                     app:layout_constraintTop_toBottomOf="@+id/breakfast" />
@@ -272,7 +273,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/breakfastList">
+                    app:layout_constraintTop_toBottomOf="@+id/breakfastRecyclerView">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/addBreakfast"
@@ -328,14 +329,12 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/lunch"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/lunchList"
-                    android:layout_width="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lunchRecyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:text=""
-                    android:textSize="18sp"
+                    android:layout_margin="8dp"
+                    android:scrollbars="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/lunch"
                     app:layout_constraintTop_toBottomOf="@+id/lunch" />
@@ -355,7 +354,7 @@
                     android:textStyle="bold"
                     app:icon="@drawable/ic_add"
                     app:layout_constraintStart_toStartOf="@+id/lunch"
-                    app:layout_constraintTop_toBottomOf="@+id/lunchList" />
+                    app:layout_constraintTop_toBottomOf="@+id/lunchRecyclerView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -386,14 +385,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/dinnerList"
-                    android:layout_width="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dinnerRecyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:text=""
-                    android:textSize="18sp"
+                    android:layout_margin="8dp"
+                    android:scrollbars="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/dinner"
                     app:layout_constraintTop_toBottomOf="@+id/dinner" />
@@ -422,10 +419,28 @@
                     android:textStyle="bold"
                     app:icon="@drawable/ic_add"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dinnerList" />
+                    app:layout_constraintTop_toBottomOf="@+id/dinnerRecyclerView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/invis"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:insetTop="100dp"
+            android:insetBottom="0dp"
+            android:minHeight="24dp"
+            android:text="Add"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
