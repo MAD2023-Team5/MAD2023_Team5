@@ -224,6 +224,7 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                                 .error(R.drawable.girl_exercise_2) // Optional error image if loading fails
                                 .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image for better performance
                         )
+                        .override(128,82)
                         .into(titleImage);
             }
 

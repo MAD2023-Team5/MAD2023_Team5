@@ -4,24 +4,32 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.List;
+
 import sg.edu.np.mad.happyhabit.databinding.ActivityMainBinding;
 import sg.edu.np.mad.happyhabit.ui.Routines.RoutineFragment;
-
-
+import sg.edu.np.mad.happyhabit.ui.Routines.UserRoutineFragment;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -37,6 +45,8 @@ public class MainActivity extends AppCompatActivity{
 
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
+
+    public Fragment selectedFragment;
 
     @Override
     public SharedPreferences getPreferences(int mode) {
@@ -99,13 +109,21 @@ public class MainActivity extends AppCompatActivity{
                     | destination.getId() == R.id.navigation_exno | destination.getId()==R.id.navigation_routine_exercises |
                   destination.getId()==R.id.navigation_creation | destination.getId()==R.id.navigation_set_creation) {
                 navView.setVisibility(View.GONE);
-            } else {
+            }
+
+
+            else {
                 navView.setVisibility(View.VISIBLE);
             }
         });
 
 
+
+
         }
+
+
+
 
 
 }

@@ -58,8 +58,9 @@ public class UserRoutineFragment extends Fragment {
 
     private TextView nodata;
 
-
-
+    public static Fragment newInstance() {
+        return  newInstance();
+    }
 
 
     @Override
