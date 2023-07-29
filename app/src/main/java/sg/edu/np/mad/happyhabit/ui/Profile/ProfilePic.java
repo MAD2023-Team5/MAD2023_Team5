@@ -32,14 +32,19 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.annotation.GlideModule;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -53,8 +58,9 @@ import java.util.Base64;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import sg.edu.np.mad.happyhabit.R;
+import sg.edu.np.mad.happyhabit.User;
 
-public class ProfilePic extends Fragment implements Serializable  {
+public class ProfilePic extends Fragment implements Serializable {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     Bitmap myBitmap;
@@ -63,18 +69,22 @@ public class ProfilePic extends Fragment implements Serializable  {
 
     // firebase storage
     private FirebaseAuth firebaseAuth;
-    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private DatabaseReference databaseReference;
+    private StorageReference storageReference;
+
     private String userEmail;
     private ProfilePicViewModel viewModel;
-    
+
     // Define the button and imageview type variable
     FloatingActionButton fab;
-    CircleImageView circle_image_id;
     ImageView imageView;
 
     // a static variable to get a reference of our application context
     public static Context contextOfApplication;
-    public static Context getContextOfApplication() { return contextOfApplication; }
+
+    public static Context getContextOfApplication() {
+        return contextOfApplication;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,62 +92,30 @@ public class ProfilePic extends Fragment implements Serializable  {
 
         // Floating action button (fab) & captured image
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        circle_image_id = (CircleImageView) view.findViewById(R.id.img_profile);
         imageView = view.findViewById(R.id.pfp);
         firebaseAuth = FirebaseAuth.getInstance();
-        userEmail = Objects.requireNonNull(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).replace(".", "");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", "");
+        // Get the reference to the current user's profile in the Firebase Realtime Database
+        DatabaseReference userRef = databaseReference.child(userEmail).child("image");
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Fetch the image URL from the database
+                String imageUrl = snapshot.getValue(String.class);
+                // Load the image into the ImageView using Glide
+                Glide.with(requireActivity())
+                        .load(imageUrl)
+                        .error(R.drawable.blank_circle_pfp) // Replace with your error drawable
+                        .into(imageView);
+            }
 
-//        // Initialize Glide with default options
-//        RequestOptions requestOptions = new RequestOptions()
-//                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache both original and resized images
-//                .skipMemoryCache(true) // Skip caching images in memory to save memory
-//                .priority(Priority.HIGH); // Set high priority for image loading
-
-//        StorageReference imagesRef = storageReference.child("pfp_images/" + userEmail);
-//
-//        // Fetch the list of images in the folder
-//        imagesRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-//            @Override
-//            public void onSuccess(ListResult listResult) {
-//                if (imagesRef != null) {
-//                    // Get the list of items (images) in the folder
-//                    List<StorageReference> items = listResult.getItems();
-//
-//                    // Sort the items by timeCreated (timestamp) in descending order
-//                    items.sort(new Comparator<StorageReference>() {
-//                        @Override
-//                        public int compare(StorageReference o1, StorageReference o2) {
-//                            return o2.getName().compareTo(o1.getName());
-//                        }
-//                    });
-//
-//                    // Get the reference to the last image (most recent upload)
-//                    StorageReference lastImageRef = items.get(0);
-//
-//                    // Download the last image from Firebase Cloud Storage
-//                    lastImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                        @Override
-//                        public void onSuccess(Uri uri) {
-//                            // Load the image into the ImageView using Glide
-//                            RequestOptions requestOptions = new RequestOptions();
-//
-//                            Glide.with(requireContext())
-//                                    .load(uri)
-//                                    .apply(requestOptions)
-//                                    .into(imageView);
-//                        }
-//                    });
-//                }
-//                else {
-//
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.e(TAG, "No pfp to show");
-//            }
-//        });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle the error if necessary
+                Log.e(TAG, "Failed to fetch image URL: " + error.getMessage());
+            }
+        });
 
         viewModel = new ViewModelProvider(requireActivity()).get(ProfilePicViewModel.class);
 
@@ -156,13 +134,18 @@ public class ProfilePic extends Fragment implements Serializable  {
     private void captureImage() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            Log.e(TAG, "CAMERA USED");
+        Log.e(TAG, "CAMERA USED");
     }
 
     // onActivityResult
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        firebaseAuth = FirebaseAuth.getInstance();
+        userEmail = Objects.requireNonNull(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail()).replace(".", "");
+        // Get the reference to the current user's profile in the Firebase Realtime Database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference userRef = databaseReference.child(userEmail).child("image");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             if (getPickImageResultUri(data) != null) {
                 // option 1: use Uri data to get Bitmap & upload Url to storage
@@ -171,28 +154,18 @@ public class ProfilePic extends Fragment implements Serializable  {
                     myBitmap = MediaStore.Images.Media.getBitmap(getContextOfApplication().getContentResolver(), picUri);
                     myBitmap = rotateImageIfRequired(myBitmap, picUri);
                     myBitmap = getResizedBitmap(myBitmap, 500);
-                    CircleImageView croppedImageView = circle_image_id;
-                    croppedImageView.setImageBitmap(myBitmap);
-//                    imageView.setImageBitmap(myBitmap);
-//                    int newImage = BitMapToString(myBitmap).hashCode();
-//                    UploadImageToFirebaseDatabase(userEmail, myBitmap);
-                    UploadImageToFirebaseStorage(picUri);
+                    UploadImageToFirebase(picUri);
                     Log.e(TAG, "ACTIVITY SUCCESSFUL");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                catch (IOException e) {e.printStackTrace();}
-            }
-            else {
+            } else {
                 // Option 2: Use Bundle to get Bitmap & upload byte data to storage instead
                 Bundle extras = data.getExtras();
                 assert extras != null;
                 myBitmap = (Bitmap) extras.get("data");
                 assert myBitmap != null;
                 myBitmap = getResizedBitmap(myBitmap, 500);
-                CircleImageView croppedImageView = circle_image_id;
-                croppedImageView.setImageBitmap(myBitmap);
-//                imageView.setImageBitmap(myBitmap);
-//                int newImage = BitMapToString(myBitmap).hashCode();
-//                UploadImageToFirebaseDatabase(userEmail, myBitmap);
                 // Convert the Bitmap image to a byte array
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -202,8 +175,7 @@ public class ProfilePic extends Fragment implements Serializable  {
                 uploadFirebaseImageAndGetUrl();
                 Log.e(TAG, "ACTIVITY SUCCESSFUL");
             }
-        }
-        else {
+        } else {
             //cancelled
             Toast.makeText(getActivity(), "Cancelled...", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "ACTIVITY FAILED");
@@ -220,7 +192,7 @@ public class ProfilePic extends Fragment implements Serializable  {
         return outputFileUri;
     }
 
-//     Get the URI of the selected image
+    //     Get the URI of the selected image
 //     Will return the correct URI for camera and gallery image.
 //     @param data the returned data of the activity result
     public Uri getPickImageResultUri(Intent data) {
@@ -233,33 +205,16 @@ public class ProfilePic extends Fragment implements Serializable  {
         return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
 
-//    // upload image into firebase database
-//    private void UploadImageToFirebaseDatabase(String imageId, Bitmap newImage) {
-//
-//        // Encode the image byte array into Base 64 hash and upload it to Firebase Database
-//        databaseReference.child(imageId).child("image").setValue(newImage)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        // Image upload successful
-//                        Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        // Image upload failed
-//                        Toast.makeText(getActivity(), "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//    }
-
-// upload & store image into firebase storage (Url Method)
-    private void UploadImageToFirebaseStorage(Uri image) {
+    // upload & store image into firebase storage (Url Method)
+    public void UploadImageToFirebase(Uri image) {
         // Create a unique filename for the image
         String filename = "image_" + System.currentTimeMillis() + ".jpg";
+        storageReference = FirebaseStorage.getInstance().getReference();
         final StorageReference fileRef = storageReference.child("pfp_images/" + userEmail + "/" + filename);
+
+        // Get the reference to the current user's profile in the Firebase Realtime Database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference userRef = databaseReference.child(userEmail).child("image");
 
         fileRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -268,40 +223,46 @@ public class ProfilePic extends Fragment implements Serializable  {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri downloadUri) {
-                        // Initialize Glide with default options
-                        RequestOptions requestOptions = new RequestOptions()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache both original and resized images
-                                .skipMemoryCache(true) // Skip caching images in memory to save memory
-                                .priority(Priority.HIGH); // Set high priority for image loading
-                        // Load the image into the ImageView using an image loading library like Glide or Picasso
-                        Glide.with(requireActivity())
-                                .load(picUri)
-                                .apply(requestOptions)
-                                .into(circle_image_id);
-                        Log.d(TAG, "IMAGE UPLOADED: URL IS " + picUri.toString());
+                        String imageUrl = downloadUri.toString();
+                        // Store the imageUrl in Firebase Realtime Database with timestamp
+                        String timestamp = String.valueOf(System.currentTimeMillis());
+                        userRef.setValue(imageUrl).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                fetchUserData(userEmail, imageUrl);
+                                // URL stored successfully in the database
+                                Log.d(TAG, "IMAGE UPLOADED: URL IS " + downloadUri);
+                                Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle any errors that occurred while saving the URL
+                                Log.e(TAG, "Failed to update profile picture");
+                            }
+                        });
                     }
                 });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG,"Failed to update profile picture");
+                Log.e(TAG, "Failed to update profile picture");
             }
         });
     }
 
     // upload & store image into firebase storage (Byte Method)
-    private void uploadFirebaseImageAndGetUrl() {
+    public void uploadFirebaseImageAndGetUrl() {
         if (imageData == null) {
             Toast.makeText(getActivity(), "No image to upload", Toast.LENGTH_SHORT).show();
             return;
         }
-
         // Create a unique filename for the image
         String filename = "image_" + System.currentTimeMillis() + ".jpg";
 
         // Create a reference to the image file in Firebase Cloud Storage
+        storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference imageRef = storageReference.child("pfp_images/" + userEmail + "/" + filename);
+        // Get the reference to the current user's profile in the Firebase Realtime Database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference userRef = databaseReference.child(userEmail).child("image");
 
         // Upload the image byte array to Firebase Cloud Storage
         UploadTask uploadTask = imageRef.putBytes(imageData);
@@ -314,20 +275,18 @@ public class ProfilePic extends Fragment implements Serializable  {
                     public void onSuccess(Uri downloadUri) {
                         // Download URL obtained
                         String imageUrl = downloadUri.toString();
-                        // Initialize Glide with default options
-                        RequestOptions requestOptions = new RequestOptions()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache both original and resized images
-                                .skipMemoryCache(true) // Skip caching images in memory to save memory
-                                .priority(Priority.HIGH); // Set high priority for image loading
-                        // Load the image into the ImageView using an image loading library like Glide or Picasso
-                        Glide.with(requireActivity())
-                                .load(imageUrl)
-                                .apply(requestOptions)
-                                .into(circle_image_id);
-
-                        // Can now use the imageUrl for any further use, such as storing it in Firebase Database or using it in the app.
-                        // displaying it in a Log message.
-                        Log.e(TAG, "Image uploaded successfully! URL: " + imageUrl);
+                        // Store the imageUrl in Firebase Realtime Database under the user's node (identified by their email address)
+                        userRef.setValue(imageUrl).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                fetchUserData(userEmail, imageUrl);
+                                // URL stored successfully in the user's node
+                                Log.d(TAG, "Image URL uploaded to user's node: " + downloadUri);
+                                Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle any errors that occurred while saving the URL
+                                Log.e(TAG, "Failed to update profile picture");
+                            }
+                        });
                     }
                 });
             }
@@ -379,94 +338,31 @@ public class ProfilePic extends Fragment implements Serializable  {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-
-    // Convert bitmap image to string for database
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b = baos.toByteArray();
-        return Base64.getEncoder().encodeToString(b);
-    }
-
-    // Convert string from database to bitmap image
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte= new byte[0];
-            encodeByte = Base64.getDecoder().decode(encodedString);
-            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
-//    // Convert hash codes of strings to bitmap image
-//    public static Bitmap createBitmapFromImageData(int width, int height, Byte[] imageData) {
-//        if (imageData == null) {
-//            return null;
-//        }
-//
-//        try {
-//            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-//            // Convert the byte array into a Bitmap
-//            // Set the pixel values to the Bitmap
-//            int[] pixels = new int[imageData.length];
-//            for (int i = 0; i < imageData.length; i++) {
-//                pixels[i] = imageData.get(i);
-//            }
-//            bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-//
-//            return bitmap;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-//    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        // save file url in bundle as it will be null on screen orientation
-//        // changes
-//        if (outState != null) {
-//            outState.putParcelable("pic_uri", picUri);
-//        } else {
-//            Log.e(TAG, "Instance State null");
-//        }
-//    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
-            new ActivityResultContracts.RequestPermission(),
-            result -> {
-                if (result) {
-                    Log.e(TAG, "onActivityResult: PERMISSION GRANTED");
-                    // PERMISSION GRANTED
+    // fetch the data from User class
+    private void fetchUserData(String userEmail, String imageUrl) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference userRef = usersRef.child(userEmail);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // The user with the provided userEmail exists in the database
+                    User user = dataSnapshot.getValue(User.class);
+                    if (user != null) {
+                        // access user properties like name, email, etc. using 'user' object
+                        user.setImage(imageUrl);
+                    }
                 } else {
-                    Log.e(TAG, "onActivityResult: PERMISSION DENIED");
-                    // PERMISSION DENIED
+                    // The user with the provided userEmail does not exist in the database
+                    Log.e(TAG, "USER DOES NOT EXIST");
                 }
             }
-    );
-}
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        Log.d("onOptionsItemSelected","yes");
-//        if (item.getItemId() == android.R.id.home)
-//            NavUtils.navigateUpFromSameTask(this);
-//        return true;
-//    }
-//    return super.onOptionsItemSelected(item);
-//}
-//
-//    private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
-//        ArrayList<String> result = new ArrayList<String>();
-//
-//        for (String perm : wanted) {
-//            if (!hasPermission(perm)) {
-//                result.add(perm);
-//            }
-//        }
-//
-//        return result;
-//    }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors that occurred while fetching the data
+                Log.e(TAG, "Failed to fetch user data: " + databaseError.getMessage());
+            }
+        });
+    }
+}

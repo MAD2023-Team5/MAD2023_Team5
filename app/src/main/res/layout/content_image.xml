@@ -19,8 +19,9 @@
     <RelativeLayout
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerVertical="false"
         android:background="@drawable/image_border"
         android:clickable="true"
         android:orientation="vertical"
@@ -36,18 +37,18 @@
 
     </RelativeLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_profile"
-        android:layout_width="259dp"
-        android:layout_height="251dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="224dp"
-        app:civ_border_color="#FFFFFF"
-        app:civ_border_width="5dp"
-        app:srcCompat="@drawable/blankpfp" />
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:id="@+id/img_profile"-->
+<!--        android:layout_width="259dp"-->
+<!--        android:layout_height="251dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginStart="50dp"-->
+<!--        android:layout_marginEnd="50dp"-->
+<!--        android:layout_marginBottom="224dp"-->
+<!--        app:civ_border_color="#FFFFFF"-->
+<!--        app:civ_border_width="5dp"-->
+<!--        app:srcCompat="@drawable/blankpfp" />-->
 
 </RelativeLayout>
