@@ -80,6 +80,7 @@ public class EditProfileFragment extends Fragment {
                 editTextDescription.setText(description);
                 editTextEmail.setText(email);
                 editTextCurrentPassword.setText(currentPassword);
+                editTextNewPassword.setText(currentPassword);
 
                 // Store Original User Data
                 originalName = name;
@@ -150,6 +151,8 @@ public class EditProfileFragment extends Fragment {
         String newName = editTextName.getText().toString().trim();
         String newDescription = editTextDescription.getText().toString().trim();
         String newEmail = editTextEmail.getText().toString().trim();
+        String newPassword = editTextNewPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
         // Get the reference to the current user's profile in the Firebase Realtime Database
         DatabaseReference userRef = databaseReference.child(userEmail);
@@ -179,35 +182,24 @@ public class EditProfileFragment extends Fragment {
                     });
         }
 
-        if (isPasswordChanged()) {
-            // Change the user's password
-            String currentPassword = editTextCurrentPassword.getText().toString();
-            String newPassword = editTextNewPassword.getText().toString();
-            String confirmPassword = editTextConfirmPassword.getText().toString();
-
-            if (newPassword.equals(confirmPassword)) {
-                AuthCredential credential = EmailAuthProvider.getCredential(userEmail, currentPassword);
-                firebaseAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            firebaseAuth.getCurrentUser().updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(requireContext(), "Password updated", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(requireContext(), "Failed to update password", Toast.LENGTH_SHORT).show();
-                                    }
+        if (!newPassword.equals(originalPassword)) {
+            if (confirmPassword.equals(newPassword)) {
+                // Update the password field in the database and the user's authentication email
+                userRef.child("password").setValue(newPassword);
+                firebaseAuth.getCurrentUser().updatePassword(confirmPassword)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(requireContext(), "Password updated", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(requireContext(), "Failed to update Password", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                        } else {
-                            Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            } else {
-                Toast.makeText(requireContext(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+            else {
+                Toast.makeText(requireContext(), "Failed to update Password", Toast.LENGTH_SHORT).show();
             }
         }
     }
