@@ -18,17 +18,20 @@ public class User implements Serializable {
     private String image;
     private String Name;
 
+    private int calorie;
+
     public User() {
         // Default constructor required for Firebase
     }
 
-    public User(int userNo, String email, String password, String description, String image, String name) {
+    public User(int userNo, String email, String password, String description, String image, String name, int calorie) {
         this.userNo = userNo;
         this.email = email;
         this.password = password;
         this.description = description;
         this.image = image;
         this.Name=name;
+        this.calorie = calorie;
     }
 
     // Getters and setters
@@ -75,6 +78,15 @@ public class User implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public int getCalorie() {
+        return calorie;
+    }
+
+    public void setCalorie(int calorie) {
+        this.calorie = calorie;
+    }
+
     public void read_database()
     {
 

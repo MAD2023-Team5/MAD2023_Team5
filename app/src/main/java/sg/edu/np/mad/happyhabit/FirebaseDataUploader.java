@@ -30,16 +30,16 @@ public class FirebaseDataUploader {
         StorageReference storageReference = storage.getReference();
 
 //        // Sample User data
-        User user1 = new User(1, "johndoe@example.com", "password123", "We're no strangers to love You know the rules and so do I", null, "John");
-        User user2 = new User(2, "adam@example.com", "password456", "A full commitment's what I'm thinking of You wouldn't get this from any other guy", null, "Adam");
-        User user3 = new User(3, "raycis@example.com", "password123", "I just wanna tell you how I'm feeling Gotta make you understand", null, "Ray Cis");
-        User user4 = new User(4, "dam@example.com", "password456", "Never gonna give you up Never gonna let you down Never gonna run around and desert you", null, "Dam Lee");
-        User user5 = new User(5, "atlas@example.com", "password123", "Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you", null, "Atlas krishna");
-        User user6 = new User(6, "kirby@example.com", "password456", "We've known each other for so long Your heart's been aching, but You're too shy to say it", null, "Kirby Johnson");
-        User user7 = new User(7, "blueball@example.com", "password123", "Never gonna give you up Never gonna let you down Never gonna run around and desert you", null, "Corona Yuen");
-        User user8 = new User(8, "yeet@example.com", "password456", "Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you", null, "Rick Astley");
-        User user9 = new User(9, "carlos@example.com", "password123", "Fitness enthusiast and outdoor lover", null, "Carlos");
-        User user10 = new User(10, "carti@example.com", "password456", "Passionate about healthy living and yoga", null, "Carti");
+        User user1 = new User(1, "johndoe@example.com", "password123", "We're no strangers to love You know the rules and so do I", null, "John", 2558);
+        User user2 = new User(2, "adam@example.com", "password456", "A full commitment's what I'm thinking of You wouldn't get this from any other guy", null, "Adam", 2358);
+        User user3 = new User(3, "raycis@example.com", "password123", "I just wanna tell you how I'm feeling Gotta make you understand", null, "Ray Cis", 2038);
+        User user4 = new User(4, "dam@example.com", "password456", "Never gonna give you up Never gonna let you down Never gonna run around and desert you", null, "Dam Lee", 2063);
+        User user5 = new User(5, "atlas@example.com", "password123", "Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you", null, "Atlas krishna", 2398);
+        User user6 = new User(6, "kirby@example.com", "password456", "We've known each other for so long Your heart's been aching, but You're too shy to say it", null, "Kirby Johnson", 2318);
+        User user7 = new User(7, "blueball@example.com", "password123", "Never gonna give you up Never gonna let you down Never gonna run around and desert you", null, "Corona Yuen", 2052);
+        User user8 = new User(8, "yeet@example.com", "password456", "Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you", null, "Rick Astley", 1952);
+        User user9 = new User(9, "carlos@example.com", "password123", "Fitness enthusiast and outdoor lover", null, "Carlos", 1912);
+        User user10 = new User(10, "carti@example.com", "password456", "Passionate about healthy living and yoga", null, "Carti", 1962);
 
         // Using firebase auth for authetication
         auth.createUserWithEmailAndPassword(user1.getEmail(),user1.getPassword());

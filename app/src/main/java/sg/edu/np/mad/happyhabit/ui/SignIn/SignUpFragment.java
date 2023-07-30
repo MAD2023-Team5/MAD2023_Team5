@@ -1,16 +1,7 @@
 package sg.edu.np.mad.happyhabit.ui.SignIn;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +10,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 import sg.edu.np.mad.happyhabit.R;
 import sg.edu.np.mad.happyhabit.User;
@@ -83,7 +82,9 @@ public class SignUpFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            User user1 = new User(10,user,passWord,"","","");
+                            int randomNumber = generateRandomNumber(1500, 3000);
+
+                            User user1 = new User(10,user,passWord,"","","", randomNumber);
                             FirebaseDatabase fd= FirebaseDatabase.getInstance();
                             DatabaseReference rootRef = fd.getReference().child("Users");
                             rootRef.child( user1.getEmail().replace(".","")).setValue(user1);
@@ -110,5 +111,10 @@ public class SignUpFragment extends Fragment {
     }
 
 
+    private int generateRandomNumber(int lowerBound, int upperBound) {
+        return ThreadLocalRandom.current().nextInt(lowerBound, upperBound);
+    }
 
 }
+
+

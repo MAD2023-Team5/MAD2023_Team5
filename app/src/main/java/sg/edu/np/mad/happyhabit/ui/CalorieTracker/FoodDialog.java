@@ -32,8 +32,6 @@ public class FoodDialog {
     Dialog dialog;
     List<Food> list;
     RecyclerView recyclerView;
-
-    ImageView foodImage;
     DatabaseReference mFoodRef, selectedFood;
     FirebaseAuth mAuth;
     FirebaseUser user;
@@ -84,7 +82,7 @@ public class FoodDialog {
 
     private void addFood(Dialog dialog, List<Food> selectedItems, String foodType) {
         for (int i = 0; i < selectedItems.size(); i++) {
-            selectedFood.child("A").child(foodType).push().setValue(selectedItems.get(i));
+            selectedFood.child(user.getUid()).child(foodType).push().setValue(selectedItems.get(i));
         }
         dialog.dismiss();
     }

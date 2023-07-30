@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/food_bank/baseline_food_bank_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/clear/baseline_clear_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,7 +29,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="131212" />
-                            <entry key="outputName" value="baseline_food_bank_24" />
+                            <entry key="outputName" value="baseline_clear_24" />
                             <entry key="sourceFile" value="C:\Users\vibu\MAD2023_Team5\app\src\main\res\drawable\Push-ups-1.svg" />
                           </map>
                         </option>

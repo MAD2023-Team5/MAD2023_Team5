@@ -48,30 +48,17 @@
             app:layout_constraintStart_toEndOf="@+id/foodImage"
             app:layout_constraintTop_toBottomOf="@id/foodName" />
 
-        <ImageView
-            android:id="@+id/remove_food"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/foodImage"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/black" />
-
         <TextView
             android:id="@+id/foodCal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="37dp"
             android:text="Food Cal: 10"
             android:textColor="#000"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/remove_food"
-            app:layout_constraintEnd_toStartOf="@id/remove_food"
-            app:layout_constraintTop_toTopOf="@id/remove_food"
-            android:layout_marginRight="10dp"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/foodServ"

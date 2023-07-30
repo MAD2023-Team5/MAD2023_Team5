@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fillViewport="true"
-    tools:context=".MainActivity"
+    android:layout_height="match_parent"
     android:background="@color/Lavender">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,147 +69,6 @@
                     app:layout_constraintStart_toStartOf="@+id/circularProgressIndicator"
                     app:layout_constraintTop_toBottomOf="@+id/intakecalorie" />
 
-                <TextView
-                    android:id="@+id/protein"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Proteins, kcal"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/linearProgressIndicator"
-                    app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator"
-                    app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator" />
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/linearProgressIndicator"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:progress="15"
-                    app:indicatorColor="@color/teal_a200"
-                    app:layout_constraintEnd_toStartOf="@+id/linearProgressIndicator2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator"
-                    app:trackColor="@color/cyan_50"
-                    app:trackCornerRadius="8dp"
-                    app:trackThickness="8dp" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="19.5"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator"
-                    app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator" />
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="of 97"
-                    android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-                    app:layout_constraintStart_toEndOf="@+id/textView4" />
-
-                <TextView
-                    android:id="@+id/fats"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fats, kcal"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/linearProgressIndicator2"
-                    app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator2" />
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/linearProgressIndicator2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:progress="15"
-                    app:indicatorColor="@color/deep_purple_300"
-                    app:layout_constraintEnd_toStartOf="@+id/linearProgressIndicator3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/linearProgressIndicator"
-                    app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator"
-                    app:trackColor="@color/deep_purple_50"
-                    app:trackCornerRadius="8dp"
-                    app:trackThickness="8dp" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="7.5"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator2"
-                    app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator2" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="of 28.7"
-                    android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
-                    app:layout_constraintStart_toEndOf="@+id/textView6" />
-
-                <TextView
-                    android:id="@+id/carbs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Carbs, kcal"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/linearProgressIndicator3"
-                    app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator3" />
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/linearProgressIndicator3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:progress="15"
-                    app:indicatorColor="@color/light_blue_a400"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/linearProgressIndicator2"
-                    app:layout_constraintTop_toBottomOf="@+id/circularProgressIndicator"
-                    app:trackColor="@color/light_blue_100"
-                    app:trackCornerRadius="8dp"
-                    app:trackThickness="8dp" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="37.7"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator3"
-                    app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator3" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="of 161.6"
-                    android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-                    app:layout_constraintStart_toEndOf="@+id/textView8" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -226,14 +83,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/breakfast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
                     android:text="Breakfast"
                     android:textColor="@color/black"
                     android:textSize="21sp"
@@ -242,54 +98,63 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/foodCalTv"
+                    android:id="@+id/breakfastCalTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:text="295.5 kcal"
+                    android:text="0 kcal"
                     android:textColor="@color/Lavender"
                     android:textStyle="bold"
                     app:layout_constraintBaseline_toBaselineOf="@+id/breakfast"
                     app:layout_constraintEnd_toEndOf="parent" />
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/breakfastRecyclerView"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/breakfastList"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:scrollbars="vertical"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:text=""
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/breakfast"
                     app:layout_constraintTop_toBottomOf="@+id/breakfast" />
 
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="match_parent"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/addBreakfast"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/breakfastRecyclerView">
+                    android:layout_marginTop="4dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="24dp"
+                    android:text="Add"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_add"
+                    app:layout_constraintStart_toStartOf="@+id/breakfast"
+                    app:layout_constraintTop_toBottomOf="@+id/breakfastList" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/addBreakfast"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:minHeight="24dp"
-                        android:text="Add"
-                        android:textAllCaps="false"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:icon="@drawable/ic_add" />
-                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clearBreakfast"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="24dp"
+                    android:text="Clear All"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/baseline_clear_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/breakfastList" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -325,16 +190,21 @@
                     android:id="@+id/lunchCalTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recommended 600 kcal"
+                    android:layout_marginEnd="16dp"
+                    android:text="0 kcal"
+                    android:textColor="@color/Lavender"
+                    android:textStyle="bold"
                     app:layout_constraintBaseline_toBaselineOf="@+id/lunch"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lunchRecyclerView"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/lunchList"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:scrollbars="vertical"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:text=""
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/lunch"
                     app:layout_constraintTop_toBottomOf="@+id/lunch" />
@@ -354,7 +224,26 @@
                     android:textStyle="bold"
                     app:icon="@drawable/ic_add"
                     app:layout_constraintStart_toStartOf="@+id/lunch"
-                    app:layout_constraintTop_toBottomOf="@+id/lunchRecyclerView" />
+                    app:layout_constraintTop_toBottomOf="@+id/lunchList" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clearLunch"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="24dp"
+                    android:text="Clear All"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/baseline_clear_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lunchList" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -385,12 +274,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/dinnerRecyclerView"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/dinnerList"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:scrollbars="vertical"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:text=""
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/dinner"
                     app:layout_constraintTop_toBottomOf="@+id/dinner" />
@@ -399,7 +290,10 @@
                     android:id="@+id/dinnerCalTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recommended 600 kcal"
+                    android:layout_marginEnd="16dp"
+                    android:text="0 kcal"
+                    android:textColor="@color/Lavender"
+                    android:textStyle="bold"
                     app:layout_constraintBaseline_toBaselineOf="@+id/dinner"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -419,7 +313,25 @@
                     android:textStyle="bold"
                     app:icon="@drawable/ic_add"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dinnerRecyclerView" />
+                    app:layout_constraintTop_toBottomOf="@+id/dinnerList" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clearDinner"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="24dp"
+                    android:text="Clear All"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/baseline_clear_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dinnerList" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
