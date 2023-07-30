@@ -42,7 +42,7 @@
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:layout_gravity="center"/>
-            
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/editProfileButton"
                 android:layout_width="wrap_content"

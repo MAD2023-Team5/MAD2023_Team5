@@ -35,12 +35,14 @@ public class ProfileFragment extends Fragment {
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile_page_improved, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_page_improved, container, false); // Identify which layout this fragment is using
 
+        // Get the reference to the current user's profile in the Firebase Database
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         firebaseAuth = FirebaseAuth.getInstance();
         String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".","");
 
+        // Profile Page TextViews
         pfpName = view.findViewById(R.id.pfpName);
         pfpEmail = view.findViewById(R.id.pfpEmail);
         emailUsed = view.findViewById(R.id.emailUsed);
@@ -48,25 +50,28 @@ public class ProfileFragment extends Fragment {
         descUsed = view.findViewById(R.id.descUsed);
         passwordUsed = view.findViewById(R.id.passwordUsed);
 
+        // Profile Page Buttons
         editProfileButton= view.findViewById(R.id.editProfileButton);
         logoutButton= view.findViewById(R.id.logoutButton);
 
         databaseReference.child(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Profile Information
                 String name = dataSnapshot.child("name").getValue(String.class);
                 String description = dataSnapshot.child("description").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String password = dataSnapshot.child("password").getValue(String.class);
 
-
+                // Set to Text Views
                 pfpName.setText(name);
                 pfpEmail.setText(email);
-
                 emailUsed.setText(email);
                 nameUsed.setText(name);
                 descUsed.setText(description);
                 passwordUsed.setText(password);
+
+                // Hide Password
                 passwordUsed.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
             }
@@ -77,25 +82,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-//        showHideBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (showHideBtn.getText().toString().equals("Show")) {
-//                    textViewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                    showHideBtn.setText("Hide");
-//                } else {
-//                    textViewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//                    showHideBtn.setText("Show");
-//                }
-//            }
-//        });
-
+        // Edit Profile Button
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToEditProfileFragment();
             }
         });
+
+        // Logout Button
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,15 +101,20 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    // Function for Navigating to EditProfile page
     private void navigateToEditProfileFragment() {
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
         navController.navigate(R.id.navigation_edit_profile);
+
     }
+
+    // Function for Navigating to SignIn page
     private void navigateToSignInFragment() {
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
         navController.navigate(R.id.navigation_signin);
+
     }
 
 }

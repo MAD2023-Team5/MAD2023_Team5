@@ -58,7 +58,7 @@ public class EditProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", "");
 
-        //TextView
+        // TextView
         currentPassword = view.findViewById(R.id.currentPassword);
 
         // EditTexts
@@ -103,6 +103,7 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
+        // SHOW/HIDE Password Button for currentPassword TextView
         showHideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,12 +117,16 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
+        // Save Changes Button
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check if changes were made
                 if (isNameChanged() || isDescriptionChanged() || isEmailChanged() || isPasswordChanged()) {
                     saveProfileChanges();
                     Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show();
+
+                // Else "No Changes Found"
                 } else {
                     Toast.makeText(requireContext(), "No Changes Found", Toast.LENGTH_SHORT).show();
                 }
@@ -131,6 +136,7 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
+        // Change Image Button
         changeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +168,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private boolean isPasswordChanged() {
-        // Compare the current password with the original password fetched from Firebase
+        // Compare the new password with the original password fetched from Firebase
         String changedPassword = newPassword.getText().toString();
         return !changedPassword.equals(originalPassword);
     }
@@ -175,7 +181,7 @@ public class EditProfileFragment extends Fragment {
         String changedPassword = newPassword.getText().toString().trim();
         String confirmChangedPassword = confirmPassword.getText().toString().trim();
 
-        // Get the reference to the current user's profile in the Firebase Realtime Database
+        // Get the reference to the current user's profile in the Firebase Database
         DatabaseReference userRef = databaseReference.child(userEmail);
 
         // Update the profile information if changes were made
@@ -183,6 +189,7 @@ public class EditProfileFragment extends Fragment {
             userRef.child("name").setValue(newName);
         }
 
+        // Update the description if changes were made
         if (!newDescription.equals(originalDescription)) {
             userRef.child("description").setValue(newDescription);
         }
@@ -203,6 +210,7 @@ public class EditProfileFragment extends Fragment {
                     });
         }
 
+        // Update password if changePassword & confirmPassword match else "failed"
         if (!changedPassword.equals(originalPassword)) {
             if (confirmChangedPassword.equals(changedPassword)) {
                 // Update the password field in the database and the user's authentication email
@@ -224,10 +232,13 @@ public class EditProfileFragment extends Fragment {
             }
         }
     }
+
+    // Navigate back to Profile page
     private void navigateToProfileFragment() {
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
         navController.navigate(R.id.navigation_profile);
+
     }
 }
 
