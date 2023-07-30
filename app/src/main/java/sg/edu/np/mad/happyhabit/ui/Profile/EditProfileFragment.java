@@ -1,14 +1,18 @@
 package sg.edu.np.mad.happyhabit.ui.Profile;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +20,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -42,7 +50,7 @@ public class EditProfileFragment extends Fragment {
     private TextView currentPassword;
     private EditText editEmail, editUsername, editDesc, newPassword, confirmPassword;
     private String userEmail, originalName, originalDescription, originalEmail, originalPassword;
-
+    private ImageView profilePic;
     private AppCompatButton saveButton, changeImage, showHideBtn;
     private ProfilePicViewModel viewModel;
 
@@ -51,7 +59,7 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_profile_page_improved, container, false);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ProfilePicViewModel.class);
+        viewModel = new ViewModelProvider(requireParentFragment()).get(ProfilePicViewModel.class);
 
         // Database Reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -68,6 +76,9 @@ public class EditProfileFragment extends Fragment {
         newPassword = view.findViewById(R.id.newPassword);
         confirmPassword = view.findViewById(R.id.confirmPassword);
 
+        // Image
+        profilePic = view.findViewById(R.id.profileImg);
+
         // Buttons
         saveButton = view.findViewById(R.id.saveButton);
         changeImage = view.findViewById(R.id.changeImage);
@@ -81,6 +92,7 @@ public class EditProfileFragment extends Fragment {
                 String description = dataSnapshot.child("description").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String password = dataSnapshot.child("password").getValue(String.class);
+                String imageUrl = dataSnapshot.child("image").getValue(String.class);
 
                 editEmail.setText(email);
                 editUsername.setText(name);
@@ -95,6 +107,15 @@ public class EditProfileFragment extends Fragment {
                 originalDescription = description;
                 originalEmail = email;
                 originalPassword = password;
+
+                // Retrieve the latest image URL from Firebase Realtime Database
+                if (imageUrl != null) {
+                    // Download and display the latest image in the ImageView
+                    downloadAndDisplayImage(imageUrl);
+                } else {
+                    // Handle case when there is no image available
+                    Log.e(TAG, "Profile image not set");
+                }
             }
 
             @Override
@@ -102,6 +123,17 @@ public class EditProfileFragment extends Fragment {
                 // Handle database error
             }
         });
+
+        // Observe changes in the shared ViewModel for image
+        viewModel.getImageUrlLiveData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                    @Override
+                    public void onChanged(String imageUrl) {
+                        // Update the ImageView with the new image URL
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            downloadAndDisplayImage(imageUrl);
+                        }
+                    }
+                });
 
         // SHOW/HIDE Password Button for currentPassword TextView
         showHideBtn.setOnClickListener(new View.OnClickListener() {
@@ -239,6 +271,23 @@ public class EditProfileFragment extends Fragment {
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
         navController.navigate(R.id.navigation_profile);
 
+    }
+
+    // display current image in pfp
+    private void downloadAndDisplayImage(String imageUrl) {
+        // Check if the URL is valid
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            // Handle invalid URL or show a placeholder image
+            return;
+        }
+
+        Glide.with(requireActivity())
+                .load(imageUrl)
+                .apply(new RequestOptions() // Placeholder while loading
+                        .error(R.drawable.blank_circle_pfp) // Blank pfp image if loading fails
+                        .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image for better performance
+                )
+                .into(profilePic);
     }
 }
 

@@ -73,6 +73,7 @@ public class ProfilePic extends Fragment implements Serializable {
     private StorageReference storageReference;
 
     private String userEmail;
+    private ProfilePicViewModel sharedViewModel;
 
     // Define the button and imageview type variable
     FloatingActionButton fab;
@@ -88,7 +89,7 @@ public class ProfilePic extends Fragment implements Serializable {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.capture_image, container, false);
-
+        sharedViewModel = new ViewModelProvider(requireParentFragment()).get(ProfilePicViewModel.class);
         // Floating action button (fab) & captured image
         fab = view.findViewById(R.id.fab);
         imageView = view.findViewById(R.id.pfp);
@@ -225,6 +226,8 @@ public class ProfilePic extends Fragment implements Serializable {
                         userRef.setValue(imageUrl).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 fetchUserData(userEmail, imageUrl);
+                                // After uploading the image URL to Firebase Database, update the shared ViewModel
+                                sharedViewModel.setImageUrl(imageUrl);
                                 // URL stored successfully in the database
                                 Log.d(TAG, "IMAGE UPLOADED: URL IS " + downloadUri);
                                 Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
@@ -275,6 +278,8 @@ public class ProfilePic extends Fragment implements Serializable {
                         userRef.setValue(imageUrl).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 fetchUserData(userEmail, imageUrl);
+                                // After uploading the image URL to Firebase Database, update the shared ViewModel
+                                sharedViewModel.setImageUrl(imageUrl);
                                 // URL stored successfully in the user's node
                                 Log.d(TAG, "Image URL uploaded to user's node: " + downloadUri);
                                 Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_SHORT).show();

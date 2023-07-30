@@ -1,13 +1,17 @@
 package sg.edu.np.mad.happyhabit.ui.Profile;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +19,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +37,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private TextView pfpName, pfpEmail, emailUsed, nameUsed, descUsed, passwordUsed;
     private Button editProfileButton, logoutButton;
-
+    private ImageView profilePic;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -50,6 +57,9 @@ public class ProfileFragment extends Fragment {
         descUsed = view.findViewById(R.id.descUsed);
         passwordUsed = view.findViewById(R.id.passwordUsed);
 
+        // Profile Page Image
+        profilePic = view.findViewById(R.id.pfpImage);
+
         // Profile Page Buttons
         editProfileButton= view.findViewById(R.id.editProfileButton);
         logoutButton= view.findViewById(R.id.logoutButton);
@@ -62,6 +72,7 @@ public class ProfileFragment extends Fragment {
                 String description = dataSnapshot.child("description").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String password = dataSnapshot.child("password").getValue(String.class);
+                String imageUrl = dataSnapshot.child("image").getValue(String.class);
 
                 // Set to Text Views
                 pfpName.setText(name);
@@ -74,6 +85,14 @@ public class ProfileFragment extends Fragment {
                 // Hide Password
                 passwordUsed.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+                // Retrieve the latest image URL from Firebase Realtime Database
+                if (imageUrl != null) {
+                    // Download and display the latest image in the ImageView
+                    downloadAndDisplayImage(imageUrl);
+                } else {
+                    // Handle case when there is no image available
+                    Log.e(TAG, "Profile image not set");
+                }
             }
 
             @Override
@@ -117,4 +136,20 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    // display current image in pfp
+    private void downloadAndDisplayImage(String imageUrl) {
+        // Check if the URL is valid
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            // Handle invalid URL or show a placeholder image
+            return;
+        }
+
+        Glide.with(requireActivity())
+                .load(imageUrl)
+                .apply(new RequestOptions() // Placeholder while loading
+                        .error(R.drawable.blank_circle_pfp) // Blank pfp image if loading fails
+                        .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image for better performance
+                )
+                .into(profilePic);
+    }
 }
