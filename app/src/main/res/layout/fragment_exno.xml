@@ -112,13 +112,13 @@
 
     <TextView
         android:id="@+id/ecercise_no_of_sets"
-        android:layout_width="227dp"
-        android:layout_height="213dp"
+        android:layout_width="205dp"
+        android:layout_height="185dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="78dp"
-        android:layout_marginBottom="147dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginBottom="171dp"
         android:gravity="center_vertical"
         android:text="x10"
         android:textAlignment="center"
@@ -133,8 +133,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="84dp"
-        android:layout_marginBottom="309dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginBottom="296dp"
         android:fontFamily="serif"
         android:text="Push Up"
         android:textAlignment="center"
@@ -150,11 +150,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginStart="-2dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="2dp"
         android:background="#6474FF"
-        android:src="@drawable/pushup"
+        android:src="@drawable/legraise"
         android:visibility="visible" />
 
     <Button
@@ -197,11 +197,11 @@
 
         <VideoView
             android:id="@+id/video"
-            android:layout_width="wrap_content"
-            android:layout_height="317dp"
+            android:layout_width="match_parent"
+            android:layout_height="348dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            />
+            android:visibility="gone"/>
 
     </FrameLayout>
 
