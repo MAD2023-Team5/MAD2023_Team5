@@ -94,7 +94,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         public void bindExercise(Sets exercise) {
             exerciseNameTextView.setText(exercise.getExercise().getName());
 
-
+            // Based on whether it duration based exercise or rep based exercise the text would change dynamically
             if (exercise.getNoofSets()!=0) {
 
                 setsTextView.setText("Sets: " + exercise.getNoofSets());
@@ -105,6 +105,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
                 setsTextView.setText("Sets: " + exercise.getTime()+"s");
             }
 
+            // getting the images for the exercise
             String path = exercise.getExercise().getImage();
             int res= context.getResources().getIdentifier(path, "drawable", context.getPackageName());
             image.setImageResource(res);

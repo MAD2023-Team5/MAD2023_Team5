@@ -80,6 +80,7 @@ public class exnoFragment extends Fragment {
         //configuring the layout based on position
         //and setting up movements
 
+        // if its the first exercise the previous would be greyed out and would have an empty clicker.
         if (position==0)
         {
             ImageView imageView = view.findViewById(R.id.imageView8);
@@ -90,6 +91,14 @@ public class exnoFragment extends Fragment {
 
             // Grey out the TextView
             textView.setTextColor(Color.GRAY);
+
+            prev.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
         }
 
         else
@@ -104,6 +113,7 @@ public class exnoFragment extends Fragment {
 
         }
 
+       // for the one in the end it would move back to routine fragmen when pressed the skip button.
        if (position+1==setsList.size())
         {
             skip.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +175,7 @@ public class exnoFragment extends Fragment {
         StorageReference videoRef = storage.getReference().child(videoPath);
         // Set up the video playback
 
+        // set up the media controller
         MediaController mediaController = new MediaController(getContext());
         mediaController.setAnchorView(video);
         video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -187,7 +198,7 @@ public class exnoFragment extends Fragment {
             // Handle any errors that occur during the download or playback process
             // For example, the video file might not exist in Firebase Storage
         });
-
+        //toggline between image and video
 
         imagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +227,7 @@ public class exnoFragment extends Fragment {
 
 
         //check for which type of layout needed(the one with stopwatch or nah)
+        // the done button would change to resume/pause button based on the type of exercise
 
         if(set.getTime()==null)
         {
@@ -251,7 +263,7 @@ public class exnoFragment extends Fragment {
             donebutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    // to pause and start the timer.
 
                     if (donebutton.getText().equals("Pause")) {
                         Log.i("Paused", donebutton.getText().toString());
@@ -303,7 +315,7 @@ public class exnoFragment extends Fragment {
 
     public void timerStart(long timeLengthMilli) {
         timer = new CountDownTimer(timeLengthMilli, 1000) {
-
+            //start timer and a function to tell what to do when the timer end.
             @Override
             public void onTick(long milliTillFinish) {
                 milliLeft = milliTillFinish;
@@ -331,6 +343,8 @@ public class exnoFragment extends Fragment {
         };
         timer.start();
     }
+    //pasue and resume timer.
+    // the resume works by starting a brand new timer with amount of time left.
     public void timerPause() {
         timer.cancel();
     }

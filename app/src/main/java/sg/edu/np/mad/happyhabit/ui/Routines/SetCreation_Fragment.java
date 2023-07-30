@@ -90,6 +90,12 @@ public class SetCreation_Fragment extends Fragment {
                     }
                 });
 
+                // based on whether we are editiing of creation the new one the view would be diff.editing would have
+                // get the info from firebase and display it out.
+
+                // the view creation through dynamic views instead of recycle view. Reason being i find dynamic view much more readable
+                // and managable compared to recylce view. It is also much more readable.
+
                 if (getArguments()!=null)
                 {
                     if(getArguments().getSerializable("sets")!=null) {
@@ -145,7 +151,7 @@ public class SetCreation_Fragment extends Fragment {
         arrayAdapter.setDropDownViewResource(R.layout.spinner_adapter);
         spinnerex.setAdapter(arrayAdapter);
 
-
+        // based on exercise selected either the duration or no of reps would be asked.
         spinnerex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -179,7 +185,7 @@ public class SetCreation_Fragment extends Fragment {
                 removeView(routineView);
             }
         });
-
+        // add it to the layout.
         layoutList.addView(routineView);
 
     }
@@ -268,6 +274,7 @@ public class SetCreation_Fragment extends Fragment {
     }
 
     private void saveroutine() {
+        //validate and save the input before moving to next fragment.
 
         Boolean result = checkIfValidAndRead();
 
@@ -324,8 +331,11 @@ public class SetCreation_Fragment extends Fragment {
 
     }
     private boolean checkIfValidAndRead() {
-            boolean result = true;
 
+            boolean result = true;
+            //makes sure all the values are filled and does not allow too big of number for duration cause may mess up the
+            // timer and larger numbers may not be able to coverted into int and crash the app
+            // if passes the validation get psuhed to firebase,
             Routine routine = (Routine) getArguments().getSerializable("routine");
             ArrayList<Sets> setsList = new ArrayList<Sets>();
 

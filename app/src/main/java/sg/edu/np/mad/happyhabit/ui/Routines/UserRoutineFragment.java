@@ -66,7 +66,9 @@ public class UserRoutineFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
-    {
+    {   //basically the same as routine fragment but without like dislike button and contains two on click litserner.
+        // the first on click litserner moves to editing and the second on moves to delete the routine.
+        // contains an add button to create  new routine.
 
         View view = inflater.inflate(R.layout.fragment_user_routine, container, false);
         firebaseData = FirebaseDatabase.getInstance().getReference("Routines");
@@ -183,7 +185,8 @@ public class UserRoutineFragment extends Fragment {
     }
     private void getExercisesForRoutine(Routine routine)
 
-    {
+    {   // if the onlcick to edit was selected, it would generate the neccessary data and then passed it to the edit page
+        // with all the info in a bundle
         String child = "routine" + routine.getRoutineNo();
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("Sets").child(child);

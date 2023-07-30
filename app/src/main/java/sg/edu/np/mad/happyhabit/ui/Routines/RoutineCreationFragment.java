@@ -109,7 +109,7 @@ public class RoutineCreationFragment extends Fragment  {
         imageView.setVisibility(View.VISIBLE);
 
         tags= new ArrayList<>();
-
+        // add chips to linear layout based on user input.
         addTagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +128,7 @@ public class RoutineCreationFragment extends Fragment  {
 
 
 
-
+        // would automatically fill in the value if its in edit mode, basically the detail that is already in firebase.
 
         if (getArguments()!=null)
         {
@@ -161,7 +161,7 @@ public class RoutineCreationFragment extends Fragment  {
 //
 //
 //
-        // Get the currently logged-in user's UID
+        // Get the currently logged-in user's email
         firebaseAuth = FirebaseAuth.getInstance();
         String uid = firebaseAuth.getCurrentUser().getEmail();
 
@@ -187,7 +187,7 @@ public class RoutineCreationFragment extends Fragment  {
             });
         }
 
-        //// saving routine
+        //// open multimedia gallery
 //
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +199,7 @@ public class RoutineCreationFragment extends Fragment  {
             }
         });
 
-
+        // moving to set creation, passed the necessary detail to the fragment through bundle.
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

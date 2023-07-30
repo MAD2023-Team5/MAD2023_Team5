@@ -260,6 +260,13 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
 
 
             });
+            //toglle between like and dislike button based on wwhat user is clicking. If the user clicked on like buttion
+            // the black like button would be gone anr rplaced with filled like button. The info would be saved in firebase under user_reaction child
+            //there would be a for loop going through they would calculate the amount like for the user and see if the current user have like
+            //or dislike a routine. The number and image would change accordingly.
+
+
+
             blankLikeImageView.setVisibility(View.VISIBLE);
             blankDislikeImageView.setVisibility(View.VISIBLE);
             filledLikeImageView.setVisibility(View.GONE);

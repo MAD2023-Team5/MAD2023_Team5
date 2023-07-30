@@ -133,6 +133,7 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
     public void onBindViewHolder(@NonNull UserRoutineViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Routine routine = routines.get(position);
         holder.bind(routine);
+        // the first litserner is on the item iteslef and the second one is inside a button
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             //calling the function on bind as it is easier get the routine information.
@@ -208,6 +209,7 @@ public class UserRoutinesAdapter extends RecyclerView.Adapter<UserRoutinesAdapte
 
             if(routine.getUrl()!=null)
             {
+                //utilise glide to put the image
                 Glide.with(itemView)
                         .load(routine.getUrl())
                         .apply(new RequestOptions()// Optional placeholder while loading

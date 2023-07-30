@@ -84,6 +84,7 @@ public class RoutineFragment extends Fragment {
         routineAdapter = new WorkoutRoutinesAdapter(fragmentManager, email,new WorkoutRoutinesAdapter.OnItemClickListener()
         {
 
+            // basically passing the neccessary values to the fragment
 
             @Override
             public void onItemClick(Routine workoutRoutine)

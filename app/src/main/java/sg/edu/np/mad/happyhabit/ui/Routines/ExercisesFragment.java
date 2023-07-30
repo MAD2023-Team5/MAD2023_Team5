@@ -60,7 +60,7 @@ public class ExercisesFragment extends Fragment {
         // Get the routine data from arguments or Firebase
         // Set up the RecyclerView
         Log.i("plsgetit", String.valueOf(getArguments().getInt("routine")));
-
+        // Get the routine no that was pased in the bundle from routine fragment to exercise fragment.
         Integer routine = getArguments().getInt("routine");
         String child = "routine" + routine;
         firebaseData = FirebaseDatabase.getInstance().getReference("Sets").child(child);
@@ -75,7 +75,7 @@ public class ExercisesFragment extends Fragment {
 
 
         Button btn = view.findViewById(R.id.start);
-
+        // after clicking on the start button the app would move on to the exno fragment
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +121,7 @@ public class ExercisesFragment extends Fragment {
                     Sets workoutRoutine = snapshot.getValue(Sets.class);
                     workoutRoutines.add(workoutRoutine);
                 }
+                //sort the list based on placement
                 Collections.sort(workoutRoutines, new Comparator<Sets>() {
                     @Override
                     public int compare(Sets o1, Sets o2){
