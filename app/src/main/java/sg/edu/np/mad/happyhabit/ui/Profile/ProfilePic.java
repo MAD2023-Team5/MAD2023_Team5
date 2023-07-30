@@ -67,13 +67,12 @@ public class ProfilePic extends Fragment implements Serializable {
     Uri picUri;
     private byte[] imageData;
 
-    // firebase storage
+    // firebase auth, database & storage
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
     private String userEmail;
-    private ProfilePicViewModel viewModel;
 
     // Define the button and imageview type variable
     FloatingActionButton fab;
@@ -91,7 +90,7 @@ public class ProfilePic extends Fragment implements Serializable {
         View view = inflater.inflate(R.layout.capture_image, container, false);
 
         // Floating action button (fab) & captured image
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab = view.findViewById(R.id.fab);
         imageView = view.findViewById(R.id.pfp);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -116,8 +115,6 @@ public class ProfilePic extends Fragment implements Serializable {
                 Log.e(TAG, "Failed to fetch image URL: " + error.getMessage());
             }
         });
-
-        viewModel = new ViewModelProvider(requireActivity()).get(ProfilePicViewModel.class);
 
         // Camera_open button is for open the camera and add the setOnClickListener in this button
         fab.setOnClickListener(v -> {
@@ -224,8 +221,7 @@ public class ProfilePic extends Fragment implements Serializable {
                     @Override
                     public void onSuccess(Uri downloadUri) {
                         String imageUrl = downloadUri.toString();
-                        // Store the imageUrl in Firebase Realtime Database with timestamp
-                        String timestamp = String.valueOf(System.currentTimeMillis());
+                        // Store the imageUrl in Firebase Realtime Database
                         userRef.setValue(imageUrl).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 fetchUserData(userEmail, imageUrl);
@@ -338,7 +334,8 @@ public class ProfilePic extends Fragment implements Serializable {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-    // fetch the data from User class
+
+    // fetch the data from User class & set image into user data
     private void fetchUserData(String userEmail, String imageUrl) {
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
         DatabaseReference userRef = usersRef.child(userEmail);
