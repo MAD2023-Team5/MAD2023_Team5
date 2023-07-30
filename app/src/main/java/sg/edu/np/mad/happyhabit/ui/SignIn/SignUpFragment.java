@@ -90,7 +90,8 @@ public class SignUpFragment extends Fragment {
                             rootRef.child( user1.getEmail().replace(".","")).setValue(user1);
 
                             Toast.makeText(getContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getContext(), EditProfileFragment.class));
+                         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                         navController.navigate(R.id.navigation_edit_profile);
                         } else {
                             Toast.makeText(getContext(), "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
