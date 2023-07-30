@@ -315,9 +315,10 @@ public class WorkoutRoutinesAdapter extends RecyclerView.Adapter<WorkoutRoutines
                                     nodislikes.setText(String.valueOf(dislikes));
 
                                 }
-                                if(user1.getUserNo()==user.getUserNo())
+                                if(user1.getEmail()==user.getEmail())
                                 {
                                     if (liked) {
+
                                         blankLikeImageView.setVisibility(View.GONE);
                                         filledLikeImageView.setVisibility(View.VISIBLE);
                                     } else {
