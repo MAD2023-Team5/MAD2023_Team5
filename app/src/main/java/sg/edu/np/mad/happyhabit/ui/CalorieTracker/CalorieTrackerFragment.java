@@ -32,11 +32,15 @@ import sg.edu.np.mad.happyhabit.R;
 
 public class CalorieTrackerFragment extends Fragment {
 
+    // Firebase references
     DatabaseReference selectedFood;
+
+    // UI elements
     MaterialButton addBreakfast, lunchAddButton, dinnerAddButton, clearBreakfast, clearLunch, clearDinner;
     TextView breakfastList, dinnerList, lunchList, breakfastCalTv, dinnerCalTv, lunchCalTv;
     TextView intakecalorie, totalcalorie;
 
+    // Variables to store total calories for each meal type
     int totalBreakfastCalories = 0;
     int totalDinnerCalories = 0;
     int totalLunchCalories = 0;
@@ -50,41 +54,59 @@ public class CalorieTrackerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calorie_tracker, container, false);
 
+        // Firebase reference to "SelectedFood" node
         selectedFood = FirebaseDatabase.getInstance().getReference().child("SelectedFood");
 
+        // Initialize UI elements
         intakecalorie = view.findViewById(R.id.intakecalorie);
         totalcalorie = view.findViewById(R.id.totalcalorie);
 
-        //Breakfast
+        // Breakfast UI elements
         breakfastList = view.findViewById(R.id.breakfastList);
         breakfastCalTv = view.findViewById(R.id.breakfastCalTv);
         addBreakfast = view.findViewById(R.id.addBreakfast);
         clearBreakfast = view.findViewById(R.id.clearBreakfast);
 
-        // Lunch
+        // Lunch UI elements
         lunchList = view.findViewById(R.id.lunchList);
         lunchCalTv = view.findViewById(R.id.lunchCalTv);
         lunchAddButton = view.findViewById(R.id.lunchAddBtton);
         clearLunch = view.findViewById(R.id.clearLunch);
 
-        // Dinner
+        // Dinner UI elements
         dinnerList = view.findViewById(R.id.dinnerList);
         dinnerCalTv = view.findViewById(R.id.dinnerCalTv);
         dinnerAddButton = view.findViewById(R.id.dinnerAddBtton);
         clearDinner = view.findViewById(R.id.clearDinner);
 
+        // Set click listeners for "Add Food" buttons
         addBreakfast.setOnClickListener(rootview -> {
             FoodDialog foodDialog = new FoodDialog(getContext(), "Breakfast");
+            foodDialog.setOnFoodAddedListener(foods -> {
+                updateFoodList(breakfastList, breakfastCalTv, foods, "Breakfast");
+                totalBreakfastCalories = calculateTotalCalories(foods);
+                sumupCal();
+            });
             foodDialog.show();
         });
 
         lunchAddButton.setOnClickListener(rootview -> {
             FoodDialog foodDialog = new FoodDialog(getContext(), "Lunch");
+            foodDialog.setOnFoodAddedListener(foods -> {
+                updateFoodList(lunchList, lunchCalTv, foods, "Lunch");
+                totalLunchCalories = calculateTotalCalories(foods);
+                sumupCal();
+            });
             foodDialog.show();
         });
 
         dinnerAddButton.setOnClickListener(rootview -> {
             FoodDialog foodDialog = new FoodDialog(getContext(), "Dinner");
+            foodDialog.setOnFoodAddedListener(foods -> {
+                updateFoodList(dinnerList, dinnerCalTv, foods, "Dinner");
+                totalDinnerCalories = calculateTotalCalories(foods);
+                sumupCal();
+            });
             foodDialog.show();
         });
 
@@ -140,6 +162,7 @@ public class CalorieTrackerFragment extends Fragment {
                             calories += food.getFoodCalorie();
                         }
 
+                        // Update the respective TextView and variable for each meal type
                         if (mealType.equals("Breakfast")) {
                             breakfastList.setText(stringBuffer.toString());
                             breakfastCalTv.setText(calories + " kcal");
@@ -155,9 +178,25 @@ public class CalorieTrackerFragment extends Fragment {
                         }
 
                         sumupCal();
+                    } else {
+                        // Handle the case when no data is available for the meal type
+                        if (mealType.equals("Breakfast")) {
+                            breakfastList.setText("");
+                            breakfastCalTv.setText("0 kcal");
+                            totalBreakfastCalories = 0;
+                        } else if (mealType.equals("Lunch")) {
+                            lunchList.setText("");
+                            lunchCalTv.setText("0 kcal");
+                            totalLunchCalories = 0;
+                        } else if (mealType.equals("Dinner")) {
+                            dinnerList.setText("");
+                            dinnerCalTv.setText("0 kcal");
+                            totalDinnerCalories = 0;
+                        }
+
+                        sumupCal();
                     }
                 }
-
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -166,23 +205,15 @@ public class CalorieTrackerFragment extends Fragment {
             });
         }
 
+        // Set click listeners for "Clear All" buttons
         clearBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Clear the UI text and reset the total calories for breakfast
-                breakfastList.setText("");
-                breakfastCalTv.setText("0 kcal");
+                clearFoodList(breakfastList, breakfastCalTv);
                 totalBreakfastCalories = 0;
-                sumupCal(); // Recalculate the total calories after clearing breakfast
-
-                // Get the reference to the "Breakfast" node under the current user in the database
-                DatabaseReference breakfastRef = FirebaseDatabase.getInstance().getReference()
-                        .child("SelectedFood")
-                        .child(useremail)
-                        .child("Breakfast");
-
-                // Remove all data under the "Breakfast" node
-                breakfastRef.removeValue();
+                sumupCal();
+                clearSelectedFoodsFromFirebase("Breakfast");
             }
         });
 
@@ -190,19 +221,10 @@ public class CalorieTrackerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Clear the UI text and reset the total calories for lunch
-                lunchList.setText("");
-                lunchCalTv.setText("0 kcal");
+                clearFoodList(lunchList, lunchCalTv);
                 totalLunchCalories = 0;
-                sumupCal(); // Recalculate the total calories after clearing lunch
-
-                // Get the reference to the "Lunch" node under the current user in the database
-                DatabaseReference lunchRef = FirebaseDatabase.getInstance().getReference()
-                        .child("SelectedFood")
-                        .child(useremail)
-                        .child("Lunch");
-
-                // Remove all data under the "Lunch" node
-                lunchRef.removeValue();
+                sumupCal();
+                clearSelectedFoodsFromFirebase("Lunch");
             }
         });
 
@@ -210,26 +232,70 @@ public class CalorieTrackerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Clear the UI text and reset the total calories for dinner
-                dinnerList.setText("");
-                dinnerCalTv.setText("0 kcal");
+                clearFoodList(dinnerList, dinnerCalTv);
                 totalDinnerCalories = 0;
-                sumupCal(); // Recalculate the total calories after clearing dinner
-
-                // Get the reference to the "Dinner" node under the current user in the database
-                DatabaseReference dinnerRef = FirebaseDatabase.getInstance().getReference()
-                        .child("SelectedFood")
-                        .child(useremail)
-                        .child("Dinner");
-
-                // Remove all data under the "Dinner" node
-                dinnerRef.removeValue();
+                sumupCal();
+                clearSelectedFoodsFromFirebase("Dinner");
             }
         });
 
         return view;
     }
 
+    // Method to update the food list in the UI
+    private void updateFoodList(TextView foodListTextView, TextView calorieTextView, List<Food> foods, String foodType) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int calories = 0;
+        for (Food food : foods) {
+            stringBuilder.append(food.getFoodName()).append("\n");
+            calories += food.getFoodCalorie();
+        }
+        foodListTextView.setText(stringBuilder.toString());
+        calorieTextView.setText(calories + " kcal");
+
+        // Save the selected foods to the Firebase database
+        saveSelectedFoodsToFirebase(foods, foodType);
+    }
+
+    // Method to save the selected foods to the Firebase database
+    private void saveSelectedFoodsToFirebase(List<Food> foods, String foodType) {
+        String useremail = FirebaseAuth.getInstance().getCurrentUser().getEmail().replace(".", "");
+        DatabaseReference selectedFoodRef = FirebaseDatabase.getInstance().getReference()
+                .child("SelectedFood")
+                .child(useremail)
+                .child(foodType);
+        selectedFoodRef.setValue(foods);
+    }
+
+    // Method to clear the food list and calorie text in the UI
+    private void clearFoodList(TextView foodListTextView, TextView calorieTextView) {
+        foodListTextView.setText("");
+        calorieTextView.setText("0 kcal");
+    }
+
+    // Method to calculate the total calories of selected foods
+    private int calculateTotalCalories(List<Food> foods) {
+        int totalCalories = 0;
+        for (Food food : foods) {
+            totalCalories += food.getFoodCalorie();
+        }
+        return totalCalories;
+    }
+
+    // Method to sum up the total calories of all meals
     private void sumupCal() {
-        intakecalorie.setText(totalBreakfastCalories + totalDinnerCalories + totalLunchCalories + "");
+        int totalCalories = totalBreakfastCalories + totalDinnerCalories + totalLunchCalories;
+        intakecalorie.setText(String.valueOf(totalCalories));
+    }
+
+    // Method to clear selected foods from the Firebase database
+    private void clearSelectedFoodsFromFirebase(String mealType) {
+        String useremail = FirebaseAuth.getInstance().getCurrentUser().getEmail().replace(".", "");
+        DatabaseReference selectedFoodRef = FirebaseDatabase.getInstance().getReference()
+                .child("SelectedFood")
+                .child(useremail)
+                .child(mealType);
+        selectedFoodRef.removeValue();
     }
 }
+

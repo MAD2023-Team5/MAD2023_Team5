@@ -12,11 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +41,7 @@ public class SignInFragment extends Fragment {
     private EditText loginEmail, loginPassword;
     private TextView signuppage;
     private Button loginbtn;
+    private CheckBox checkBox;
 
 
     public static SignInFragment newInstance() {
@@ -55,8 +60,12 @@ public class SignInFragment extends Fragment {
         loginPassword = view.findViewById(R.id.login_password);
         loginbtn = view.findViewById(R.id.loginbtn);
         signuppage = view.findViewById(R.id.signup);
+        checkBox = view.findViewById(R.id.checkBox);
         // using firebase authentication to autheticate users. If else statement utilised to point out the exact problem. For example if the email
         //or password field is empty or email is invalid format the appropriate response would be given.
+
+        // Hide password initially
+        loginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +102,20 @@ public class SignInFragment extends Fragment {
                     loginEmail.setError("Email cannot be empty");
                 } else {
                     loginEmail.setError("Please enter a valid email");
+                }
+            }
+        });
+
+        // Show password checkbox
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    // show password
+                    loginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    // hide password
+                    loginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,18 +43,29 @@ public class FoodDialog {
     CalorieTrackerAdapter adapter;
     String type;
 
+    // Define the interface for the listener
+    public interface OnFoodAddedListener {
+        void onFoodAdded(List<Food> selectedFoods);
+    }
 
-    public FoodDialog(Context context,String type) {
+    private OnFoodAddedListener foodAddedListener;
+
+    public void setOnFoodAddedListener(OnFoodAddedListener listener) {
+        this.foodAddedListener = listener;
+    }
+
+    public FoodDialog(Context context, String type) {
         this.context = context;
         dialog = new Dialog(context);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getInstance().getCurrentUser();
-        this.type=type;
-
+        this.type = type;
     }
 
     public void show() {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.food_dialog_layout);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mFoodRef = FirebaseDatabase.getInstance().getReference().child("Food");
         selectedFood = FirebaseDatabase.getInstance().getReference().child("SelectedFood");
@@ -63,12 +78,11 @@ public class FoodDialog {
         adapter = new CalorieTrackerAdapter(list, context);
         recyclerView.setAdapter(adapter);
 
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (adapter.getSelectedItems().size() > 0) {
-                    addFood(dialog, adapter.getSelectedItems(),type);
+                    addFood(dialog, adapter.getSelectedItems(), type);
                 } else {
                     Toast.makeText(context, "Please Select Food", Toast.LENGTH_SHORT).show();
                 }
@@ -76,17 +90,17 @@ public class FoodDialog {
         });
 
         dialog.show();
-        dialog.create();
-
     }
 
     private void addFood(Dialog dialog, List<Food> selectedItems, String foodType) {
+        if (foodAddedListener != null) {
+            foodAddedListener.onFoodAdded(selectedItems);
+        }
         for (int i = 0; i < selectedItems.size(); i++) {
             selectedFood.child(user.getUid()).child(foodType).push().setValue(selectedItems.get(i));
         }
         dialog.dismiss();
     }
-
 
     private void loadFood() {
         mFoodRef.addValueEventListener(new ValueEventListener() {
@@ -108,4 +122,5 @@ public class FoodDialog {
         });
     }
 }
+
 
