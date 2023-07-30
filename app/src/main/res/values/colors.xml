@@ -26,4 +26,12 @@
     <color name="dividerColor">#BDBDBD</color>
     <color name="backgroundColor">#FFFFFF</color>
     <color name="accentColor">#FF4081</color>
+
+    //testing
+    <color name="darkpurple">#482980</color>
+    <color name="night_mode">#612481</color>
+    <color name="notif_blue">#13B2C3</color>
+    <color name="private_yellow">#E6A326</color>
+    <color name="security_pink">#D95F69</color>
+    <color name="edit_blue">#006DB2</color>
 </resources>
