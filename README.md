@@ -50,9 +50,9 @@ Vibu
       - like & dislike system
         
 - Video and image guide for the exercises for user to follow through
-      -  Timer (Pause and Resume)
-      -  Video guide(stored in firebase storage)
-      -  Go back and forth between diff stages of the routine.
+      - Timer (Pause and Resume)
+      - Video guide(stored in firebase storage)
+      - Go back and forth between diff stages of the routine.
 
 - Debugging
 
