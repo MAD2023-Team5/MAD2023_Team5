@@ -53,6 +53,7 @@ Vibu
       - Timer (Pause and Resume)
       - Video guide(stored in firebase storage)
       - Go back and forth between diff stages of the routine.
+  
 
 - Debugging
 
