@@ -12,13 +12,13 @@
 
     <Button
         android:id="@+id/done_button"
-        android:layout_width="209dp"
-        android:layout_height="70dp"
+        android:layout_width="196dp"
+        android:layout_height="63dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="118dp"
-        android:layout_marginBottom="152dp"
+        android:layout_marginStart="126dp"
+        android:layout_marginBottom="158dp"
         android:backgroundTint="#060227"
         android:text="Done"
         android:textAlignment="center"
@@ -33,8 +33,8 @@
         android:layout_height="66dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginBottom="83dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="82dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -52,15 +52,15 @@
             android:id="@+id/textView"
             android:layout_width="114dp"
             android:layout_height="43dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="12dp"
             android:layout_toEndOf="@+id/imageView8"
             android:gravity="center_vertical"
             android:text="Previous"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
     </RelativeLayout>
 
@@ -79,18 +79,18 @@
             android:layout_width="114dp"
             android:layout_height="43dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="18dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="13dp"
             android:baselineAligned="true"
             android:gravity="center_vertical"
             android:text="Skip"
             android:textAlignment="textStart"
             android:textSize="20sp"
             android:textStyle="bold"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            android:textColor="@color/black"/>/>
 
         <ImageView
             android:id="@+id/imageView6"
@@ -111,30 +111,14 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/ecercise_no_of_sets"
-        android:layout_width="205dp"
-        android:layout_height="185dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="89dp"
-        android:layout_marginBottom="171dp"
-        android:gravity="center_vertical"
-        android:text="x10"
-        android:textAlignment="center"
-        android:textColor="#0E0E0E"
-        android:textSize="48sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/exercise_title"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="85dp"
-        android:layout_marginBottom="296dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginBottom="291dp"
         android:fontFamily="serif"
         android:text="Push Up"
         android:textAlignment="center"

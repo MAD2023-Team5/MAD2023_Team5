@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,10 +15,10 @@
 
         android:layout_width="320dp"
         android:layout_height="566dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,11 +30,14 @@
         android:id="@+id/start"
         android:layout_width="382dp"
         android:layout_height="40dp"
+        android:layout_below="@+id/exerciseRecyclerView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#1E1B1B"
         android:text="@string/start"
         app:cornerRadius="20dp" />
 
-</LinearLayout>
+</RelativeLayout>
 
 
 
