@@ -40,8 +40,20 @@ Clairer
 - Improving UI & App Icon Design
 
 Vibu 
-- Creation & Editing of routines & sets (w/ Description, Tags & adding images from gallery)
-- Improved layout of Browsing Routines with search & like & dislike system
+- Creation/Editing/Deleting of routines & sets
+    - Add tags using chip view
+    - Select images from gallery
+    - Dynamic Views for creating and editing
+
+- Improved layout of Browsing Routines
+      - search bar
+      - like & dislike system
+        
+- Video and image guide for the exercises for user to follow through
+      -  Timer (Pause and Resume)
+      -  Video guide(stored in firebase storage)
+      -  Go back and forth between diff stages of the routine.
+
 - Debugging
 
 Ludovic 
