@@ -60,6 +60,9 @@ Vibu
 Ludovic 
 - Creation of Profile Page
 - Editing of Profile Details (Name, password etc.)
+- UI for both: Profile page & Editing of Profile Details page
+- Logout Feature (In Profile page)
+- Hide/Show Password Features (In SingIn page & Editing of Profile Details page)
 
 Ern Wu 
 - Creation of Firebase Storage for binary data (images & videos)
