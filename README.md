@@ -6,14 +6,16 @@ Team Members
 3) Ludovic Tan S10223654
 4) Kuek Ern Wu S10222221
 
-Happy Habit is an app that caters to individuals who are interested in fitness and health. This lifestyle/social app allows users to follow a fitness personality that they are interested use their exercise routines to gain inspiration and enhance their own fitness lifestyle in. With the app, users can also create their own exercise routine and share it online. Happy Habit also allows users to follow other profiles that match their fitness and health goals. Users can even earn personalized achievements based on their usage.
+App Description: Happy Habit is an app that caters to individuals who are interested in fitness and health. This lifestyle/social app allows users to follow a fitness personality that they are interested use their exercise routines to gain inspiration and enhance their own fitness lifestyle in. With the app, users can also create their own exercise routine and share it online. Happy Habit also allows users to follow other profiles that match their fitness and health goals. Users can even earn personalized achievements based on their usage.
 
 App Category:
 Health & Fitness; Social
 
+
 Roles and Contributions
 
 Stage 1 Features:
+
 Clairer 
 - Login/Sign up Page (Design + Code): 
 Created a Login page for existing accounts; Comes with a sign-up page for newcomers
@@ -30,7 +32,9 @@ Ern Wu
 - Recycler View for Users: 
 List of users who have created an account with Happy Habit, with email and personality description
 
+
 Stage 2 Features:
+
 Clairer 
 - Creation of Calorie Tracker (i.e. Tracking for amount of calories taken in a meal)
 - Improving UI & App Icon Design
