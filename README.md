@@ -37,9 +37,9 @@ Stage 2 Features:
 
 Clairer 
 - Creation of Calorie Tracker
-      - Allows user to select food within the firebase database
-      - Tracks user calorie input through their selection in all 3 meals
-      - Able to total their sum of calories.
+    - Allow user to select food from firebase database
+    - Able to track their selection in different meals
+    - Total intake calorie is displayed
   
 - Improving UI & App Design
 
