@@ -36,8 +36,12 @@ List of users who have created an account with Happy Habit, with email and perso
 Stage 2 Features:
 
 Clairer 
-- Creation of Calorie Tracker (i.e. Tracking for amount of calories taken in a meal)
-- Improving UI & App Icon Design
+- Creation of Calorie Tracker
+      - Allows user to select food within the firebase database
+      - Tracks user calorie input through their selection in all 3 meals
+      - Able to total their sum of calories.
+  
+- Improving UI & App Design
 
 Vibu 
 - Creation/Editing/Deleting of routines & sets
